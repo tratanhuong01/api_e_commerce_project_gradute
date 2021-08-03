@@ -6,6 +6,8 @@ import com.api.api_e_commerce_project_gradute.comment.Comment;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -47,10 +49,57 @@ public class User {
   private String phone;
 
   @Column
+  private String password;
+
+  @Column
+  private String codeEmail;
+
+  @Column
+  private String codePhone;
+
+  @Column
+  private int isVerifyEmail;
+
+  @Column
+  private int isVerifyPhone;
+
+  @Column
   private int type;
 
   @Column
   private Timestamp timeCreated;
+
+  public String getCodeEmail() {
+    return codeEmail;
+  }
+
+  public void setCodeEmail(String codeEmail) {
+    this.codeEmail = codeEmail;
+  }
+
+  public String getCodePhone() {
+    return codePhone;
+  }
+
+  public void setCodePhone(String codePhone) {
+    this.codePhone = codePhone;
+  }
+
+  public int getIsVerifyEmail() {
+    return isVerifyEmail;
+  }
+
+  public void setIsVerifyEmail(int isVerifyEmail) {
+    this.isVerifyEmail = isVerifyEmail;
+  }
+
+  public int getIsVerifyPhone() {
+    return isVerifyPhone;
+  }
+
+  public void setIsVerifyPhone(int isVerifyPhone) {
+    this.isVerifyPhone = isVerifyPhone;
+  }
 
   public String getId() {
     return id;
@@ -80,8 +129,10 @@ public class User {
     return birthday;
   }
 
-  public void setBirthday(Date birthday) {
-    this.birthday = birthday;
+  public void setBirthday(String birthday) throws ParseException {
+    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+    Date parsed = format.parse(birthday);
+    this.birthday = parsed;
   }
 
   public String getSex() {
@@ -118,6 +169,14 @@ public class User {
 
   public Timestamp getTimeCreated() {
     return timeCreated;
+  }
+
+  public String getPassword() {
+    return password;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
   }
 
   public void setTimeCreated(Timestamp timeCreated) {

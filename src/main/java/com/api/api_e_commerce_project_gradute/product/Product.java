@@ -13,7 +13,7 @@ import java.util.Set;
 @Table(name = "product")
 public class Product {
   @Id
-  private Long id;
+  private String id;
 
   @OneToMany(mappedBy = "productInput")
   private Set<ProductInput> productInput = new HashSet<>();;
@@ -44,13 +44,27 @@ public class Product {
   private int isShow;
 
   @Column
+  private String brand;
+
+  @Column
+  private String slug;
+
+  @Column
   private String describeProduct;
 
-  public Long getId() {
+  public String getBrand() {
+    return brand;
+  }
+
+  public void setBrand(String brand) {
+    this.brand = brand;
+  }
+
+  public String getId() {
     return id;
   }
 
-  public void setId(Long id) {
+  public void setId(String id) {
     this.id = id;
   }
 
