@@ -20,12 +20,14 @@ public interface UserRepository extends JpaRepository<User,String> {
   @Query(value = "SELECT * FROM user WHERE phone = ?1  ",nativeQuery = true)
   List<User> getUserByPhone(String phone);
 
-  @Query(value = "SELECT * FROM user WHERE (email = ?1 or phone = ?2) AMD password = ?3 ",nativeQuery = true)
+  @Query(value = "SELECT * FROM user WHERE ( email = ?1 or phone = ?1 ) AND password = ?2 ",nativeQuery = true)
   User checkLogin(String emailOrPhone,String password);
 
   @Transactional
   @Modifying
-  @Query(value = "UPDATE user SET code_email = ?1 WHERE id_user = ?2 ")
-  String updateCodeEmail(String codeEmail,String idUser);
+  @Query(value = "UPDATE user SET code_email = ?1 WHERE id = ?2 ",nativeQuery = true)
+  int updateCodeEmail(String codeEmail,String idUser);
+
+
 
 }
