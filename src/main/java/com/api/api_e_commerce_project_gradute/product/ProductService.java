@@ -20,6 +20,15 @@ public class ProductService {
   }
 
   public Product addProduct(Product product) {
+    Product productNew = productRepository.getIdBestNew();
+    if (productNew == null) {
+      product.setId("SP1000000000");
+    }
+    else {
+      int id = Integer.parseInt(productNew.getId().split("SP")[1]);
+      id++;
+      product.setId(String.valueOf(id));
+    }
     return productRepository.save(product);
   }
 

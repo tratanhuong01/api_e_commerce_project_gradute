@@ -19,7 +19,7 @@ public class ProductOutputController {
   }
 
   @CrossOrigin
-  @GetMapping("productOutputs/idProductOutput}")
+  @GetMapping("productOutputs/{idProductOutput}")
   public Optional<ProductOutput> getProductOutputById(@PathVariable Long idProductOutput) {
     return productOutputService.getProductOutputById(idProductOutput);
   }

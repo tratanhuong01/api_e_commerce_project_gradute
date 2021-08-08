@@ -12,7 +12,7 @@ public class CategoryNews {
   @Id
   private String id;
 
-  @OneToMany(mappedBy = "categoryNews")
+  @OneToMany(mappedBy = "categoryNews",cascade = CascadeType.ALL)
   private Set<News> categoryNews = new HashSet<>();
 
   @Column

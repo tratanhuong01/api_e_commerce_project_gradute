@@ -1,11 +1,19 @@
 package com.api.api_e_commerce_project_gradute.product;
 
+import com.api.api_e_commerce_project_gradute.brand.Brand;
+import com.api.api_e_commerce_project_gradute.color.Color;
 import com.api.api_e_commerce_project_gradute.group_product.GroupProduct;
+import com.api.api_e_commerce_project_gradute.image.Image;
+import com.api.api_e_commerce_project_gradute.line_product.LineProduct;
+import com.api.api_e_commerce_project_gradute.memory.Memory;
 import com.api.api_e_commerce_project_gradute.sale.Sale;
 import com.api.api_e_commerce_project_gradute.product_input.ProductInput;
 import com.api.api_e_commerce_project_gradute.product_output.ProductOutput;
+import com.api.api_e_commerce_project_gradute.size.Size;
+import com.api.api_e_commerce_project_gradute.user.User;
 
 import javax.persistence.*;
+import javax.sound.sampled.Line;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,36 +23,45 @@ public class Product {
   @Id
   private String id;
 
+  @ManyToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "id_user")
+  private User productUser;
+
   @OneToMany(mappedBy = "productInput")
-  private Set<ProductInput> productInput = new HashSet<>();;
+  private Set<ProductInput> productInput = new HashSet<>();
 
   @OneToMany(mappedBy = "productOutput")
-  private Set<ProductOutput> productOutput = new HashSet<>();;
+  private Set<ProductOutput> productOutput = new HashSet<>();
 
   @OneToMany(mappedBy = "productSale")
   private Set<Sale> productSale = new HashSet<>();;
 
-  @ManyToOne
-  @JoinColumn(name = "id_group_product")
-  private GroupProduct groupProduct;
+  @ManyToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "id_memory")
+  private Memory memoryProduct;
 
-  @Column
-  private String nameProduct;
+  @ManyToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "id_line_product")
+  private LineProduct lineProduct;
 
-  @Column
-  private String color;
+  @ManyToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "id_color")
+  private Color colorProduct;
 
-  @Column
-  private String size;
+  @ManyToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "id_size")
+  private Size sizeProduct;
 
-  @Column
-  private String image;
+  @ManyToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "id_brand")
+  private Brand brandProduct;
+
+  @ManyToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "id_image")
+  private Image imageProduct;
 
   @Column
   private int isShow;
-
-  @Column
-  private String brand;
 
   @Column
   private String slug;
@@ -52,12 +69,52 @@ public class Product {
   @Column
   private String describeProduct;
 
-  public String getBrand() {
-    return brand;
+  public String getSlug() {
+    return slug;
   }
 
-  public void setBrand(String brand) {
-    this.brand = brand;
+  public void setSlug(String slug) {
+    this.slug = slug;
+  }
+
+  public LineProduct getLineProduct() {
+    return lineProduct;
+  }
+
+  public void setLineProduct(LineProduct lineProduct) {
+    this.lineProduct = lineProduct;
+  }
+
+  public Color getColorProduct() {
+    return colorProduct;
+  }
+
+  public void setColorProduct(Color colorProduct) {
+    this.colorProduct = colorProduct;
+  }
+
+  public Size getSizeProduct() {
+    return sizeProduct;
+  }
+
+  public void setSizeProduct(Size sizeProduct) {
+    this.sizeProduct = sizeProduct;
+  }
+
+  public Brand getBrandProduct() {
+    return brandProduct;
+  }
+
+  public void setBrandProduct(Brand brandProduct) {
+    this.brandProduct = brandProduct;
+  }
+
+  public Image getImageProduct() {
+    return imageProduct;
+  }
+
+  public void setImageProduct(Image imageProduct) {
+    this.imageProduct = imageProduct;
   }
 
   public String getId() {
@@ -66,46 +123,6 @@ public class Product {
 
   public void setId(String id) {
     this.id = id;
-  }
-
-  public GroupProduct getGroupProduct() {
-    return groupProduct;
-  }
-
-  public void setGroupProduct(GroupProduct groupProduct) {
-    this.groupProduct = groupProduct;
-  }
-
-  public String getNameProduct() {
-    return nameProduct;
-  }
-
-  public void setNameProduct(String nameProduct) {
-    this.nameProduct = nameProduct;
-  }
-
-  public String getColor() {
-    return color;
-  }
-
-  public void setColor(String color) {
-    this.color = color;
-  }
-
-  public String getSize() {
-    return size;
-  }
-
-  public void setSize(String size) {
-    this.size = size;
-  }
-
-  public String getImage() {
-    return image;
-  }
-
-  public void setImage(String image) {
-    this.image = image;
   }
 
   public int getIsShow() {

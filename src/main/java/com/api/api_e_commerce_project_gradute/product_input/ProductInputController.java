@@ -24,4 +24,16 @@ public class ProductInputController {
     return productInputService.getProductInputById(idProductInput);
   }
 
+  @CrossOrigin
+  @PostMapping("productInputs")
+  public ProductInput addProductInput(@RequestBody ProductInput productInput) {
+    return productInputService.addProductInput(productInput);
+  }
+
+  @CrossOrigin
+  @PutMapping("productInputs")
+  public ProductInput updateProductInput(@RequestBody ProductInput productInput) {
+    return productInputService.addProductInput(productInput);
+  }
+
 }

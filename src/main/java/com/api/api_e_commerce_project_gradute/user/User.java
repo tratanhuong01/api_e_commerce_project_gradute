@@ -3,6 +3,7 @@ package com.api.api_e_commerce_project_gradute.user;
 import com.api.api_e_commerce_project_gradute.bill.Bill;
 import com.api.api_e_commerce_project_gradute.bill_review.BillReview;
 import com.api.api_e_commerce_project_gradute.comment.Comment;
+import com.api.api_e_commerce_project_gradute.product.Product;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -18,16 +19,19 @@ public class User {
   @Id
   private String id;
 
-  @OneToMany(mappedBy = "billUser")
+  @OneToMany(mappedBy = "productUser",cascade = CascadeType.ALL)
+  private Set<Product> productUser = new HashSet<>();
+
+  @OneToMany(mappedBy = "billUser",cascade = CascadeType.ALL)
   private Set<Bill> billUser = new HashSet<>();;
 
-  @OneToMany(mappedBy = "cartUser")
+  @OneToMany(mappedBy = "cartUser",cascade = CascadeType.ALL)
   private Set<User> cartUser = new HashSet<>();;
 
-  @OneToMany(mappedBy = "reviewBillUser")
+  @OneToMany(mappedBy = "reviewBillUser",cascade = CascadeType.ALL)
   private Set<BillReview> reviewBillUser = new HashSet<>();;
 
-  @OneToMany(mappedBy = "commentUser")
+  @OneToMany(mappedBy = "commentUser",cascade = CascadeType.ALL)
   private Set<Comment> commentUser = new HashSet<>();;
 
   @Column
