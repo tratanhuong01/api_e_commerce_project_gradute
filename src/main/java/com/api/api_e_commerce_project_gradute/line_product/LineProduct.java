@@ -15,10 +15,10 @@ public class LineProduct {
   @Id
   private String id;
 
-  @OneToMany(mappedBy = "lineProduct",cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "lineProduct")
   private Set<Product> lineProduct = new HashSet<>();
 
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne
   @JoinColumn(name = "id_group_product")
   private GroupProduct groupProduct;
 

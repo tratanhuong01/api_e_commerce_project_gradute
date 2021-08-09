@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ColorService {
@@ -15,8 +16,8 @@ public class ColorService {
     return colorRepository.findAll();
   }
 
-  public Color getColorById(String idColor) {
-    return colorRepository.getById(idColor);
+  public Optional<Color> getColorById(String idColor) {
+    return colorRepository.findById(idColor);
   }
 
   public Color addColor(Color color) {

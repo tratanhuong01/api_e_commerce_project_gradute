@@ -14,7 +14,7 @@ public class Color {
   @Id
   private String id;
 
-  @OneToMany(mappedBy = "colorProduct",cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "colorProduct")
   private Set<Product> colorProduct = new HashSet<>();;
 
   @Column

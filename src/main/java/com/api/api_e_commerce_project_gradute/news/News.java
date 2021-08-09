@@ -17,10 +17,10 @@ public class News {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @OneToMany(mappedBy = "newsDetail",cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "newsDetail")
   private Set<NewsDetail> newsDetail = new HashSet<>();;
 
-  @OneToMany(mappedBy = "newsComment",cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "newsComment")
   private Set<Comment> newsComment = new HashSet<>();;
 
   @OneToOne

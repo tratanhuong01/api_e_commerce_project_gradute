@@ -12,7 +12,7 @@ public class Brand {
   @Id
   private String id;
 
-  @OneToMany(mappedBy = "brandProduct",cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "brandProduct")
   private Set<Product> brandProduct = new HashSet<>();;
 
   @Column

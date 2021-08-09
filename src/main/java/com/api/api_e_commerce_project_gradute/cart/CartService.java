@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CartService {
@@ -15,8 +16,8 @@ public class CartService {
     return cartRepository.findAll();
   }
 
-  public Cart getCartById(Long idCart) {
-    return cartRepository.getById(idCart);
+  public Optional<Cart> getCartById(Long idCart) {
+    return cartRepository.findById(idCart);
   }
 
   public Cart addCart(Cart cart) {

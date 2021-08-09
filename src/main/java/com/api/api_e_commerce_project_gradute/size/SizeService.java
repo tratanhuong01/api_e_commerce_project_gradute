@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SizeService {
@@ -15,8 +16,8 @@ public class SizeService {
     return sizeRepository.findAll();
   }
 
-  public Size getSizeById(String idSize) {
-    return sizeRepository.getById(idSize);
+  public Optional<Size> getSizeById(String idSize) {
+    return sizeRepository.findById(idSize);
   }
 
   public Size addSize(Size size) {

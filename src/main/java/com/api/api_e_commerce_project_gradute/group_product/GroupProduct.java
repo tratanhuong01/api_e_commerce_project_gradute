@@ -17,7 +17,7 @@ public class GroupProduct {
   @Id
   private String id;
 
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne
   @JoinColumn(name = "id_category_product")
   private CategoryProduct categoryGroupProduct;
 

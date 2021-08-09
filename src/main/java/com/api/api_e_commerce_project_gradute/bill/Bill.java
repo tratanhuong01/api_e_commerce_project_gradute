@@ -14,10 +14,10 @@ public class Bill {
   @Id
   private String id;
 
-  @OneToMany(mappedBy = "billDetail",cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "billDetail")
   private Set<BillDetail> billDetail = new HashSet<>();
 
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne
   @JoinColumn(name = "id_user")
   private User billUser;
 

@@ -1,5 +1,6 @@
 package com.api.api_e_commerce_project_gradute.product_input;
 
+import com.api.api_e_commerce_project_gradute.DTO.ProductInputAdd;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,14 +21,14 @@ public class ProductInputController {
 
   @CrossOrigin
   @GetMapping("productInputs/{idProductInput}")
-  public ProductInput getProductInputById(@PathVariable Long idProductInput) {
+  public Optional<ProductInput> getProductInputById(@PathVariable Long idProductInput) {
     return productInputService.getProductInputById(idProductInput);
   }
 
   @CrossOrigin
   @PostMapping("productInputs")
-  public ProductInput addProductInput(@RequestBody ProductInput productInput) {
-    return productInputService.addProductInput(productInput);
+  public ProductInput addProductInput(@RequestBody ProductInputAdd productInputAdd) {
+    return productInputService.addProductInput(productInputAdd);
   }
 
   @CrossOrigin

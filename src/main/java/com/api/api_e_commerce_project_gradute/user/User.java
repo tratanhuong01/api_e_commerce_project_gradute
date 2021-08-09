@@ -19,19 +19,19 @@ public class User {
   @Id
   private String id;
 
-  @OneToMany(mappedBy = "productUser",cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "productUser")
   private Set<Product> productUser = new HashSet<>();
 
-  @OneToMany(mappedBy = "billUser",cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "billUser")
   private Set<Bill> billUser = new HashSet<>();;
 
-  @OneToMany(mappedBy = "cartUser",cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "cartUser")
   private Set<User> cartUser = new HashSet<>();;
 
-  @OneToMany(mappedBy = "reviewBillUser",cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "reviewBillUser")
   private Set<BillReview> reviewBillUser = new HashSet<>();;
 
-  @OneToMany(mappedBy = "commentUser",cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "commentUser")
   private Set<Comment> commentUser = new HashSet<>();;
 
   @Column

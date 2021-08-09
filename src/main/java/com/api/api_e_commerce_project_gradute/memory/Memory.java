@@ -13,7 +13,7 @@ public class Memory {
   @Id
   private String id;
 
-  @OneToMany(mappedBy = "memoryProduct",cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "memoryProduct")
   private Set<Product> memoryProduct = new HashSet<>();
 
   @Column

@@ -13,7 +13,7 @@ public class Size {
   @Id
   private String id;
 
-  @OneToMany(mappedBy = "sizeProduct",cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "sizeProduct")
   private Set<Size> sizeProduct = new HashSet<>();
 
   @Column

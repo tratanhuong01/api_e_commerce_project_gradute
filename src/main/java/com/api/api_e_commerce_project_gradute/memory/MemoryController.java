@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class MemoryController {
@@ -19,7 +20,7 @@ public class MemoryController {
 
   @CrossOrigin
   @GetMapping("memories/{idMemory}")
-  public Memory getMemoryById(@PathVariable String idMemory) {
+  public Optional<Memory> getMemoryById(@PathVariable String idMemory) {
     return memoryService.getMemoryById(idMemory);
   }
 

@@ -12,7 +12,7 @@ public class ProductInput {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @OneToOne(cascade = CascadeType.ALL)
+  @OneToOne
   @JoinColumn(name = "id_product")
   private Product productInput;
 

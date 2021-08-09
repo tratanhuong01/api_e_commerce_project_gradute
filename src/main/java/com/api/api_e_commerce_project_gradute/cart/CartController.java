@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class CartController {
@@ -19,7 +20,7 @@ public class CartController {
 
   @CrossOrigin
   @GetMapping("carts/{idCart}")
-  public Cart getCartById(@PathVariable Long idCart) {
+  public Optional<Cart> getCartById(@PathVariable Long idCart) {
     return cartService.getCartById(idCart);
   }
 

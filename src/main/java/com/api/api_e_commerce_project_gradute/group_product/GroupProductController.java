@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class GroupProductController {
@@ -19,7 +20,7 @@ public class GroupProductController {
 
   @CrossOrigin
   @GetMapping("groupProducts/{idGroupProduct}")
-  public GroupProduct getGroupProductById(@PathVariable String idGroupProduct) {
+  public Optional<GroupProduct> getGroupProductById(@PathVariable String idGroupProduct) {
     return groupProductService.getGroupProductById((idGroupProduct));
   }
 

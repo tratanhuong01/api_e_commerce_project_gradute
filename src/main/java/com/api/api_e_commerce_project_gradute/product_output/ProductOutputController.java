@@ -1,5 +1,6 @@
 package com.api.api_e_commerce_project_gradute.product_output;
 
+import com.api.api_e_commerce_project_gradute.DTO.ProductOutputAdd;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,8 +27,8 @@ public class ProductOutputController {
 
   @CrossOrigin
   @PostMapping("productOutputs")
-  public ProductOutput addProductOutput(@RequestBody ProductOutput productOutput) {
-    return productOutputService.addProductOutput(productOutput);
+  public ProductOutput addProductOutput(@RequestBody ProductOutputAdd productOutputAdd) {
+    return productOutputService.addProductOutput(productOutputAdd);
   }
 
   @CrossOrigin

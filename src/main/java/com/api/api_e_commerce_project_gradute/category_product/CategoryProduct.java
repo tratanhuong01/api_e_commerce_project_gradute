@@ -13,7 +13,7 @@ public class CategoryProduct {
   @Id
   private String id;
 
-  @OneToMany(mappedBy = "categoryGroupProduct",cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "categoryGroupProduct")
   private Set<GroupProduct> categoryGroupProduct = new HashSet<>();
 
   @Column

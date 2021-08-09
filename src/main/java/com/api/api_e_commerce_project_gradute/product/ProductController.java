@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class ProductController {
@@ -19,7 +20,7 @@ public class ProductController {
 
   @CrossOrigin
   @GetMapping("products/{idProduct}")
-  public Product getProductById(@PathVariable String idProduct) {
+  public Optional<Product> getProductById(@PathVariable String idProduct) {
     return productService.getProductById(idProduct);
   }
 
@@ -33,6 +34,12 @@ public class ProductController {
   @PutMapping("products")
   public Product updateProduct(@RequestBody Product product) {
     return productService.addProduct(product);
+  }
+
+  @CrossOrigin
+  @GetMapping("getIdBestNew")
+  public Product getIdBestNew() {
+    return productService.getIdBestNew();
   }
 
 }

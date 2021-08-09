@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class BillReviewController {
@@ -19,7 +20,7 @@ public class BillReviewController {
 
   @CrossOrigin
   @GetMapping("billReviews/{idBillReview}")
-  public BillReview getBillReviewById(@PathVariable Long idBillReview) {
+  public Optional<BillReview> getBillReviewById(@PathVariable Long idBillReview) {
     return billReviewService.getBillReviewById(idBillReview);
   }
 

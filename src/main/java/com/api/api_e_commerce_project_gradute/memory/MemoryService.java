@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MemoryService {
@@ -15,8 +16,8 @@ public class MemoryService {
     return memoryRepository.findAll();
   }
 
-  public Memory getMemoryById(String idMemory) {
-    return memoryRepository.getById(idMemory);
+  public Optional<Memory> getMemoryById(String idMemory) {
+    return memoryRepository.findById(idMemory);
   }
 
   public Memory addMemory(Memory memory) {

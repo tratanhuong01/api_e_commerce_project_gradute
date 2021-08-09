@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class CommentController {
@@ -19,7 +20,7 @@ public class CommentController {
 
   @CrossOrigin
   @GetMapping("comments/{idComment}")
-  public Comment getCommentById(@PathVariable Long idComment) {
+  public Optional<Comment> getCommentById(@PathVariable Long idComment) {
     return commentService.getCommentById(idComment);
   }
 

@@ -1,9 +1,12 @@
 package com.api.api_e_commerce_project_gradute.product;
 
+import com.api.api_e_commerce_project_gradute.DTO.ProductFull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductService {
@@ -15,21 +18,22 @@ public class ProductService {
     return productRepository.findAll();
   }
 
-  public Product getProductById(String idProduct) {
-    return productRepository.getById(idProduct);
+  public Optional<Product> getProductById(String idProduct) {
+    return productRepository.findById(idProduct);
   }
 
   public Product addProduct(Product product) {
-    Product productNew = productRepository.getIdBestNew();
-    if (productNew == null) {
-      product.setId("SP1000000000");
-    }
-    else {
-      int id = Integer.parseInt(productNew.getId().split("SP")[1]);
-      id++;
-      product.setId(String.valueOf(id));
-    }
     return productRepository.save(product);
+  }
+
+  public Product getIdBestNew() {
+    return productRepository.getIdBestNew();
+  }
+
+  public List<ProductFull> getAllProductFull() {
+    List<ProductFull> productFullList = new ArrayList<>();
+
+    return productFullList;
   }
 
 }

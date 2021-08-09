@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CommentService {
@@ -15,8 +16,8 @@ public class CommentService {
     return commentRepository.findAll();
   }
 
-  public Comment getCommentById(Long idComment) {
-    return commentRepository.getById(idComment);
+  public Optional<Comment> getCommentById(Long idComment) {
+    return commentRepository.findById(idComment);
   }
 
   public Comment addComment(Comment comment) {

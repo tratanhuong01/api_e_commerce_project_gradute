@@ -11,7 +11,7 @@ public class NewsDetail {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private String id;
 
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne
   @JoinColumn(name = "id_news")
   private News newsDetail;
 

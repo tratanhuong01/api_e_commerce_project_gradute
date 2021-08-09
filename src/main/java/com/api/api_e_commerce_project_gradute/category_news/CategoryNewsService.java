@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CategoryNewsService {
@@ -15,8 +16,8 @@ public class CategoryNewsService {
     return categoryNewsRepository.findAll();
   }
 
-  public CategoryNews getCategoryNewsById(Long idCategoryNews) {
-    return categoryNewsRepository.getById(idCategoryNews);
+  public Optional<CategoryNews> getCategoryNewsById(Long idCategoryNews) {
+    return categoryNewsRepository.findById(idCategoryNews);
   }
 
   public CategoryNews addCategoryNews(CategoryNews categoryNews) {

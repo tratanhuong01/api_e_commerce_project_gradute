@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class GroupProductService {
@@ -15,8 +16,8 @@ public class GroupProductService {
     return groupProductRepository.findAll();
   }
 
-  public GroupProduct getGroupProductById(String idGroupProduct) {
-    return groupProductRepository.getById(idGroupProduct);
+  public Optional<GroupProduct> getGroupProductById(String idGroupProduct) {
+    return groupProductRepository.findById(idGroupProduct);
   }
 
   public GroupProduct addGroupProduct(GroupProduct groupProduct) {

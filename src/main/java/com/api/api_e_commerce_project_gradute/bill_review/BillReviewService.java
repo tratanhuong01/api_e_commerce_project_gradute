@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BillReviewService {
@@ -15,8 +16,8 @@ public class BillReviewService {
     return billReviewRepository.findAll();
   }
 
-  public BillReview getBillReviewById(Long idBillReview) {
-    return billReviewRepository.getById(idBillReview);
+  public Optional<BillReview> getBillReviewById(Long idBillReview) {
+    return billReviewRepository.findById(idBillReview);
   }
 
   public BillReview addBillReview(BillReview billReview) {

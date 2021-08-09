@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class CategoryNewsController {
@@ -19,7 +20,7 @@ public class CategoryNewsController {
 
   @CrossOrigin
   @GetMapping("categoryNews/{idCategoryNews}")
-  public CategoryNews getCategoryNewsById(@PathVariable Long idCategoryNews) {
+  public Optional<CategoryNews> getCategoryNewsById(@PathVariable Long idCategoryNews) {
     return categoryNewsService.getCategoryNewsById(idCategoryNews);
   }
 

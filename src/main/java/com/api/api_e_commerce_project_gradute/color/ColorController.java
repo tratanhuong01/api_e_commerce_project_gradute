@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class ColorController {
@@ -19,7 +20,7 @@ public class ColorController {
 
   @CrossOrigin
   @GetMapping("colors/{idColor}")
-  public Color getColorById(@PathVariable String idColor) {
+  public Optional<Color> getColorById(@PathVariable String idColor) {
     return colorService.getColorById(idColor);
   }
 

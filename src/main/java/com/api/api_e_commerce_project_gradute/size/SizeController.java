@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class SizeController {
@@ -19,7 +20,7 @@ public class SizeController {
 
   @CrossOrigin
   @GetMapping("sizes/{idSize}")
-  public Size getSizeById(@PathVariable String idSize) {
+  public Optional<Size> getSizeById(@PathVariable String idSize) {
     return sizeService.getSizeById(idSize);
   }
 

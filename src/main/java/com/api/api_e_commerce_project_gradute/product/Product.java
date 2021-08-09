@@ -69,6 +69,22 @@ public class Product {
   @Column
   private String describeProduct;
 
+  public User getProductUser() {
+    return productUser;
+  }
+
+  public void setProductUser(User productUser) {
+    this.productUser = productUser;
+  }
+
+  public Memory getMemoryProduct() {
+    return memoryProduct;
+  }
+
+  public void setMemoryProduct(Memory memoryProduct) {
+    this.memoryProduct = memoryProduct;
+  }
+
   public String getSlug() {
     return slug;
   }
