@@ -1,10 +1,9 @@
-package com.api.api_e_commerce_project_gradute.DTO;
+package com.api.api_e_commerce_project_gradute.DTO.product;
 
 import javax.persistence.ColumnResult;
 import javax.persistence.ConstructorResult;
 import javax.persistence.NamedNativeQuery;
 import javax.persistence.SqlResultSetMapping;
-import java.util.List;
 
 @SqlResultSetMapping(name = "customDataMapping",
     classes = @ConstructorResult(
@@ -23,7 +22,12 @@ import java.util.List;
             @ColumnResult(name = "idColor", type = String.class),
             @ColumnResult(name = "idMemory", type = String.class),
             @ColumnResult(name = "isShow", type = Integer.class),
-            @ColumnResult(name = "idImage", type = String.class),
+            @ColumnResult(name = "idImage", type = Long.class),
+            @ColumnResult(name = "slug", type = String.class),
+            @ColumnResult(name = "color", type = String.class),
+            @ColumnResult(name = "image", type = String.class),
+            @ColumnResult(name = "memory", type = String.class),
+            @ColumnResult(name = "brand" , type = String.class)
         }
     )
 )
@@ -45,5 +49,10 @@ public interface ProductMain {
   String getIdColor();
   String getIdMemory();
   int getIsShow();
-  String getIdImage();
+  Long getIdImage();
+  String getSlug();
+  String getColor();
+  String getImage();
+  String getMemory();
+  String getBrand();
 }

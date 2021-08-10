@@ -1,4 +1,4 @@
-package com.api.api_e_commerce_project_gradute.DTO;
+package com.api.api_e_commerce_project_gradute.DTO.product;
 
 import com.api.api_e_commerce_project_gradute.color.Color;
 import com.api.api_e_commerce_project_gradute.image.Image;
@@ -18,12 +18,60 @@ public class ProductFull {
   private List<Memory> memoryList;
   private List<Image> imageList;
   private String slug;
-  private String image;
-  private String color;
-  private String memory;
   private int priceInput;
   private int priceOutput;
   private int sale;
+  private String image;
+  private String color;
+  private String memory;
+  private String brand;
+  public ProductFull(String idProduct, String idCategoryProduct, String nameCategoryProduct, String idGroupProduct,
+ String nameGroupProduct, String idLineProduct, String nameLineProduct, List<Color> colorList,
+ List<Memory> memoryList, List<Image> imageList, String slug, int priceInput, int priceOutput, int sale,
+ String image,String color,String memory,String brand){
+    this.idProduct = idProduct;
+    this.idCategoryProduct = idCategoryProduct;
+    this.nameCategoryProduct = nameCategoryProduct;
+    this.idGroupProduct = idGroupProduct;
+    this.nameGroupProduct = nameGroupProduct;
+    this.idLineProduct = idLineProduct;
+    this.nameLineProduct = nameLineProduct;
+    this.colorList = colorList;
+    this.memoryList = memoryList;
+    this.imageList = imageList;
+    this.slug = slug;
+    this.priceInput = priceInput;
+    this.priceOutput = priceOutput;
+    this.sale = sale;
+    this.image = image;
+    this.color = color;
+    this.memory = memory;
+    this.brand = brand;
+  }
+
+  public String getImage() {
+    return image;
+  }
+
+  public void setImage(String image) {
+    this.image = image;
+  }
+
+  public String getColor() {
+    return color;
+  }
+
+  public void setColor(String color) {
+    this.color = color;
+  }
+
+  public String getMemory() {
+    return memory;
+  }
+
+  public void setMemory(String memory) {
+    this.memory = memory;
+  }
 
   public String getIdProduct() {
     return idProduct;
@@ -111,30 +159,6 @@ public class ProductFull {
 
   public void setSlug(String slug) {
     this.slug = slug;
-  }
-
-  public String getImage() {
-    return image;
-  }
-
-  public void setImage(String image) {
-    this.image = image;
-  }
-
-  public String getColor() {
-    return color;
-  }
-
-  public void setColor(String color) {
-    this.color = color;
-  }
-
-  public String getMemory() {
-    return memory;
-  }
-
-  public void setMemory(String memory) {
-    this.memory = memory;
   }
 
   public int getPriceInput() {

@@ -1,6 +1,6 @@
 package com.api.api_e_commerce_project_gradute.product_input;
 
-import com.api.api_e_commerce_project_gradute.DTO.ProductInputAdd;
+import com.api.api_e_commerce_project_gradute.DTO.product.ProductInputAdd;
 import com.api.api_e_commerce_project_gradute.product.Product;
 import com.api.api_e_commerce_project_gradute.product.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;

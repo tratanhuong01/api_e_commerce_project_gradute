@@ -1,4 +1,4 @@
-package com.api.api_e_commerce_project_gradute.DTO;
+package com.api.api_e_commerce_project_gradute.DTO.product;
 
 import com.api.api_e_commerce_project_gradute.product_input.ProductInput;
 
