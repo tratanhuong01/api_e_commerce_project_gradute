@@ -68,4 +68,11 @@ public class ProductController {
     return productService.getProductBySlug(slug);
   }
 
+  @CrossOrigin
+  @PostMapping("getSlug")
+  public String getSlugByColorAndMemory(@RequestParam String idColor,@RequestParam String idMemory,
+                                        @RequestParam String idLineProduct) {
+    return productService.getSlugByColorAndMemory(idColor,idMemory,idLineProduct);
+  }
+
 }

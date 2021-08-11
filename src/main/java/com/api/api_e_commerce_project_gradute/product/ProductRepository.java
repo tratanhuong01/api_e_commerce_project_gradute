@@ -16,12 +16,15 @@ public interface ProductRepository extends JpaRepository<Product,String> {
   @Query(value = "SELECT * FROM product WHERE id = ?1 ",nativeQuery = true)
   Product getProductById(String id);
 
+  @Query(value = "SELECT slug FROM product WHERE id_color = ?1 AND id_memory = ?2 AND id_line_product = ?3 ",nativeQuery = true)
+  String getSlugByColorAndMemory(String idColor,String idMemory,String idLineProduct);
+
   @Query(value = "SELECT p.id as 'idProduct' , cp.id as 'idCategoryProduct',cp.name_category_product as 'nameCategoryProduct' ," +
       " gp.id as 'idGroupProduct' , gp.name_group_product as 'nameGroupProduct' , lp.id as  'idLineProduct' , " +
       " lp.name_line_product as 'nameLineProduct' , pi.price_input as 'priceInput' ," +
       " po.price_output as 'priceOutput' , s.percent as 'sale' ,c.id as 'idColor', m.id as " +
       " 'idMemory' , p.is_show as 'isShow', i.id as 'idImage' ,p.slug as 'slug' , " +
-      " i.src as `image` , c.code as 'color' , m.name_memory as 'memory' , b.name_brand as 'brand'  FROM product p " +
+      "  b.name_brand as 'idBrand'  FROM product p " +
       " INNER JOIN line_product lp ON p.id_line_product = lp.id " +
       " INNER JOIN group_product gp ON lp.id_group_product = gp.id" +
       " INNER JOIN category_product cp ON gp.id_category_product = cp.id" +

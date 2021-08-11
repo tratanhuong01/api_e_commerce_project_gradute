@@ -4,6 +4,7 @@ import com.api.api_e_commerce_project_gradute.DTO.product.ProductByCategory;
 import com.api.api_e_commerce_project_gradute.DTO.product.ProductFull;
 import com.api.api_e_commerce_project_gradute.DTO.product.ProductIndex;
 import com.api.api_e_commerce_project_gradute.DTO.product.ProductMain;
+import com.api.api_e_commerce_project_gradute.brand.BrandRepository;
 import com.api.api_e_commerce_project_gradute.category_product.CategoryProduct;
 import com.api.api_e_commerce_project_gradute.category_product.CategoryProductRepository;
 import com.api.api_e_commerce_project_gradute.color.Color;
@@ -36,6 +37,9 @@ public class ProductService {
   ImageRepository imageRepository;
 
   @Autowired
+  BrandRepository brandRepository;
+
+  @Autowired
   CategoryProductRepository categoryProductRepository;
 
   public List<Product> getAllProducts() {
@@ -63,61 +67,7 @@ public class ProductService {
       List<Image> imageList = new ArrayList<>();
       List<Memory> memoryList = new ArrayList<>();
       for (ProductMain productMain: productMainList) {
-        if (productMain.getColor() != null)
-        {
-          int count = 0;
-          for (Color color : colorList) {
-            if (color.getId().equals(productMain.getIdColor())) {
-              count++;
-            }
-          }
-          if (count == 0)
-            colorList.add(colorRepository.getColorByIdColor(productMain.getColor()));
-        }
-        if (productMain.getImage() != null) {
-          int count = 0;
-          for (Image image : imageList) {
-            if (image.getId().equals(productMain.getIdImage())) {
-              count++;
-            }
-          }
-          if (count == 0)
-            imageList.add(imageRepository.getImageByIdImage(productMain.getIdImage()));
-        }
-
-        if (productMain.getMemory() != null) {
-          int count = 0;
-          for (Memory memory : memoryList) {
-            if (memory.getId().equals(productMain.getIdMemory())) {
-              count++;
-            }
-          }
-          if (count == 0)
-            memoryList.add(memoryRepository.getMemoryByIdMemory(productMain.getMemory()));
-        }
-
-      }
-      ProductFull productFull = new ProductFull(productMainList.get(0).getIdProduct(),productMainList.get(0).getIdCategoryProduct(),
-          productMainList.get(0).getNameCategoryProduct(),productMainList.get(0).getIdGroupProduct(),productMainList.get(0).getNameGroupProduct(),
-          productMainList.get(0).getIdLineProduct(),productMainList.get(0).getNameLineProduct(),colorList,memoryList,imageList,
-          productMainList.get(0).getSlug(),productMainList.get(0).getPriceInput(),productMainList.get(0).getPriceOutput(),
-          productMainList.get(0).getSale(),productMainList.get(0).getImage(),productMainList.get(0).getColor(),
-          productMainList.get(0).getMemory(),productMainList.get(0).getBrand());
-      productFullList.add(productFull);
-    }
-    return productFullList;
-  }
-
-  public List<ProductFull> getProductByCategory(String idCategory) {
-    List<ProductFull> productFullList = new ArrayList<>();
-    List<String> stringList = productRepository.getDistinctIdLineProduct(idCategory);
-    for (String string: stringList) {
-      List<ProductMain> productMainList = productRepository.getProductByIdLineProduct(string);
-      List<Color> colorList = new ArrayList<>();
-      List<Image> imageList = new ArrayList<>();
-      List<Memory> memoryList = new ArrayList<>();
-      for (ProductMain productMain: productMainList) {
-        if (productMain.getColor() != null) {
+        if (productMain.getIdColor() != null) {
           int count = 0;
           for (Color color : colorList) {
             if (color.getId().equals(productMain.getIdColor())) {
@@ -127,7 +77,7 @@ public class ProductService {
           if (count == 0)
             colorList.add(colorRepository.getColorByIdColor(productMain.getIdColor()));
         }
-        if (productMain.getImage() != null) {
+        if (productMain.getIdMemory() != null) {
           int count = 0;
           for (Image image : imageList) {
             if (image.getId().equals(productMain.getIdImage())) {
@@ -137,7 +87,7 @@ public class ProductService {
           if (count == 0)
             imageList.add(imageRepository.getImageByIdImage(productMain.getIdImage()));
         }
-        if (productMain.getMemory() != null) {
+        if (productMain.getIdMemory() != null) {
           int count = 0;
           for (Memory memory : memoryList) {
             if (memory.getId().equals(productMain.getIdMemory())) {
@@ -152,8 +102,63 @@ public class ProductService {
           productMainList.get(0).getNameCategoryProduct(),productMainList.get(0).getIdGroupProduct(),productMainList.get(0).getNameGroupProduct(),
           productMainList.get(0).getIdLineProduct(),productMainList.get(0).getNameLineProduct(),colorList,memoryList,imageList,
           productMainList.get(0).getSlug(),productMainList.get(0).getPriceInput(),productMainList.get(0).getPriceOutput(),
-          productMainList.get(0).getSale(),productMainList.get(0).getImage(),productMainList.get(0).getColor(),
-          productMainList.get(0).getMemory(),productMainList.get(0).getBrand());
+          productMainList.get(0).getSale(), imageRepository.getImageByIdImage(productMainList.get(0).getIdImage()),
+          colorRepository.getColorByIdColor(productMainList.get(0).getIdColor()),
+          memoryRepository.getMemoryByIdMemory(productMainList.get(0).getIdMemory()),
+          brandRepository.getBrandByIdBrand(productMainList.get(0).getIdBrand()));
+      productFullList.add(productFull);
+    }
+    return productFullList;
+  }
+
+  public List<ProductFull> getProductByCategory(String idCategory) {
+    List<ProductFull> productFullList = new ArrayList<>();
+    List<String> stringList = productRepository.getDistinctIdLineProduct(idCategory);
+    for (String string: stringList) {
+      List<ProductMain> productMainList = productRepository.getProductByIdLineProduct(string);
+      List<Color> colorList = new ArrayList<>();
+      List<Image> imageList = new ArrayList<>();
+      List<Memory> memoryList = new ArrayList<>();
+      for (ProductMain productMain: productMainList) {
+        if (productMain.getIdColor() != null) {
+          int count = 0;
+          for (Color color : colorList) {
+            if (color.getId().equals(productMain.getIdColor())) {
+              count++;
+            }
+          }
+          if (count == 0)
+            colorList.add(colorRepository.getColorByIdColor(productMain.getIdColor()));
+        }
+        if (productMain.getIdMemory() != null) {
+          int count = 0;
+          for (Image image : imageList) {
+            if (image.getId().equals(productMain.getIdImage())) {
+              count++;
+            }
+          }
+          if (count == 0)
+            imageList.add(imageRepository.getImageByIdImage(productMain.getIdImage()));
+        }
+        if (productMain.getIdMemory() != null) {
+          int count = 0;
+          for (Memory memory : memoryList) {
+            if (memory.getId().equals(productMain.getIdMemory())) {
+              count++;
+            }
+          }
+          if (count == 0)
+            memoryList.add(memoryRepository.getMemoryByIdMemory(productMain.getIdMemory()));
+        }
+      }
+      ProductFull productFull = new ProductFull(productMainList.get(0).getIdProduct(),productMainList.get(0).getIdCategoryProduct(),
+          productMainList.get(0).getNameCategoryProduct(),productMainList.get(0).getIdGroupProduct(),productMainList.get(0).getNameGroupProduct(),
+          productMainList.get(0).getIdLineProduct(),productMainList.get(0).getNameLineProduct(),colorList,memoryList,imageList,
+          productMainList.get(0).getSlug(),productMainList.get(0).getPriceInput(),productMainList.get(0).getPriceOutput(),
+          productMainList.get(0).getSale(), imageRepository.getImageByIdImage(productMainList.get(0).getIdImage()),
+          colorRepository.getColorByIdColor(productMainList.get(0).getIdColor()),
+          memoryRepository.getMemoryByIdMemory(productMainList.get(0).getIdMemory()),
+          brandRepository.getBrandByIdBrand(productMainList.get(0).getIdBrand()));
       productFullList.add(productFull);
     }
     return productFullList;
@@ -178,7 +183,7 @@ public class ProductService {
         List<Image> imageList = new ArrayList<>();
         List<Memory> memoryList = new ArrayList<>();
         for (ProductMain productMain: productMainList) {
-          if (productMain.getColor() != null) {
+          if (productMain.getIdColor() != null) {
             int count = 0;
             for (Color color : colorList) {
               if (color.getId().equals(productMain.getIdColor())) {
@@ -188,7 +193,7 @@ public class ProductService {
             if (count == 0)
               colorList.add(colorRepository.getColorByIdColor(productMain.getIdColor()));
           }
-          if (productMain.getImage() != null) {
+          if (productMain.getIdMemory() != null) {
             int count = 0;
             for (Image image : imageList) {
               if (image.getId().equals(productMain.getIdImage())) {
@@ -198,7 +203,7 @@ public class ProductService {
             if (count == 0)
               imageList.add(imageRepository.getImageByIdImage(productMain.getIdImage()));
           }
-          if (productMain.getMemory() != null) {
+          if (productMain.getIdMemory() != null) {
             int count = 0;
             for (Memory memory : memoryList) {
               if (memory.getId().equals(productMain.getIdMemory())) {
@@ -213,8 +218,10 @@ public class ProductService {
             productMainList.get(0).getNameCategoryProduct(),productMainList.get(0).getIdGroupProduct(),productMainList.get(0).getNameGroupProduct(),
             productMainList.get(0).getIdLineProduct(),productMainList.get(0).getNameLineProduct(),colorList,memoryList,imageList,
             productMainList.get(0).getSlug(),productMainList.get(0).getPriceInput(),productMainList.get(0).getPriceOutput(),
-            productMainList.get(0).getSale(),productMainList.get(0).getImage(),productMainList.get(0).getColor(),
-            productMainList.get(0).getMemory(),productMainList.get(0).getBrand());
+            productMainList.get(0).getSale(), imageRepository.getImageByIdImage(productMainList.get(0).getIdImage()),
+            colorRepository.getColorByIdColor(productMainList.get(0).getIdColor()),
+            memoryRepository.getMemoryByIdMemory(productMainList.get(0).getIdMemory()),
+            brandRepository.getBrandByIdBrand(productMainList.get(0).getIdBrand()));
         productFullList.add(productFull);
       }
       productByCategory.setListProductCategory(productFullList);
@@ -231,9 +238,8 @@ public class ProductService {
     List<Image> imageList = new ArrayList<>();
     List<Memory> memoryList = new ArrayList<>();
     ProductFull productFull = null;
-    ProductMain productMainFindIndex = null;
     for (ProductMain productMain: productMainList) {
-      if (productMain.getColor() != null) {
+      if (productMain.getIdColor() != null) {
         int count = 0;
         for (Color color : colorList) {
           if (color.getId().equals(productMain.getIdColor())) {
@@ -243,7 +249,7 @@ public class ProductService {
         if (count == 0)
           colorList.add(colorRepository.getColorByIdColor(productMain.getIdColor()));
       }
-      if (productMain.getImage() != null) {
+      if (productMain.getIdImage() != null) {
         int count = 0;
         for (Image image : imageList) {
           if (image.getId().equals(productMain.getIdImage())) {
@@ -253,7 +259,7 @@ public class ProductService {
         if (count == 0)
           imageList.add(imageRepository.getImageByIdImage(productMain.getIdImage()));
       }
-      if (productMain.getMemory() != null) {
+      if (productMain.getIdMemory() != null) {
         int count = 0;
         for (Memory memory : memoryList) {
           if (memory.getId().equals(productMain.getIdMemory())) {
@@ -268,9 +274,15 @@ public class ProductService {
         productMains.getNameCategoryProduct(),productMains.getIdGroupProduct(),productMains.getNameGroupProduct(),
         productMains.getIdLineProduct(),productMains.getNameLineProduct(),colorList,memoryList,imageList,
         productMains.getSlug(),productMains.getPriceInput(),productMains.getPriceOutput(),
-        productMains.getSale(),productMains.getImage(),productMains.getColor(),
-        productMains.getMemory(),productMains.getBrand());
+        productMains.getSale(),imageRepository.getImageByIdImage(productMains.getIdImage()),
+        colorRepository.getColorByIdColor(productMains.getIdColor()),
+        memoryRepository.getMemoryByIdMemory(productMains.getIdMemory()),
+        brandRepository.getBrandByIdBrand(productMains.getIdBrand()));
     return productFull;
+  }
+
+  public String getSlugByColorAndMemory(String idColor,String idMemory,String idLineProduct) {
+    return productRepository.getSlugByColorAndMemory(idColor,idMemory,idLineProduct);
   }
 
 }

@@ -1,5 +1,6 @@
 package com.api.api_e_commerce_project_gradute.DTO.product;
 
+import com.api.api_e_commerce_project_gradute.brand.Brand;
 import com.api.api_e_commerce_project_gradute.color.Color;
 import com.api.api_e_commerce_project_gradute.image.Image;
 import com.api.api_e_commerce_project_gradute.memory.Memory;
@@ -21,14 +22,14 @@ public class ProductFull {
   private int priceInput;
   private int priceOutput;
   private int sale;
-  private String image;
-  private String color;
-  private String memory;
-  private String brand;
+  private Image image;
+  private Color color;
+  private Memory memory;
+  private Brand brand;
   public ProductFull(String idProduct, String idCategoryProduct, String nameCategoryProduct, String idGroupProduct,
  String nameGroupProduct, String idLineProduct, String nameLineProduct, List<Color> colorList,
  List<Memory> memoryList, List<Image> imageList, String slug, int priceInput, int priceOutput, int sale,
- String image,String color,String memory,String brand){
+ Image image,Color color,Memory memory,Brand brand){
     this.idProduct = idProduct;
     this.idCategoryProduct = idCategoryProduct;
     this.nameCategoryProduct = nameCategoryProduct;
@@ -49,28 +50,36 @@ public class ProductFull {
     this.brand = brand;
   }
 
-  public String getImage() {
+  public Image getImage() {
     return image;
   }
 
-  public void setImage(String image) {
+  public void setImage(Image image) {
     this.image = image;
   }
 
-  public String getColor() {
+  public Color getColor() {
     return color;
   }
 
-  public void setColor(String color) {
+  public void setColor(Color color) {
     this.color = color;
   }
 
-  public String getMemory() {
+  public Memory getMemory() {
     return memory;
   }
 
-  public void setMemory(String memory) {
+  public void setMemory(Memory memory) {
     this.memory = memory;
+  }
+
+  public Brand getBrand() {
+    return brand;
+  }
+
+  public void setBrand(Brand brand) {
+    this.brand = brand;
   }
 
   public String getIdProduct() {
