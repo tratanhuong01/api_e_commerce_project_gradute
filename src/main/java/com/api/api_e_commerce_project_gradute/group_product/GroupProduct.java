@@ -25,7 +25,7 @@ public class GroupProduct {
   private String nameGroupProduct;
 
   @Column
-  private int typeGroupProduct;
+  private String slugGroupProduct;
 
   public String getId() {
     return id;
@@ -43,11 +43,11 @@ public class GroupProduct {
     this.nameGroupProduct = nameGroupProduct;
   }
 
-  public int getTypeGroupProduct() {
-    return typeGroupProduct;
+  public String getSlugGroupProduct() {
+    return slugGroupProduct;
   }
 
-  public void setTypeGroupProduct(int typeGroupProduct) {
-    this.typeGroupProduct = typeGroupProduct;
+  public void setSlugGroupProduct(String slugGroupProduct) {
+    this.slugGroupProduct = slugGroupProduct;
   }
 }

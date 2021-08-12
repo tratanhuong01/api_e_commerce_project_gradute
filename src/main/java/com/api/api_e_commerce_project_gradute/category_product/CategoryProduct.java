@@ -20,7 +20,15 @@ public class CategoryProduct {
   private String nameCategoryProduct;
 
   @Column
-  private int type;
+  private String slugCategoryProduct;
+
+  public String getSlugCategoryProduct() {
+    return slugCategoryProduct;
+  }
+
+  public void setSlugCategoryProduct(String slugCategoryProduct) {
+    this.slugCategoryProduct = slugCategoryProduct;
+  }
 
   public String getId() {
     return id;
@@ -38,11 +46,4 @@ public class CategoryProduct {
     this.nameCategoryProduct = nameCategoryProduct;
   }
 
-  public int getType() {
-    return type;
-  }
-
-  public void setType(int type) {
-    this.type = type;
-  }
 }
