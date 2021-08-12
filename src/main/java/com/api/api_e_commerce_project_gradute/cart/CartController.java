@@ -1,5 +1,6 @@
 package com.api.api_e_commerce_project_gradute.cart;
 
+import com.api.api_e_commerce_project_gradute.DTO.cart.CartFull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,15 +26,33 @@ public class CartController {
   }
 
   @CrossOrigin
+  @GetMapping("getAllCartByIdUser/{idUser}")
+  public List<CartFull> getAllCartByIdUser(@PathVariable String idUser) {
+    return cartService.getAllCartByIdUser(idUser);
+  }
+
+  @CrossOrigin
   @PostMapping("carts")
-  public Cart addCart(@RequestBody Cart cart) {
+  public List<CartFull> addCart(@RequestBody Cart cart) {
     return cartService.addCart(cart);
   }
 
   @CrossOrigin
-  @PutMapping("carts")
-  public Cart updateCart(@RequestBody Cart cart) {
-    return cartService.addCart(cart);
+  @GetMapping("checkCart/{idUser}/{idProduct}")
+  public Cart checkCart(@PathVariable String idUser,@PathVariable String idProduct) {
+    return cartService.checkCart(idUser, idProduct);
+  }
+
+  @CrossOrigin
+  @PutMapping("updateCart")
+  public List<CartFull> updateCart(@RequestParam int amount,@RequestParam Long idCart,@RequestParam String idUser) {
+    return cartService.updateCart(amount,idCart,idUser);
+  }
+
+  @CrossOrigin
+  @DeleteMapping("carts")
+  public List<CartFull> deleteCart(@RequestParam String idUser,@RequestParam Long idCart) {
+    return cartService.deleteCart(idCart, idUser);
   }
 
 }

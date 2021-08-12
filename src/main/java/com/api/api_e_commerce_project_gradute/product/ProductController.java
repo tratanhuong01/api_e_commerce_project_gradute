@@ -65,7 +65,13 @@ public class ProductController {
   @CrossOrigin
   @PostMapping("getProductBySlug")
   public ProductFull getProductBySlug(@RequestParam String slug) {
-    return productService.getProductBySlug(slug);
+    return productService.getProductBySlug(slug,0);
+  }
+
+  @CrossOrigin
+  @PostMapping("getProductById")
+  public ProductFull getProductByIdProduct(@RequestParam String slug) {
+    return productService.getProductBySlug(slug,1);
   }
 
   @CrossOrigin

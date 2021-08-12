@@ -57,6 +57,25 @@ public interface ProductRepository extends JpaRepository<Product,String> {
       " WHERE p.slug = ?1 ",nativeQuery = true)
   ProductMain getProductBySlug(String slug);
 
+  @Query(value = "SELECT p.id as 'idProduct' , cp.id as 'idCategoryProduct',cp.name_category_product as 'nameCategoryProduct' ," +
+      " gp.id as 'idGroupProduct' , gp.name_group_product as 'nameGroupProduct' , lp.id as  'idLineProduct' , " +
+      " lp.name_line_product as 'nameLineProduct' , pi.price_input as 'priceInput' ," +
+      " po.price_output as 'priceOutput' , s.percent as 'sale' ,c.id as 'idColor', m.id as " +
+      " 'idMemory' , p.is_show as 'isShow', i.id as 'idImage' ,p.slug as 'slug' , " +
+      " i.src as `image` , c.code as 'color' , m.name_memory as 'memory' , b.name_brand as 'brand'  FROM product p " +
+      " INNER JOIN line_product lp ON p.id_line_product = lp.id " +
+      " INNER JOIN group_product gp ON lp.id_group_product = gp.id" +
+      " INNER JOIN category_product cp ON gp.id_category_product = cp.id" +
+      " LEFT JOIN color c ON p.id_color = c.id " +
+      " LEFT JOIN memory m ON p.id_memory = m.id" +
+      " LEFT JOIN sale s ON s.id_product = p.id" +
+      " LEFT JOIN product_output po ON po.id_product = p.id  " +
+      " LEFT JOIN product_input pi ON pi.id_product = p.id" +
+      " INNER JOIN brand b ON p.id_brand = b.id " +
+      " INNER JOIN image i ON p.id_image = i.id " +
+      " WHERE p.id = ?1 ",nativeQuery = true)
+  ProductMain getProductByIdProduct(String id);
+
   @Query(value = "SELECT DISTINCT id_line_product FROM product ",nativeQuery = true)
   List<String> getDistinctIdLineProduct();
 

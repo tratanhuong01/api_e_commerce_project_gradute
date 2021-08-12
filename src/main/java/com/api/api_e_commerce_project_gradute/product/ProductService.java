@@ -231,8 +231,13 @@ public class ProductService {
     return productIndex;
   }
 
-  public ProductFull getProductBySlug(String slug) {
-    ProductMain productMains = productRepository.getProductBySlug(slug);
+  public ProductFull getProductBySlug(String slug, int type) {
+    ProductMain productMains = null;
+    if (type == 0)
+      productMains = productRepository.getProductBySlug(slug);
+    else
+      productMains = productRepository.getProductByIdProduct(slug);
+
     List<ProductMain> productMainList = productRepository.getProductByIdLineProduct(productMains.getIdLineProduct());
     List<Color> colorList = new ArrayList<>();
     List<Image> imageList = new ArrayList<>();
