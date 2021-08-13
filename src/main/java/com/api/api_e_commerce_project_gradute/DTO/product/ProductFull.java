@@ -26,10 +26,11 @@ public class ProductFull {
   private Color color;
   private Memory memory;
   private Brand brand;
+  private String describeProduct;
   public ProductFull(String idProduct, String idCategoryProduct, String nameCategoryProduct, String idGroupProduct,
  String nameGroupProduct, String idLineProduct, String nameLineProduct, List<Color> colorList,
  List<Memory> memoryList, List<Image> imageList, String slug, int priceInput, int priceOutput, int sale,
- Image image,Color color,Memory memory,Brand brand){
+ Image image,Color color,Memory memory,Brand brand,String describeProduct){
     this.idProduct = idProduct;
     this.idCategoryProduct = idCategoryProduct;
     this.nameCategoryProduct = nameCategoryProduct;
@@ -48,6 +49,15 @@ public class ProductFull {
     this.color = color;
     this.memory = memory;
     this.brand = brand;
+    this.describeProduct = describeProduct;
+  }
+
+  public String getDescribeProduct() {
+    return describeProduct;
+  }
+
+  public void setDescribeProduct(String describeProduct) {
+    this.describeProduct = describeProduct;
   }
 
   public Image getImage() {

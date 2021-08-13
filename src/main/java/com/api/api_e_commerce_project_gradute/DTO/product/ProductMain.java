@@ -24,7 +24,8 @@ import javax.persistence.SqlResultSetMapping;
             @ColumnResult(name = "isShow", type = Integer.class),
             @ColumnResult(name = "idImage", type = Long.class),
             @ColumnResult(name = "slug", type = String.class),
-            @ColumnResult(name = "idBrand" , type = String.class)
+            @ColumnResult(name = "idBrand" , type = String.class),
+            @ColumnResult(name = "describeProduct",type = String.class)
         }
     )
 )
@@ -49,4 +50,5 @@ public interface ProductMain {
   Long getIdImage();
   String getSlug();
   String getIdBrand();
+  String getDescribeProduct();
 }

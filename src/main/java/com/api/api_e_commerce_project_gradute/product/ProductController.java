@@ -81,4 +81,17 @@ public class ProductController {
     return productService.getSlugByColorAndMemory(idColor,idMemory,idLineProduct);
   }
 
+  @CrossOrigin
+  @PostMapping("getProductBySlugCategory")
+  public List<ProductFull> getProductBySlugCategory(@RequestParam String slugCategoryProduct) {
+    return productService.getProductBySlugCategory(slugCategoryProduct);
+  }
+
+  @CrossOrigin
+  @PostMapping("getProductBySlugCategoryAndSlugGroup")
+  public List<ProductFull> getProductBySlugCategoryAndSlugGroup(@RequestParam String slugCategoryProduct,
+                                                            @RequestParam String slugGroupProduct) {
+    return productService.getProductBySlugCategoryAndSlugGroup(slugCategoryProduct,slugGroupProduct);
+  }
+
 }

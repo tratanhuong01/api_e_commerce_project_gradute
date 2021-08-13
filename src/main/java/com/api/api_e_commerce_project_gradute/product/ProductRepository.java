@@ -24,7 +24,7 @@ public interface ProductRepository extends JpaRepository<Product,String> {
       " lp.name_line_product as 'nameLineProduct' , pi.price_input as 'priceInput' ," +
       " po.price_output as 'priceOutput' , s.percent as 'sale' ,c.id as 'idColor', m.id as " +
       " 'idMemory' , p.is_show as 'isShow', i.id as 'idImage' ,p.slug as 'slug' , " +
-      "  b.name_brand as 'idBrand'  FROM product p " +
+      "  b.name_brand as 'idBrand' , p.describe_product as 'describeProduct' FROM product p " +
       " INNER JOIN line_product lp ON p.id_line_product = lp.id " +
       " INNER JOIN group_product gp ON lp.id_group_product = gp.id" +
       " INNER JOIN category_product cp ON gp.id_category_product = cp.id" +
@@ -43,7 +43,8 @@ public interface ProductRepository extends JpaRepository<Product,String> {
       " lp.name_line_product as 'nameLineProduct' , pi.price_input as 'priceInput' ," +
       " po.price_output as 'priceOutput' , s.percent as 'sale' ,c.id as 'idColor', m.id as " +
       " 'idMemory' , p.is_show as 'isShow', i.id as 'idImage' ,p.slug as 'slug' , " +
-      " i.src as `image` , c.code as 'color' , m.name_memory as 'memory' , b.name_brand as 'brand'  FROM product p " +
+      " i.src as `image` , c.code as 'color' , m.name_memory as 'memory' , b.id as 'idBrand' , " +
+      " p.describe_product as 'describeProduct' FROM product p " +
       " INNER JOIN line_product lp ON p.id_line_product = lp.id " +
       " INNER JOIN group_product gp ON lp.id_group_product = gp.id" +
       " INNER JOIN category_product cp ON gp.id_category_product = cp.id" +
@@ -62,7 +63,8 @@ public interface ProductRepository extends JpaRepository<Product,String> {
       " lp.name_line_product as 'nameLineProduct' , pi.price_input as 'priceInput' ," +
       " po.price_output as 'priceOutput' , s.percent as 'sale' ,c.id as 'idColor', m.id as " +
       " 'idMemory' , p.is_show as 'isShow', i.id as 'idImage' ,p.slug as 'slug' , " +
-      " i.src as `image` , c.code as 'color' , m.name_memory as 'memory' , b.name_brand as 'brand'  FROM product p " +
+      " i.src as `image` , c.code as 'color' , m.name_memory as 'memory' , b.name_brand as 'brand' , " +
+      " p.describe_product as 'describeProduct' FROM product p " +
       " INNER JOIN line_product lp ON p.id_line_product = lp.id " +
       " INNER JOIN group_product gp ON lp.id_group_product = gp.id" +
       " INNER JOIN category_product cp ON gp.id_category_product = cp.id" +
@@ -85,5 +87,19 @@ public interface ProductRepository extends JpaRepository<Product,String> {
       "INNER JOIN category_product cp ON gp.id_category_product = cp.id " +
       "WHERE cp.id = ?1 ",nativeQuery = true)
   List<String> getDistinctIdLineProduct(String idCategory);
+
+  @Query(value = "SELECT DISTINCT id_line_product FROM product p " +
+      "INNER JOIN line_product lp ON p.id_line_product = lp.id " +
+      "INNER JOIN group_product gp ON lp.id_group_product = gp.id " +
+      "INNER JOIN category_product cp ON gp.id_category_product = cp.id " +
+      "WHERE cp.slug_category_product = ?1 AND gp.slug_group_product = ?2  ",nativeQuery = true)
+  List<String> getDistinctIdLineProduct(String slugCategory,String slugGroup);
+
+  @Query(value = "SELECT DISTINCT id_line_product FROM product p " +
+      "INNER JOIN line_product lp ON p.id_line_product = lp.id " +
+      "INNER JOIN group_product gp ON lp.id_group_product = gp.id " +
+      "INNER JOIN category_product cp ON gp.id_category_product = cp.id " +
+      "WHERE cp.slug_category_product = ?1 ",nativeQuery = true)
+  List<String> getDistinctIdLineProducts(String slugCategory);
 
 }
