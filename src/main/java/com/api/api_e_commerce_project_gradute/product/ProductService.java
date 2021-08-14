@@ -15,6 +15,8 @@ import com.api.api_e_commerce_project_gradute.image.Image;
 import com.api.api_e_commerce_project_gradute.image.ImageRepository;
 import com.api.api_e_commerce_project_gradute.memory.Memory;
 import com.api.api_e_commerce_project_gradute.memory.MemoryRepository;
+import com.api.api_e_commerce_project_gradute.news.News;
+import com.api.api_e_commerce_project_gradute.news.NewsRepository;
 import com.api.api_e_commerce_project_gradute.size.Size;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,6 +48,9 @@ public class ProductService {
 
   @Autowired
   GroupProductRepository groupProductRepository;
+
+  @Autowired
+  NewsRepository newsRepository;
 
   public List<Product> getAllProducts() {
     return productRepository.findAll();
@@ -292,7 +297,6 @@ public class ProductService {
       categoryByGroupProduct.setGroupProductList(groupProductRepository.getGroupProductByIdCategoryProduct(
           categoryProduct.getId()));
       categoryByGroupProductList.add(categoryByGroupProduct);
-
       ProductByCategory productByCategory = new ProductByCategory();
       productByCategory.setIdCategoryProduct(categoryProduct.getId());
       productByCategory.setNameCategoryProduct(categoryProduct.getNameCategoryProduct());
@@ -350,6 +354,7 @@ public class ProductService {
       productByCategory.setListProductCategory(productFullList);
       productByCategoryList.add(productByCategory);
     }
+    productIndex.setNewsList(newsRepository.getBestNewsIndex());
     productIndex.setListCategoryByGroupProduct(categoryByGroupProductList);
     productIndex.setListProductByCategory(productByCategoryList);
     return productIndex;

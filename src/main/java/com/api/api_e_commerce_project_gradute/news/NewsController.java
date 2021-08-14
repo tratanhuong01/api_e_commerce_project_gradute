@@ -20,7 +20,7 @@ public class NewsController {
 
   @CrossOrigin
   @GetMapping("news/{idNews}")
-  public Optional<News> getNewsById(@PathVariable String idNews) {
+  public Optional<News> getNewsById(@PathVariable Long idNews) {
     return newsService.getNewsById(idNews);
   }
 
@@ -34,6 +34,12 @@ public class NewsController {
   @PutMapping("news")
   public News updateNews(@RequestBody News news) {
     return newsService.addNews(news);
+  }
+
+  @CrossOrigin
+  @PostMapping("getNewsBySlug")
+  public News getNewsBySlug(@RequestParam String slug) {
+    return newsService.getNewsBySlug(slug);
   }
 
 }

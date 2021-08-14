@@ -2,7 +2,6 @@ package com.api.api_e_commerce_project_gradute.news;
 
 import com.api.api_e_commerce_project_gradute.category_news.CategoryNews;
 import com.api.api_e_commerce_project_gradute.comment.Comment;
-import com.api.api_e_commerce_project_gradute.news_detail.NewsDetail;
 import com.api.api_e_commerce_project_gradute.user.User;
 
 import javax.persistence.*;
@@ -17,9 +16,6 @@ public class News {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @OneToMany(mappedBy = "newsDetail")
-  private Set<NewsDetail> newsDetail = new HashSet<>();;
-
   @OneToMany(mappedBy = "newsComment")
   private Set<Comment> newsComment = new HashSet<>();;
 
@@ -27,7 +23,7 @@ public class News {
   @JoinColumn(name = "id_user")
   private User userNews;
 
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne
   @JoinColumn(name = "id_category_news")
   private CategoryNews categoryNews;
 
@@ -42,6 +38,39 @@ public class News {
 
   @Column
   private Timestamp timeCreated;
+
+  @Column
+  private int view;
+
+  @Column
+  private String content;
+
+  @Column
+  private String slug;
+
+  public String getSlug() {
+    return slug;
+  }
+
+  public void setSlug(String slug) {
+    this.slug = slug;
+  }
+
+  public String getContent() {
+    return content;
+  }
+
+  public void setContent(String content) {
+    this.content = content;
+  }
+
+  public int getView() {
+    return view;
+  }
+
+  public void setView(int view) {
+    this.view = view;
+  }
 
   public Long getId() {
     return id;
