@@ -18,9 +18,21 @@ public class Comment {
   @JoinColumn(name = "id_user")
   private User commentUser;
 
+  @Column
+  private String fullName;
+
+  @Column
+  private String email;
+
+  @Column
+  private int level;
+
+  @Column
+  private Long reply;
+
   @ManyToOne
   @JoinColumn(name = "id_news")
-  private News newsComment;
+  private News commentNews;
 
   @Column
   private String content;
@@ -44,12 +56,28 @@ public class Comment {
     this.commentUser = commentUser;
   }
 
-  public News getNewsComment() {
-    return newsComment;
+  public int getLevel() {
+    return level;
   }
 
-  public void setNewsComment(News newsComment) {
-    this.newsComment = newsComment;
+  public void setLevel(int level) {
+    this.level = level;
+  }
+
+  public Long getReply() {
+    return reply;
+  }
+
+  public void setReply(Long reply) {
+    this.reply = reply;
+  }
+
+  public News getCommentNews() {
+    return commentNews;
+  }
+
+  public void setCommentNews(News commentNews) {
+    this.commentNews = commentNews;
   }
 
   public String getContent() {
@@ -66,5 +94,21 @@ public class Comment {
 
   public void setTimeCreated(Timestamp timeCreated) {
     this.timeCreated = timeCreated;
+  }
+
+  public String getFullName() {
+    return fullName;
+  }
+
+  public void setFullName(String fullName) {
+    this.fullName = fullName;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
   }
 }

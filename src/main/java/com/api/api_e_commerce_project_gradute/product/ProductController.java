@@ -94,4 +94,9 @@ public class ProductController {
     return productService.getProductBySlugCategoryAndSlugGroup(slugCategoryProduct,slugGroupProduct);
   }
 
+  @CrossOrigin
+  @GetMapping("getAll")
+  public List<Product> getAll() {
+    return productService.getAll();
+  }
 }

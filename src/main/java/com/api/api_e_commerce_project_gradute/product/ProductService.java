@@ -420,4 +420,8 @@ public class ProductService {
     return productRepository.getSlugByColorAndMemory(idColor,idMemory,idLineProduct);
   }
 
+  public List<Product> getAll() {
+    return productRepository.getAll();
+  }
+
 }

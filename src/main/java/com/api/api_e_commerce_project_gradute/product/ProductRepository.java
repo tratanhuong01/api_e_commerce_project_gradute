@@ -102,4 +102,10 @@ public interface ProductRepository extends JpaRepository<Product,String> {
       "WHERE cp.slug_category_product = ?1 ",nativeQuery = true)
   List<String> getDistinctIdLineProducts(String slugCategory);
 
+  @Query(value = "SELECT p.*  FROM product p " +
+      " INNER JOIN line_product lp ON p.id_line_product = lp.id " +
+      " INNER JOIN group_product gp ON lp.id_group_product = gp.id" +
+      " INNER JOIN category_product cp ON gp.id_category_product = cp.id" ,nativeQuery = true)
+  List<Product> getAll();
+
 }

@@ -16,8 +16,8 @@ public class News {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @OneToMany(mappedBy = "newsComment")
-  private Set<Comment> newsComment = new HashSet<>();;
+  @OneToMany(mappedBy = "commentNews")
+  private Set<Comment> commentNews = new HashSet<>();;
 
   @OneToOne
   @JoinColumn(name = "id_user")
