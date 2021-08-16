@@ -253,7 +253,7 @@ public class ProductService {
           if (count == 0)
             colorList.add(colorRepository.getColorByIdColor(productMain.getIdColor()));
         }
-        if (productMain.getIdMemory() != null) {
+        if (productMain.getIdImage() != null) {
           int count = 0;
           for (Image image : imageList) {
             if (image.getId().equals(productMain.getIdImage())) {
@@ -292,9 +292,11 @@ public class ProductService {
     ProductIndex productIndex = new ProductIndex();
     productIndex.setListProductSaleToday(new ArrayList<>());
     productIndex.setListProductTopSell(new ArrayList<>());
+
     List<ProductByCategory> productByCategoryList = new ArrayList<>();
     List<CategoryProduct> categoryProductList = categoryProductRepository.findAll();
     List<CategoryByGroupProduct> categoryByGroupProductList = new ArrayList<>();
+
     for (CategoryProduct categoryProduct: categoryProductList) {
       CategoryByGroupProduct categoryByGroupProduct = new CategoryByGroupProduct();
       categoryByGroupProduct.setCategoryProduct(categoryProduct);
@@ -323,7 +325,7 @@ public class ProductService {
             if (count == 0)
               colorList.add(colorRepository.getColorByIdColor(productMain.getIdColor()));
           }
-          if (productMain.getIdMemory() != null) {
+          if (productMain.getIdImage() != null) {
             int count = 0;
             for (Image image : imageList) {
               if (image.getId().equals(productMain.getIdImage())) {
@@ -358,9 +360,16 @@ public class ProductService {
       productByCategory.setListProductCategory(productFullList);
       productByCategoryList.add(productByCategory);
     }
+
     productIndex.setNewsList(newsRepository.getBestNewsIndex());
     productIndex.setListCategoryByGroupProduct(categoryByGroupProductList);
     productIndex.setListProductByCategory(productByCategoryList);
+
+    List<ProductFull> listProductSaleToday = new ArrayList<>();
+    for (Product product: productRepository.getProductSaleToday())
+      listProductSaleToday.add(getProductBySlug(product.getId(),-1));
+    productIndex.setListProductSaleToday(listProductSaleToday);
+
     return productIndex;
   }
 
@@ -368,6 +377,8 @@ public class ProductService {
     ProductMain productMains = null;
     if (type == 0)
       productMains = productRepository.getProductBySlug(slug);
+    else if (type == -1)
+      productMains = productRepository.getProductByIdProduct(slug);
     else
       productMains = productRepository.getProductByIdProduct(slug);
 
@@ -421,18 +432,15 @@ public class ProductService {
   }
 
   public String getSlugByColorAndMemory(String idColor,String idMemory,String idLineProduct) {
+    String string = "";
     if (idMemory.equals(""))
-    {
-      System.out.println("not memory");
-      return productRepository.getSlugByColorAndNotMemory(idColor,idLineProduct);
-    }
+      string = productRepository.getSlugByColorAndNotMemory(idColor,idLineProduct);
     else if (idColor.equals(""))
-    {
-      System.out.println("not color");
-      return productRepository.getSlugByNotColorAndMemory(idMemory,idLineProduct);
-    }
+      string =  productRepository.getSlugByNotColorAndMemory(idMemory,idLineProduct);
     else
-    return productRepository.getSlugByColorAndMemory(idColor,idMemory,idLineProduct);
+      string = productRepository.getSlugByColorAndMemory(idColor,idMemory,idLineProduct);
+
+    return string;
   }
 
   public List<Product> getAll() {

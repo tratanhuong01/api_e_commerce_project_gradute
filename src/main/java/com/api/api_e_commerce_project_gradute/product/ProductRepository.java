@@ -30,7 +30,8 @@ public interface ProductRepository extends JpaRepository<Product,String> {
       " lp.name_line_product as 'nameLineProduct' , pi.price_input as 'priceInput' ," +
       " po.price_output as 'priceOutput' , s.percent as 'sale' ,c.id as 'idColor', m.id as " +
       " 'idMemory' , p.is_show as 'isShow', i.id as 'idImage' ,p.slug as 'slug' , " +
-      "  b.name_brand as 'idBrand' , p.describe_product as 'describeProduct' FROM product p " +
+      " i.src as `image` , c.code as 'color' , m.name_memory as 'memory' , b.name_brand as 'idBrand' , " +
+      " p.describe_product as 'describeProduct' FROM product p " +
       " INNER JOIN line_product lp ON p.id_line_product = lp.id " +
       " INNER JOIN group_product gp ON lp.id_group_product = gp.id" +
       " INNER JOIN category_product cp ON gp.id_category_product = cp.id" +
@@ -69,7 +70,7 @@ public interface ProductRepository extends JpaRepository<Product,String> {
       " lp.name_line_product as 'nameLineProduct' , pi.price_input as 'priceInput' ," +
       " po.price_output as 'priceOutput' , s.percent as 'sale' ,c.id as 'idColor', m.id as " +
       " 'idMemory' , p.is_show as 'isShow', i.id as 'idImage' ,p.slug as 'slug' , " +
-      " i.src as `image` , c.code as 'color' , m.name_memory as 'memory' , b.name_brand as 'brand' , " +
+      " i.src as `image` , c.code as 'color' , m.name_memory as 'memory' , b.name_brand as 'idBrand' , " +
       " p.describe_product as 'describeProduct' FROM product p " +
       " INNER JOIN line_product lp ON p.id_line_product = lp.id " +
       " INNER JOIN group_product gp ON lp.id_group_product = gp.id" +
@@ -113,5 +114,10 @@ public interface ProductRepository extends JpaRepository<Product,String> {
       " INNER JOIN group_product gp ON lp.id_group_product = gp.id" +
       " INNER JOIN category_product cp ON gp.id_category_product = cp.id" ,nativeQuery = true)
   List<Product> getAll();
+
+  @Query(value = "SELECT product.* FROM product INNER JOIN sale ON product.id = sale.id_product " +
+      "WHERE time_end >= CONCAT(DATE(NOW()),' 00:00:00') " +
+      "ORDER BY sale.percent + 0 DESC LIMIT 0,4",nativeQuery = true)
+  List<Product> getProductSaleToday();
 
 }
