@@ -14,7 +14,7 @@ public class ProductInput {
 
   @OneToOne
   @JoinColumn(name = "id_product")
-  private Product productInput;
+  private Product productInputs;
 
   @Column
   private int amount;
@@ -33,12 +33,12 @@ public class ProductInput {
     this.id = id;
   }
 
-  public Product getProductInput() {
-    return productInput;
+  public Product getProductInputs() {
+    return productInputs;
   }
 
-  public void setProductInput(Product productInput) {
-    this.productInput = productInput;
+  public void setProductInputs(Product productInputs) {
+    this.productInputs = productInputs;
   }
 
   public int getAmount() {

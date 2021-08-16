@@ -44,6 +44,9 @@ public class User {
   private Date birthday;
 
   @Column
+  private String avatar;
+
+  @Column
   private String sex;
 
   @Column
@@ -72,6 +75,18 @@ public class User {
 
   @Column
   private Timestamp timeCreated;
+
+  public void setBirthday(Date birthday) {
+    this.birthday = birthday;
+  }
+
+  public String getAvatar() {
+    return avatar;
+  }
+
+  public void setAvatar(String avatar) {
+    this.avatar = avatar;
+  }
 
   public String getCodeEmail() {
     return codeEmail;

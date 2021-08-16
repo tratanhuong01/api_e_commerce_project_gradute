@@ -30,10 +30,8 @@ public class ProductInputService {
     return productInputRepository.save(productInput);
   }
 
-  public ProductInput addProductInput(ProductInputAdd productInputAdd) {
-    ProductInput productInput = productInputAdd.getProductInput();
-    Product product = productRepository.getProductById(productInputAdd.getId());
-    productInput.setProductInput(product);
+  public ProductInput addProductInput(ProductInput productInput,String id) {
+    productInput.setProductInputs(productRepository.getProductById(id));
     return productInputRepository.save(productInput);
   }
 

@@ -27,15 +27,6 @@ public class Product {
   @JoinColumn(name = "id_user")
   private User productUser;
 
-  @OneToMany(mappedBy = "productInput")
-  private Set<ProductInput> productInput = new HashSet<>();
-
-  @OneToMany(mappedBy = "productOutput")
-  private Set<ProductOutput> productOutput = new HashSet<>();
-
-  @OneToMany(mappedBy = "productSale")
-  private Set<Sale> productSale = new HashSet<>();;
-
   @ManyToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "id_memory")
   private Memory memoryProduct;

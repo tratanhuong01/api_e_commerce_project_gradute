@@ -22,8 +22,8 @@ public class ProductController {
 
   @CrossOrigin
   @GetMapping("products/{idProduct}")
-  public Optional<Product> getProductById(@PathVariable String idProduct) {
-    return productService.getProductById(idProduct);
+  public Product getProductById(@PathVariable String idProduct) {
+    return productService.getProductByIdMain(idProduct);
   }
 
   @CrossOrigin

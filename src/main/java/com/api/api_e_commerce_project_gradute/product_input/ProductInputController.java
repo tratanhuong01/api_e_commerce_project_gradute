@@ -28,7 +28,7 @@ public class ProductInputController {
   @CrossOrigin
   @PostMapping("productInputs")
   public ProductInput addProductInput(@RequestBody ProductInputAdd productInputAdd) {
-    return productInputService.addProductInput(productInputAdd);
+    return productInputService.addProductInput(productInputAdd.getProductInput(),productInputAdd.getId());
   }
 
   @CrossOrigin

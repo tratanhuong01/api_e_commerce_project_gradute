@@ -16,8 +16,14 @@ public interface ProductRepository extends JpaRepository<Product,String> {
   @Query(value = "SELECT * FROM product WHERE id = ?1 ",nativeQuery = true)
   Product getProductById(String id);
 
+  @Query(value = "SELECT slug FROM product WHERE id_color = ?1 AND id_memory IS NULL AND id_line_product = ?2 ",nativeQuery = true)
+  String getSlugByColorAndNotMemory(String idColor,String idLineProduct);
+
   @Query(value = "SELECT slug FROM product WHERE id_color = ?1 AND id_memory = ?2 AND id_line_product = ?3 ",nativeQuery = true)
   String getSlugByColorAndMemory(String idColor,String idMemory,String idLineProduct);
+
+  @Query(value = "SELECT slug FROM product WHERE id_color IS NULL AND id_memory = ?1 AND id_line_product = ?2 ",nativeQuery = true)
+  String getSlugByNotColorAndMemory(String idMemory,String idLineProduct);
 
   @Query(value = "SELECT p.id as 'idProduct' , cp.id as 'idCategoryProduct',cp.name_category_product as 'nameCategoryProduct' ," +
       " gp.id as 'idGroupProduct' , gp.name_group_product as 'nameGroupProduct' , lp.id as  'idLineProduct' , " +

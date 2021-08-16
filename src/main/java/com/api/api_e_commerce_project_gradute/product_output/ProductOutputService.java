@@ -26,14 +26,8 @@ public class ProductOutputService {
     return productOutputRepository.findById(idProductOutput);
   }
 
-  public ProductOutput addProductOutput(ProductOutput productOutput) {
-    return productOutputRepository.save(productOutput);
-  }
-
-  public ProductOutput addProductOutput(ProductOutputAdd productOutputAdd) {
-    ProductOutput productOutput = productOutputAdd.getProductOutput();
-    Product product = productRepository.getProductById(productOutputAdd.getId());
-    productOutput.setProductOutput(product);
+  public ProductOutput addProductOutput(ProductOutput productOutput,String id) {
+    productOutput.setProductOutputs(productRepository.getProductById(id));
     return productOutputRepository.save(productOutput);
   }
 

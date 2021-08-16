@@ -52,6 +52,10 @@ public class ProductService {
   @Autowired
   NewsRepository newsRepository;
 
+  public Product getProductByIdMain(String id) {
+    return productRepository.getProductById(id);
+  }
+
   public List<Product> getAllProducts() {
     return productRepository.findAll();
   }
@@ -417,6 +421,17 @@ public class ProductService {
   }
 
   public String getSlugByColorAndMemory(String idColor,String idMemory,String idLineProduct) {
+    if (idMemory.equals(""))
+    {
+      System.out.println("not memory");
+      return productRepository.getSlugByColorAndNotMemory(idColor,idLineProduct);
+    }
+    else if (idColor.equals(""))
+    {
+      System.out.println("not color");
+      return productRepository.getSlugByNotColorAndMemory(idMemory,idLineProduct);
+    }
+    else
     return productRepository.getSlugByColorAndMemory(idColor,idMemory,idLineProduct);
   }
 

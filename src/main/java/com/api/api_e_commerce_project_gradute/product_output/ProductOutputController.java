@@ -28,13 +28,13 @@ public class ProductOutputController {
   @CrossOrigin
   @PostMapping("productOutputs")
   public ProductOutput addProductOutput(@RequestBody ProductOutputAdd productOutputAdd) {
-    return productOutputService.addProductOutput(productOutputAdd);
+    return productOutputService.addProductOutput(productOutputAdd.getProductOutput(),productOutputAdd.getId());
   }
 
   @CrossOrigin
   @PutMapping("productOutputs")
   public ProductOutput updateProductOutput(@RequestBody ProductOutput productOutput) {
-    return productOutputService.addProductOutput(productOutput);
+    return productOutputService.addProductOutput(productOutput,"");
   }
 
 }

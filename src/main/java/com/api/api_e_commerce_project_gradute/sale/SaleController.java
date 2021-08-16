@@ -1,5 +1,6 @@
 package com.api.api_e_commerce_project_gradute.sale;
 
+import com.api.api_e_commerce_project_gradute.DTO.sale.SaleAdd;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,14 +27,14 @@ public class SaleController {
 
   @CrossOrigin
   @PostMapping("sales")
-  public Sale addSale(@RequestBody Sale sale) {
-    return saleService.addSale(sale);
+  public Sale addSale(@RequestBody SaleAdd saleAdd) {
+    return saleService.addSale(saleAdd.getSale(),saleAdd.getId());
   }
 
   @CrossOrigin
   @PostMapping("sale")
   public Sale updateSale(@RequestBody Sale sale) {
-    return saleService.addSale(sale);
+    return saleService.addSale(sale,"");
   }
 
 }
