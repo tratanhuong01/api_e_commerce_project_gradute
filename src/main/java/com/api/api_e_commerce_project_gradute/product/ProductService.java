@@ -447,4 +447,17 @@ public class ProductService {
     return productRepository.getAll();
   }
 
+  public List<CategoryByGroupProduct> getCategoryByGroupProducts() {
+    List<CategoryByGroupProduct> categoryByGroupProductList = new ArrayList<>();
+    List<CategoryProduct> categoryProductList = categoryProductRepository.findAll();
+    for (CategoryProduct categoryProduct: categoryProductList) {
+      CategoryByGroupProduct categoryByGroupProduct = new CategoryByGroupProduct();
+      categoryByGroupProduct.setCategoryProduct(categoryProduct);
+      categoryByGroupProduct.setGroupProductList(groupProductRepository.getGroupProductByIdCategoryProduct(
+          categoryProduct.getId()));
+      categoryByGroupProductList.add(categoryByGroupProduct);
+    }
+    return categoryByGroupProductList;
+  }
+
 }

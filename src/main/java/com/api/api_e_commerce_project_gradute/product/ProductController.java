@@ -1,5 +1,6 @@
 package com.api.api_e_commerce_project_gradute.product;
 
+import com.api.api_e_commerce_project_gradute.DTO.CategoryByGroupProduct;
 import com.api.api_e_commerce_project_gradute.DTO.product.ProductFull;
 import com.api.api_e_commerce_project_gradute.DTO.product.ProductIndex;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,4 +100,11 @@ public class ProductController {
   public List<Product> getAll() {
     return productService.getAll();
   }
+
+  @CrossOrigin
+  @GetMapping("getCategoryByGroupProducts")
+  public List<CategoryByGroupProduct> getCategoryByGroupProducts() {
+    return productService.getCategoryByGroupProducts();
+  }
+
 }
