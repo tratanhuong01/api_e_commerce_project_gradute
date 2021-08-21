@@ -4,6 +4,7 @@ import com.api.api_e_commerce_project_gradute.bill.Bill;
 import com.api.api_e_commerce_project_gradute.bill_review.BillReview;
 import com.api.api_e_commerce_project_gradute.comment.Comment;
 import com.api.api_e_commerce_project_gradute.product.Product;
+import com.api.api_e_commerce_project_gradute.wish_list.WishList;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -21,6 +22,10 @@ public class User {
 
   @OneToMany(mappedBy = "productUser")
   private Set<Product> productUser = new HashSet<>();
+
+  @OneToMany(mappedBy = "wishListUser")
+  private Set<WishList> wishListUser = new HashSet<>();
+
 
   @OneToMany(mappedBy = "billUser")
   private Set<Bill> billUser = new HashSet<>();;

@@ -1,6 +1,9 @@
 package com.api.api_e_commerce_project_gradute.bill;
 
+import com.api.api_e_commerce_project_gradute.address.Address;
+import com.api.api_e_commerce_project_gradute.bank.Bank;
 import com.api.api_e_commerce_project_gradute.bill_detail.BillDetail;
+import com.api.api_e_commerce_project_gradute.payment_method.PaymentMethod;
 import com.api.api_e_commerce_project_gradute.user.User;
 
 import javax.persistence.*;
@@ -24,8 +27,20 @@ public class Bill {
   @Column
   private int status;
 
+  @ManyToOne
+  @JoinColumn(name = "id_payment_method")
+  private PaymentMethod paymentMethodBill;
+
+  @ManyToOne
+  @JoinColumn(name = "id_bank")
+  private Bank bankBill;
+
+  @ManyToOne
+  @JoinColumn(name = "id_address")
+  private Address addressBill;
+
   @Column
-  private int methodPayment;
+  private int total;
 
   @Column
   private Timestamp timeCreated;
@@ -54,12 +69,36 @@ public class Bill {
     this.status = status;
   }
 
-  public int getMethodPayment() {
-    return methodPayment;
+  public PaymentMethod getPaymentMethodBill() {
+    return paymentMethodBill;
   }
 
-  public void setMethodPayment(int methodPayment) {
-    this.methodPayment = methodPayment;
+  public void setPaymentMethodBill(PaymentMethod paymentMethodBill) {
+    this.paymentMethodBill = paymentMethodBill;
+  }
+
+  public Bank getBankBill() {
+    return bankBill;
+  }
+
+  public void setBankBill(Bank bankBill) {
+    this.bankBill = bankBill;
+  }
+
+  public Address getAddressBill() {
+    return addressBill;
+  }
+
+  public void setAddressBill(Address addressBill) {
+    this.addressBill = addressBill;
+  }
+
+  public int getTotal() {
+    return total;
+  }
+
+  public void setTotal(int total) {
+    this.total = total;
   }
 
   public Timestamp getTimeCreated() {
