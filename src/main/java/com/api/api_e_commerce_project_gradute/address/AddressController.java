@@ -36,4 +36,10 @@ public class AddressController {
     return addressService.addAddress(address);
   }
 
+  @CrossOrigin
+  @DeleteMapping("addresses/{id}")
+  public List<Address> deleteAddress(@PathVariable Long id) {
+    return addressService.deleteAddress(id);
+  }
+
 }

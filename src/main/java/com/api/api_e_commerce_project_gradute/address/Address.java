@@ -9,7 +9,7 @@ import javax.persistence.*;
 public class Address {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @ManyToOne
@@ -30,6 +30,12 @@ public class Address {
 
   @Column
   private int statusAddress;
+
+  @Column
+  private String fullName;
+
+  @Column
+  private String phone;
 
   @Column
   private int typeAddress;
@@ -59,6 +65,22 @@ public class Address {
 
   public void setAddressUser(User addressUser) {
     this.addressUser = addressUser;
+  }
+
+  public String getFullName() {
+    return fullName;
+  }
+
+  public void setFullName(String fullName) {
+    this.fullName = fullName;
+  }
+
+  public String getPhone() {
+    return phone;
+  }
+
+  public void setPhone(String phone) {
+    this.phone = phone;
   }
 
   public Long getId() {
