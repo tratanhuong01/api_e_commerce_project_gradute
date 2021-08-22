@@ -21,6 +21,8 @@ public class AddressService {
   }
 
   public List<Address> addAddress(Address address) {
+    if (address.getIsDefault() == 1)
+      addressRepository.setDefaultAddressMain(address.getAddressUser().getId());
      addressRepository.save(address);
      return addressRepository.findAll();
   }
@@ -33,5 +35,11 @@ public class AddressService {
     addressRepository.deleteById(id);
     return addressRepository.findAll();
   }
+
+  public List<Address> setDefaultAddress(String idUser,Long idAddress) {
+    addressRepository.setDefaultAddressMain(idUser);
+   addressRepository.setDefaultAddress(idUser, idAddress);
+   return addressRepository.findAll();
+}
 
 }

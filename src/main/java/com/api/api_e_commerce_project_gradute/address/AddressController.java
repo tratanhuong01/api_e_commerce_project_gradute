@@ -42,4 +42,10 @@ public class AddressController {
     return addressService.deleteAddress(id);
   }
 
+  @CrossOrigin
+  @PutMapping("setDefaultAddress/{idUser}/{idAddress}")
+  public List<Address> setDefaultAddress(@PathVariable String idUser,@PathVariable Long idAddress) {
+    return addressService.setDefaultAddress(idUser,idAddress);
+  }
+
 }
