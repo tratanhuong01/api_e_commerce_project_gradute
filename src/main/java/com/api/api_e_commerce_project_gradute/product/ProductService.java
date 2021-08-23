@@ -128,7 +128,7 @@ public class ProductService {
 
   public List<ProductFull> getProductByCategory(String idCategory) {
     List<ProductFull> productFullList = new ArrayList<>();
-    List<String> stringList = productRepository.getDistinctIdLineProduct(idCategory);
+    List<String> stringList = productRepository.getDistinctIdLineProductByIdCategory(idCategory);
     for (String string: stringList) {
       List<ProductMain> productMainList = productRepository.getProductByIdLineProduct(string);
       List<Color> colorList = new ArrayList<>();
@@ -182,7 +182,7 @@ public class ProductService {
 
   public List<ProductFull> getProductBySlugCategory(String slugCategory) {
     List<ProductFull> productFullList = new ArrayList<>();
-    List<String> stringList = productRepository.getDistinctIdLineProducts(slugCategory);
+    List<String> stringList = productRepository.getDistinctIdLineProductBySlugCategoryProduct(slugCategory);
     for (String string: stringList) {
       List<ProductMain> productMainList = productRepository.getProductByIdLineProduct(string);
       List<Color> colorList = new ArrayList<>();
@@ -236,7 +236,7 @@ public class ProductService {
 
   public List<ProductFull> getProductBySlugCategoryAndSlugGroup(String slugCategory,String slugGroup) {
     List<ProductFull> productFullList = new ArrayList<>();
-    List<String> stringList = productRepository.getDistinctIdLineProduct(slugCategory,slugGroup);
+    List<String> stringList = productRepository.getDistinctIdLineProductBySlugCategoryAndSlugGroupProduct(slugCategory,slugGroup);
     for (String string: stringList) {
       List<ProductMain> productMainList = productRepository.getProductByIdLineProduct(string);
       List<Color> colorList = new ArrayList<>();
@@ -306,8 +306,9 @@ public class ProductService {
       ProductByCategory productByCategory = new ProductByCategory();
       productByCategory.setIdCategoryProduct(categoryProduct.getId());
       productByCategory.setNameCategoryProduct(categoryProduct.getNameCategoryProduct());
-      productByCategory.setSlugCategoryProduct("");
-      List<String> stringList = productRepository.getDistinctIdLineProduct(categoryProduct.getId());
+      productByCategory.setSlugCategoryProduct(categoryProduct.getSlugCategoryProduct());
+      List<String> stringList = productRepository.getDistinctIdLineProductByIdCategoryLimit(
+          categoryProduct.getId(),0,12);
       List<ProductFull> productFullList = new ArrayList<>();
       for (String string: stringList) {
         List<ProductMain> productMainList = productRepository.getProductByIdLineProduct(string);
@@ -441,10 +442,6 @@ public class ProductService {
       string = productRepository.getSlugByColorAndMemory(idColor,idMemory,idLineProduct);
 
     return string;
-  }
-
-  public List<Product> getAll() {
-    return productRepository.getAll();
   }
 
   public List<CategoryByGroupProduct> getCategoryByGroupProducts() {

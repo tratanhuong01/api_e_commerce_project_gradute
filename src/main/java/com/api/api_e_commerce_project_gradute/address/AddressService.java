@@ -38,8 +38,12 @@ public class AddressService {
 
   public List<Address> setDefaultAddress(String idUser,Long idAddress) {
     addressRepository.setDefaultAddressMain(idUser);
-   addressRepository.setDefaultAddress(idUser, idAddress);
-   return addressRepository.findAll();
-}
+    addressRepository.setDefaultAddress(idUser, idAddress);
+    return addressRepository.findAll();
+  }
+
+  public Address getDefaultAddress(String idUser) {
+    return addressRepository.getDefaultAddress(idUser);
+  }
 
 }

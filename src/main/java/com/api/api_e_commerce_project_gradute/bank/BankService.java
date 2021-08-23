@@ -20,6 +20,10 @@ public class BankService {
     return bankRepository.findById(id);
   }
 
+  public List<Bank> getBankByIdUser(String id) {
+    return bankRepository.getBankByIdUser(id);
+  }
+
   public List<Bank> addBank(Bank bank) {
     bankRepository.save(bank);
     return bankRepository.findAll();

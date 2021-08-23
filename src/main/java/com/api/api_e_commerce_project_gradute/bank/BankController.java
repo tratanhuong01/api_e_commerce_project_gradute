@@ -20,8 +20,8 @@ public class BankController {
 
   @CrossOrigin
   @GetMapping("banks/{id}")
-  public Optional<Bank> getBankById(@PathVariable Long id) {
-    return bankService.getBankById(id);
+  public List<Bank> getBankByIdUser(@PathVariable String id) {
+    return bankService.getBankByIdUser(id);
   }
 
   @CrossOrigin

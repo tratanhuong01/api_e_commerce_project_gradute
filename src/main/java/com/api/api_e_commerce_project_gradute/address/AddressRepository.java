@@ -23,4 +23,8 @@ public interface AddressRepository extends JpaRepository<Address,Long> {
   @Transactional
   @Query(value = "UPDATE address SET is_default = 0 WHERE id_user = ?1",nativeQuery = true)
   int setDefaultAddressMain(String idUser);
+
+  @Query(value = "SELECT * FROM address WHERE id_user = ?1 AND is_default = 1 ",nativeQuery = true)
+  Address getDefaultAddress(String idUser);
+
 }

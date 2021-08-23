@@ -48,4 +48,10 @@ public class AddressController {
     return addressService.setDefaultAddress(idUser,idAddress);
   }
 
+  @CrossOrigin
+  @GetMapping("getDefaultAddress/{id}")
+  public Address getDefaultAddress(@PathVariable String id) {
+    return addressService.getDefaultAddress(id);
+  }
+
 }

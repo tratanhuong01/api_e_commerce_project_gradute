@@ -94,13 +94,6 @@ public class ProductController {
                                                             @RequestParam String slugGroupProduct) {
     return productService.getProductBySlugCategoryAndSlugGroup(slugCategoryProduct,slugGroupProduct);
   }
-
-  @CrossOrigin
-  @GetMapping("getAll")
-  public List<Product> getAll() {
-    return productService.getAll();
-  }
-
   @CrossOrigin
   @GetMapping("getCategoryByGroupProducts")
   public List<CategoryByGroupProduct> getCategoryByGroupProducts() {
