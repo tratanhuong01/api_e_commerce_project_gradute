@@ -8,7 +8,9 @@ import com.api.api_e_commerce_project_gradute.memory.MemoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,6 +38,7 @@ public class CartService {
   }
 
   public List<CartFull> addCart(Cart cart) {
+    cart.setTimeCreated((new Timestamp(new Date().getTime())));
     cartRepository.save(cart);
     return getAllCartByIdUser(cart.getUserCart().getId());
   }

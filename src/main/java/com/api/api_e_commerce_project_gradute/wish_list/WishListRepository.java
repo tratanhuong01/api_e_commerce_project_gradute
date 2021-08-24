@@ -14,7 +14,7 @@ public interface WishListRepository extends JpaRepository<WishList,Long> {
   @Query(value = "SELECT * FROM wish_list WHERE id_user = ?1 ",nativeQuery = true)
   List<WishList> getWishListByIdUser(String id);
 
-  @Query(value = "SELECT wl.id as 'idWishList' , p.id as 'idProduct' , u.id as 'idUser' , u.first_name as 'firstName' , " +
+  @Query(value = "SELECT wl.id as 'idCart' , p.id as 'idProduct' , u.id as 'idUser' , u.first_name as 'firstName' , " +
       " u.last_name as 'lastName' , lp.id as  'idLineProduct' , " +
       " lp.name_line_product as 'nameLineProduct' , pi.price_input as 'priceInput' ," +
       " po.price_output as 'priceOutput' , s.percent as 'sale' ,c.id as 'color', m.id as " +

@@ -11,7 +11,7 @@ import java.sql.Timestamp;
 public class WishList {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @ManyToOne
@@ -26,7 +26,7 @@ public class WishList {
   private int amount;
 
   @Column
-  private Timestamp time_created;
+  private Timestamp timeCreated;
 
   public Long getId() {
     return id;
@@ -60,11 +60,11 @@ public class WishList {
     this.amount = amount;
   }
 
-  public Timestamp getTime_created() {
-    return time_created;
+  public Timestamp getTimeCreated() {
+    return timeCreated;
   }
 
-  public void setTime_created(Timestamp time_created) {
-    this.time_created = time_created;
+  public void setTimeCreated(Timestamp timeCreated) {
+    this.timeCreated = timeCreated;
   }
 }

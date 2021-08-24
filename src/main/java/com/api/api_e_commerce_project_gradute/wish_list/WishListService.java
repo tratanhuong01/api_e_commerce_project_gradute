@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -44,6 +46,7 @@ public class WishListService {
   }
 
   public List<CartFull> addWishList(WishList wishList) {
+    wishList.setTimeCreated((new Timestamp(new Date().getTime())));
      wishListRepository.save(wishList);
      return getAllWishListByIdUser(wishList.getWishListUser().getId());
   }

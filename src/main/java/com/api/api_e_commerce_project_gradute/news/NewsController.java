@@ -1,6 +1,7 @@
 package com.api.api_e_commerce_project_gradute.news;
 
 import com.api.api_e_commerce_project_gradute.DTO.news.NewsDetailPage;
+import com.api.api_e_commerce_project_gradute.DTO.news.NewsPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -59,6 +60,18 @@ public class NewsController {
   @PutMapping("updateViewNews")
   public int updateViewNews(@RequestParam String slug) {
     return newsService.updateViewNews(slug);
+  }
+
+  @CrossOrigin
+  @GetMapping("getListNewsMostView")
+  public List<News> getListNewsMostView() {
+    return newsService.getListNewsMostView();
+  }
+
+  @CrossOrigin
+  @GetMapping("getNewsPage")
+  public NewsPage getNewsPage(){
+    return newsService.getNewsPage();
   }
 
 }

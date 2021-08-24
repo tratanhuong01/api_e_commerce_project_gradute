@@ -1,7 +1,11 @@
 package com.api.api_e_commerce_project_gradute.news;
 
 import com.api.api_e_commerce_project_gradute.DTO.comment.CommentLevel;
+import com.api.api_e_commerce_project_gradute.DTO.news.NewsByCategory;
 import com.api.api_e_commerce_project_gradute.DTO.news.NewsDetailPage;
+import com.api.api_e_commerce_project_gradute.DTO.news.NewsPage;
+import com.api.api_e_commerce_project_gradute.category_news.CategoryNews;
+import com.api.api_e_commerce_project_gradute.category_news.CategoryNewsRepository;
 import com.api.api_e_commerce_project_gradute.comment.Comment;
 import com.api.api_e_commerce_project_gradute.comment.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +22,9 @@ public class NewsService {
 
   @Autowired
   NewsRepository newsRepository;
+
+  @Autowired
+  CategoryNewsRepository categoryNewsRepository;
 
   @Autowired
   CommentRepository commentRepository;
@@ -50,6 +57,7 @@ public class NewsService {
       commentLevelList.add(commentLevel);
     }
     newsDetailPage.setCommentLevelList(commentLevelList);
+    newsDetailPage.setNewsSameList(newsRepository.getListNewsSame(news.getCategoryNews().getId(),news.getId()));
     return newsDetailPage;
   }
 
@@ -63,6 +71,33 @@ public class NewsService {
 
   public int updateViewNews(String slug) {
     return newsRepository.updateViewNews(slug);
+  }
+
+  public List<News> getListNewsMostView() {
+    return newsRepository.getListNewsMostView();
+  }
+
+  public NewsPage getNewsPage() {
+    NewsPage newsPage = new NewsPage();
+    newsPage.setNumberNews(newsRepository.getNumberNews());
+    newsPage.setListAllNewsBestLimit(newsRepository.getListAllNewsBestLimit(0,9));
+    newsPage.setListNewsMostView(newsRepository.getListNewsMostView());
+    newsPage.setListSaleNewsMost(newsRepository.getListNewsLimit("TINKHUYENMAI",0,3));
+
+    List<NewsByCategory> newsByCategoryList = new ArrayList<>();
+
+    List<CategoryNews> categoryNewsList = categoryNewsRepository.findAll();
+
+    for (CategoryNews categoryNews : categoryNewsList) {
+      NewsByCategory newsByCategory = new NewsByCategory();
+      newsByCategory.setCategoryNews(categoryNews);
+      newsByCategory.setNewsList(newsRepository.getListNewsLimit(categoryNews.getId(),0,3));
+      newsByCategoryList.add(newsByCategory);
+    }
+
+    newsPage.setListNewsByCategory(newsByCategoryList);
+
+    return newsPage;
   }
 
 }
