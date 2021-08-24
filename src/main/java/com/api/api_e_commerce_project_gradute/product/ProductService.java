@@ -56,8 +56,13 @@ public class ProductService {
     return productRepository.getProductById(id);
   }
 
-  public List<Product> getAllProducts() {
-    return productRepository.findAll();
+  public List<ProductFull> getAllProducts() {
+    List<ProductFull> productFullList = new ArrayList<>();
+    List<Product> productList = productRepository.getProductLimit(0,9);
+    for (Product product: productList)
+      productFullList.add(getProductBySlug(product.getId(),-1));
+
+    return productFullList;
   }
 
   public Optional<Product> getProductById(String idProduct) {
@@ -378,8 +383,6 @@ public class ProductService {
     ProductMain productMains = null;
     if (type == 0)
       productMains = productRepository.getProductBySlug(slug);
-    else if (type == -1)
-      productMains = productRepository.getProductByIdProduct(slug);
     else
       productMains = productRepository.getProductByIdProduct(slug);
 

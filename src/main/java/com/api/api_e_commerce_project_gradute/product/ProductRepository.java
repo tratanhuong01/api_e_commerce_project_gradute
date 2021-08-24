@@ -12,6 +12,8 @@ public interface ProductRepository extends JpaRepository<Product,String> {
   //get id new of product table
   @Query(value = "SELECT * FROM product ORDER BY id DESC LIMIT 1",nativeQuery = true)
   Product getIdBestNew();
+  @Query(value = "SELECT * FROM product LIMIT ?1 , ?2 ",nativeQuery = true)
+  List<Product> getProductLimit(int offset,int limit);
   //get product by id
   @Query(value = "SELECT * FROM product WHERE id = ?1 ",nativeQuery = true)
   Product getProductById(String id);

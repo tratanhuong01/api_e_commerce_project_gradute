@@ -17,7 +17,7 @@ public class ProductController {
 
   @CrossOrigin
   @GetMapping("products")
-  public List<Product> getAllProducts() {
+  public List<ProductFull> getAllProducts() {
     return productService.getAllProducts();
   }
 
