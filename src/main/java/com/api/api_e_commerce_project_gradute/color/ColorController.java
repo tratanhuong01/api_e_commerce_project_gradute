@@ -15,7 +15,13 @@ public class ColorController {
   @CrossOrigin
   @GetMapping("colors")
   public List<Color> getAllColors() {
-    return colorService.getAllColors();
+    return colorService.getColorsLimit(0,10);
+  }
+
+  @CrossOrigin
+  @GetMapping("colors/{offset}/{limit}")
+  public List<Color> getColorsLimit(@PathVariable int offset,@PathVariable int limit) {
+    return colorService.getColorsLimit(offset,limit);
   }
 
   @CrossOrigin

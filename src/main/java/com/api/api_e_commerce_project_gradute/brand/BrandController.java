@@ -15,7 +15,13 @@ public class BrandController {
   @CrossOrigin
   @GetMapping("brands")
   public List<Brand> getAllBrands() {
-    return brandService.getAllBrands();
+    return brandService.getBrandsLimit(0,10);
+  }
+
+  @CrossOrigin
+  @GetMapping("brands/{offset}/{limit}")
+  public List<Brand> getBrandsLimit(@PathVariable int offset,@PathVariable int limit) {
+    return brandService.getBrandsLimit(offset,limit);
   }
 
   @CrossOrigin

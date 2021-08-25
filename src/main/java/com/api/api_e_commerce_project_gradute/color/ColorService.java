@@ -16,6 +16,10 @@ public class ColorService {
     return colorRepository.findAll();
   }
 
+  public List<Color> getColorsLimit(int offset,int limit) {
+    return colorRepository.getColorsLimit(offset, limit);
+  }
+
   public Optional<Color> getColorById(String idColor) {
     return colorRepository.findById(idColor);
   }
@@ -23,5 +27,7 @@ public class ColorService {
   public Color addColor(Color color) {
     return colorRepository.save(color);
   }
+
+
 
 }

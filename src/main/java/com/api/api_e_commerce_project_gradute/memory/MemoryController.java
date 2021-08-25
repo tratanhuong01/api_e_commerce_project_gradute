@@ -15,7 +15,13 @@ public class MemoryController {
   @CrossOrigin
   @GetMapping("memories")
   public List<Memory> getAllMemories() {
-    return memoryService.getAllMemories();
+    return memoryService.getMemoriesLimit(0,10);
+  }
+
+  @CrossOrigin
+  @GetMapping("memories/{offset}/{limit}")
+  public List<Memory> getMemoriesLimit(@PathVariable  int offset,@PathVariable int limit) {
+    return memoryService.getMemoriesLimit(offset, limit);
   }
 
   @CrossOrigin

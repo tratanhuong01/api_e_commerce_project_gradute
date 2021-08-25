@@ -24,4 +24,8 @@ public class MemoryService {
     return memoryRepository.save(memory);
   }
 
+  public List<Memory> getMemoriesLimit(int offset,int limit) {
+    return memoryRepository.getMemoriesLimit(offset, limit);
+  }
+
 }

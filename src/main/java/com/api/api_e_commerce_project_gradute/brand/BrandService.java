@@ -24,4 +24,8 @@ public class BrandService {
     return brandRepository.save(brand);
   }
 
+  public List<Brand> getBrandsLimit(int offset,int limit) {
+    return brandRepository.getBrandsLimit(offset, limit);
+  }
+
 }
