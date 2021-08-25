@@ -16,9 +16,21 @@ public class ProductController {
   ProductService productService;
 
   @CrossOrigin
+  @GetMapping("products/{offset}/{limit}")
+  public List<ProductFull> getProductLimit(@PathVariable int offset,@PathVariable int limit) {
+    return productService.getAllProductLimit(offset, limit);
+  }
+
+  @CrossOrigin
+  @GetMapping("productsAll")
+  public List<ProductFull> getAll() {
+    return productService.getAllProducts();
+  }
+
+  @CrossOrigin
   @GetMapping("products")
   public List<ProductFull> getAllProducts() {
-    return productService.getAllProducts();
+    return productService.getAllProductLimit(0,10);
   }
 
   @CrossOrigin

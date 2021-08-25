@@ -13,9 +13,21 @@ public class LineProductController {
   LineProductService lineProductService;
 
   @CrossOrigin
-  @GetMapping("lineProducts")
+  @GetMapping("lineProductsAll")
   public List<LineProduct> getAllLineProducts() {
     return lineProductService.getAllLineProducts();
+  }
+
+  @CrossOrigin
+  @GetMapping("lineProducts")
+  public List<LineProduct> getAllLineProductLimit() {
+    return lineProductService.getAllLineProductLimit(0,10);
+  }
+
+  @CrossOrigin
+  @GetMapping("lineProducts/{offset}/{limit}")
+  public List<LineProduct> getAllLineProductLimit(@PathVariable int offset,@PathVariable int limit) {
+    return lineProductService.getAllLineProductLimit(offset, limit);
   }
 
   @CrossOrigin

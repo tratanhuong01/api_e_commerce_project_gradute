@@ -24,4 +24,8 @@ public class CategoryProductService {
     return categoryProductRepository.save(categoryProduct);
   }
 
+  public List<CategoryProduct> getAllCategoryProductLimit(int offset,int limit) {
+    return categoryProductRepository.getAllCategoryProductLimit(offset, limit);
+  }
+
 }

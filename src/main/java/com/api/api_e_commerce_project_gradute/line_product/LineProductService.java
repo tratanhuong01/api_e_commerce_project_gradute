@@ -33,4 +33,8 @@ public class LineProductService {
     return lineProductRepository.save(lineProduct);
   }
 
+  public List<LineProduct> getAllLineProductLimit(int offset,int limit) {
+    return lineProductRepository.getAllLineProductLimit(offset, limit);
+  }
+
 }

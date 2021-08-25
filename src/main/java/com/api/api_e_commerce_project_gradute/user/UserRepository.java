@@ -28,6 +28,7 @@ public interface UserRepository extends JpaRepository<User,String> {
   @Query(value = "UPDATE user SET code_email = ?1 WHERE id = ?2 ",nativeQuery = true)
   int updateCodeEmail(String codeEmail,String idUser);
 
-
+  @Query(value = "SELECT * FROM user LIMIT ?1 , ?2 ",nativeQuery = true)
+  List<User> getAllUsersLimit(int offset,int limit);
 
 }

@@ -13,6 +13,12 @@ public class BrandController {
   BrandService brandService;
 
   @CrossOrigin
+  @GetMapping("brandsAll")
+  public List<Brand> getAll() {
+    return brandService.getAllBrands();
+  }
+
+  @CrossOrigin
   @GetMapping("brands")
   public List<Brand> getAllBrands() {
     return brandService.getBrandsLimit(0,10);

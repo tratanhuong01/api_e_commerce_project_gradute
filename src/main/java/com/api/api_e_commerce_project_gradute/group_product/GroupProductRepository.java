@@ -12,4 +12,7 @@ public interface GroupProductRepository extends JpaRepository<GroupProduct,Strin
   @Query(value = "SELECT * FROM group_product WHERE id_category_product = ?1 ",nativeQuery = true)
   List<GroupProduct> getGroupProductByIdCategoryProduct(String idCategoryProduct);
 
+  @Query(value = "SELECT * FROM group_product LIMIT ?1 , ?2 ",nativeQuery = true)
+  List<GroupProduct> getAllGroupProductLimit(int offset,int limit);
+
 }

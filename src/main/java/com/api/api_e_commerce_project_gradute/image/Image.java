@@ -15,7 +15,7 @@ public class Image {
   private Long id;
 
   @OneToMany(mappedBy = "imageProduct",cascade = CascadeType.ALL)
-  private Set<Product> imageProduct = new HashSet<>();;
+  private Set<Product> imageProduct = new HashSet<>();
 
   @Column
   private String src;

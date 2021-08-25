@@ -24,4 +24,8 @@ public class GroupProductService {
     return groupProductRepository.save(groupProduct);
   }
 
+  public List<GroupProduct> getGroupProductLimit(int offset,int limit) {
+    return groupProductRepository.getAllGroupProductLimit(offset, limit);
+  }
+
 }

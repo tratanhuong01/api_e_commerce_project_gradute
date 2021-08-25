@@ -70,4 +70,8 @@ public class UserService {
     return String.valueOf(number);
   }
 
+  public List<User> getAllUsersLimit(int offset,int limit) {
+    return userRepository.getAllUsersLimit(offset, limit);
+  }
+
 }

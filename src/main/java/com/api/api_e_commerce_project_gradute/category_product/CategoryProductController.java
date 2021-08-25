@@ -13,9 +13,21 @@ public class CategoryProductController {
   CategoryProductService categoryProductService;
 
   @CrossOrigin
-  @GetMapping("categoryProducts")
+  @GetMapping("categoryProductsAll")
   public List<CategoryProduct> getAllCategoryProducts() {
     return categoryProductService.getAllCategoryProducts();
+  }
+
+  @CrossOrigin
+  @GetMapping("categoryProducts")
+  public List<CategoryProduct> getAllCategoryProductLimit() {
+    return categoryProductService.getAllCategoryProductLimit(0,10);
+  }
+
+  @CrossOrigin
+  @GetMapping("categoryProducts/{offset}/{limit}")
+  public List<CategoryProduct> getAllCategoryProducts(@PathVariable int offset,@PathVariable int limit) {
+    return categoryProductService.getAllCategoryProductLimit(offset, limit);
   }
 
   @CrossOrigin

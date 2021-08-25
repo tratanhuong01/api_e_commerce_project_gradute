@@ -13,8 +13,14 @@ public class MemoryController {
   MemoryService memoryService;
 
   @CrossOrigin
-  @GetMapping("memories")
+  @GetMapping("memoriesAll")
   public List<Memory> getAllMemories() {
+    return memoryService.getAllMemories();
+  }
+
+  @CrossOrigin
+  @GetMapping("memories")
+  public List<Memory> getAll() {
     return memoryService.getMemoriesLimit(0,10);
   }
 

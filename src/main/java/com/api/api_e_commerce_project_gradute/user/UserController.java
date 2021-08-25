@@ -18,9 +18,21 @@ public class UserController {
   MailService mailService;
 
   @CrossOrigin
-  @GetMapping("users")
+  @GetMapping("usersAll")
   public List<User> getAllUsers() {
     return userService.getAllUsers();
+  }
+
+  @CrossOrigin
+  @GetMapping("users")
+  public List<User> getAllUsersLimit() {
+    return userService.getAllUsersLimit(0,10);
+  }
+
+  @CrossOrigin
+  @GetMapping("users/{offset}/{limit}")
+  public List<User> getAllUsersLimit(@PathVariable int offset,@PathVariable int limit) {
+    return userService.getAllUsersLimit(offset,limit);
   }
 
   @CrossOrigin

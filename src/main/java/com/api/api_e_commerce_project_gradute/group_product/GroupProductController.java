@@ -13,9 +13,21 @@ public class GroupProductController {
   GroupProductService groupProductService;
 
   @CrossOrigin
-  @GetMapping("groupProducts")
+  @GetMapping("groupProductsAll")
   public List<GroupProduct> getAllGroupProducts() {
     return groupProductService.getAllGroupProducts();
+  }
+
+  @CrossOrigin
+  @GetMapping("groupProducts")
+  public List<GroupProduct> getAllGroupProductLimit() {
+    return groupProductService.getGroupProductLimit(0,10);
+  }
+
+  @CrossOrigin
+  @GetMapping("groupProducts/{offset}/{limit}")
+  public List<GroupProduct> getAllGroupProductLimit(@PathVariable int offset,@PathVariable int limit) {
+    return groupProductService.getGroupProductLimit(offset, limit);
   }
 
   @CrossOrigin

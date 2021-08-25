@@ -58,10 +58,17 @@ public class ProductService {
 
   public List<ProductFull> getAllProducts() {
     List<ProductFull> productFullList = new ArrayList<>();
-    List<Product> productList = productRepository.getProductLimit(0,9);
+    List<Product> productList = productRepository.findAll();
     for (Product product: productList)
       productFullList.add(getProductBySlug(product.getId(),-1));
+    return productFullList;
+  }
 
+  public List<ProductFull> getAllProductLimit(int offset,int limit) {
+    List<ProductFull> productFullList = new ArrayList<>();
+    List<Product> productList = productRepository.getProductLimit(offset,limit);
+    for (Product product: productList)
+      productFullList.add(getProductBySlug(product.getId(),-1));
     return productFullList;
   }
 
@@ -458,6 +465,10 @@ public class ProductService {
       categoryByGroupProductList.add(categoryByGroupProduct);
     }
     return categoryByGroupProductList;
+  }
+
+  public List<Product> getProductLimit(int offset,int limit) {
+    return productRepository.getProductLimit(offset, limit);
   }
 
 }

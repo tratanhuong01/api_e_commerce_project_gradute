@@ -13,6 +13,12 @@ public class ColorController {
   ColorService colorService;
 
   @CrossOrigin
+  @GetMapping("colorsAll")
+  public List<Color> getAll() {
+    return colorService.getAllColors();
+  }
+
+  @CrossOrigin
   @GetMapping("colors")
   public List<Color> getAllColors() {
     return colorService.getColorsLimit(0,10);
