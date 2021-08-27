@@ -1,14 +1,8 @@
 package com.api.api_e_commerce_project_gradute.group_product;
 
 import com.api.api_e_commerce_project_gradute.category_product.CategoryProduct;
-import com.api.api_e_commerce_project_gradute.image.Image;
-import com.api.api_e_commerce_project_gradute.line_product.LineProduct;
-import com.api.api_e_commerce_project_gradute.product.Product;
-import com.api.api_e_commerce_project_gradute.size.Size;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "group_product")

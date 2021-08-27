@@ -37,6 +37,12 @@ public class GroupProductController {
   }
 
   @CrossOrigin
+  @GetMapping("groupProductsByCategory/{idCategory}")
+  public List<GroupProduct> getGroupProductByIdCategory(@PathVariable String idCategory) {
+    return groupProductService.getGroupProductByIdCategoryProduct((idCategory));
+  }
+
+  @CrossOrigin
   @PostMapping("groupProducts")
   public GroupProduct addGroupProduct(@RequestBody GroupProduct groupProduct) {
     return groupProductService.addGroupProduct(groupProduct);

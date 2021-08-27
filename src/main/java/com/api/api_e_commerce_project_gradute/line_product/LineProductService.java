@@ -37,4 +37,8 @@ public class LineProductService {
     return lineProductRepository.getAllLineProductLimit(offset, limit);
   }
 
+  public List<LineProduct> getLineProductByIdGroupProduct(String idGroupProduct) {
+    return lineProductRepository.getLineProductByIdGroupProduct(idGroupProduct);
+  }
+
 }

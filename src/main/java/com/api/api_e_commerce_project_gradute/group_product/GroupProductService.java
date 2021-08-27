@@ -28,4 +28,8 @@ public class GroupProductService {
     return groupProductRepository.getAllGroupProductLimit(offset, limit);
   }
 
+  public List<GroupProduct> getGroupProductByIdCategoryProduct(String idCategory) {
+    return groupProductRepository.getGroupProductByIdCategoryProduct(idCategory);
+  }
+
 }

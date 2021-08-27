@@ -3,6 +3,7 @@ package com.api.api_e_commerce_project_gradute.line_product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.sound.sampled.Line;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,6 +35,12 @@ public class LineProductController {
   @GetMapping("lineProducts/{idLineProduct}")
   public Optional<LineProduct> getLineProductById(@PathVariable String idLineProduct) {
     return lineProductService.getLineProductById(idLineProduct);
+  }
+
+  @CrossOrigin
+  @GetMapping("getLineProductsByGroup/{idGroup}")
+  public List<LineProduct> getLineProductByIdGroupProduct(@PathVariable String idGroup) {
+    return lineProductService.getLineProductByIdGroupProduct(idGroup);
   }
 
   @CrossOrigin

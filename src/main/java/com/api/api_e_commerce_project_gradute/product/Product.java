@@ -2,20 +2,13 @@ package com.api.api_e_commerce_project_gradute.product;
 
 import com.api.api_e_commerce_project_gradute.brand.Brand;
 import com.api.api_e_commerce_project_gradute.color.Color;
-import com.api.api_e_commerce_project_gradute.group_product.GroupProduct;
 import com.api.api_e_commerce_project_gradute.image.Image;
 import com.api.api_e_commerce_project_gradute.line_product.LineProduct;
 import com.api.api_e_commerce_project_gradute.memory.Memory;
-import com.api.api_e_commerce_project_gradute.sale.Sale;
-import com.api.api_e_commerce_project_gradute.product_input.ProductInput;
-import com.api.api_e_commerce_project_gradute.product_output.ProductOutput;
-import com.api.api_e_commerce_project_gradute.size.Size;
+import com.api.api_e_commerce_project_gradute.ram.Ram;
 import com.api.api_e_commerce_project_gradute.user.User;
 
 import javax.persistence.*;
-import javax.sound.sampled.Line;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "product")
@@ -40,8 +33,8 @@ public class Product {
   private Color colorProduct;
 
   @ManyToOne(cascade = CascadeType.ALL)
-  @JoinColumn(name = "id_size")
-  private Size sizeProduct;
+  @JoinColumn(name = "id_ram")
+  private Ram ramProduct;
 
   @ManyToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "id_brand")
@@ -100,12 +93,12 @@ public class Product {
     this.colorProduct = colorProduct;
   }
 
-  public Size getSizeProduct() {
-    return sizeProduct;
+  public Ram getRamProduct() {
+    return ramProduct;
   }
 
-  public void setSizeProduct(Size sizeProduct) {
-    this.sizeProduct = sizeProduct;
+  public void setRamProduct(Ram ramProduct) {
+    this.ramProduct = ramProduct;
   }
 
   public Brand getBrandProduct() {

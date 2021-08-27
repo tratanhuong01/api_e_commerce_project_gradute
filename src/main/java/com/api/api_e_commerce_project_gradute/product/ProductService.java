@@ -15,9 +15,7 @@ import com.api.api_e_commerce_project_gradute.image.Image;
 import com.api.api_e_commerce_project_gradute.image.ImageRepository;
 import com.api.api_e_commerce_project_gradute.memory.Memory;
 import com.api.api_e_commerce_project_gradute.memory.MemoryRepository;
-import com.api.api_e_commerce_project_gradute.news.News;
 import com.api.api_e_commerce_project_gradute.news.NewsRepository;
-import com.api.api_e_commerce_project_gradute.size.Size;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
