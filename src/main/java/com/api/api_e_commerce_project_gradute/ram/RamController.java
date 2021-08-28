@@ -13,7 +13,7 @@ public class RamController {
   RamService ramService;
 
   @CrossOrigin
-  @GetMapping("rams")
+  @GetMapping("ramsAll")
   public List<Ram> getAllRams() {
     return ramService.getAllRams();
   }
