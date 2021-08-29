@@ -2,12 +2,21 @@ package com.api.api_e_commerce_project_gradute.DTO.review_product;
 
 public class InfoReviewProduct {
   private int sumReview;
+  private int sumAll;
   private int oneStar;
   private int twoStar;
   private int threeStar;
   private int fourStar;
   private int fiveStar;
   private int images;
+
+  public int getSumAll() {
+    return sumAll;
+  }
+
+  public void setSumAll(int sumAll) {
+    this.sumAll = sumAll;
+  }
 
   public int getSumReview() {
     return sumReview;

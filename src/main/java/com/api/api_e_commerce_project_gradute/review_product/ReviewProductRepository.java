@@ -25,7 +25,10 @@ public interface ReviewProductRepository extends JpaRepository<ReviewProduct,Lon
       "LIMIT ?3 , ?4 ",nativeQuery = true)
   List<ReviewProduct> getReviewProductByStarByIdProductLimit(String idProduct,int star,int offset,int limit);
 
-  @Query(value = "SELECT * FROM review_product WHERE id_product = ?1 AND star = ?2 ",nativeQuery = true)
-  List<ReviewProduct> getReviewProductByStarByIdProductAll(String idProduct,int star);
+  @Query(value = "SELECT COUNT(*) FROM review_product WHERE id_product = ?1 AND star = ?2 ",nativeQuery = true)
+  int getReviewProductByStarByIdProductAll(String idProduct,int star);
+
+  @Query(value = "SELECT * FROM review_product WHERE reply = ?1 AND level = 2 ORDER BY time_created LIMIT ?2 , ?3 ",nativeQuery = true)
+  List<ReviewProduct> getReviewProductByReply(Long reply,int offset,int limit);
 
 }
