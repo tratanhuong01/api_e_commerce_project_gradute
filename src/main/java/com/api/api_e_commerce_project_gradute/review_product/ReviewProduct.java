@@ -4,6 +4,7 @@ import com.api.api_e_commerce_project_gradute.product.Product;
 import com.api.api_e_commerce_project_gradute.user.User;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "review_product")
@@ -50,6 +51,17 @@ public class ReviewProduct {
 
   @Column
   private int type;
+
+  @Column
+  private Timestamp timeCreated;
+
+  public Timestamp getTimeCreated() {
+    return timeCreated;
+  }
+
+  public void setTimeCreated(Timestamp timeCreated) {
+    this.timeCreated = timeCreated;
+  }
 
   public Long getId() {
     return id;
