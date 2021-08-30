@@ -48,15 +48,6 @@ public class NewsService {
     newsDetailPage.setNews(news);
     newsDetailPage.setNewsBestList(newsRepository.getBestNewsIndex());
     newsDetailPage.setNewsBestLoveList(newsRepository.getBestLoveNews());
-    List<Comment> commentList = commentRepository.getListCommentLevelOneByIdNews(news.getId());
-    List<CommentLevel> commentLevelList = new ArrayList<>();
-    for (Comment comment: commentList) {
-      CommentLevel commentLevel = new CommentLevel();
-      commentLevel.setComment(comment);
-      commentLevel.setCommentList(commentRepository.getListCommentLevelTwoByIdNews(comment.getId()));
-      commentLevelList.add(commentLevel);
-    }
-    newsDetailPage.setCommentLevelList(commentLevelList);
     newsDetailPage.setNewsSameList(newsRepository.getListNewsSame(news.getCategoryNews().getId(),news.getId()));
     return newsDetailPage;
   }

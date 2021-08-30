@@ -1,5 +1,6 @@
 package com.api.api_e_commerce_project_gradute.comment;
 
+import com.api.api_e_commerce_project_gradute.DTO.comment.CommentLevel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,9 +14,15 @@ public class CommentController {
   CommentService commentService;
 
   @CrossOrigin
-  @GetMapping("comments")
-  public List<Comment> getAllComments() {
-    return commentService.getAllComments();
+  @GetMapping("commentsAll/{idNews}")
+  public int getAllComments(@PathVariable Long idNews) {
+    return commentService.getAllComments(idNews);
+  }
+
+  @CrossOrigin
+  @GetMapping("comments/{idNews}/{offset}/{limit}")
+  public List<CommentLevel> getAllCommentLimit(@PathVariable Long idNews, @PathVariable int offset, @PathVariable int limit) {
+    return commentService.getAllCommentLimit(idNews,offset,limit);
   }
 
   @CrossOrigin

@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-public class NewsController {
+public class  NewsController {
 
   @Autowired
   NewsService newsService;

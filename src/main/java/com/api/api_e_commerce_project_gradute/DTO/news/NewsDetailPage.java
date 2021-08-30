@@ -7,7 +7,6 @@ import java.util.List;
 
 public class NewsDetailPage {
   private News news;
-  private List<CommentLevel> commentLevelList;
   private List<News> newsBestList;
   private List<News> newsBestLoveList;
   private List<News> newsSameList;
@@ -26,14 +25,6 @@ public class NewsDetailPage {
 
   public void setNews(News news) {
     this.news = news;
-  }
-
-  public List<CommentLevel> getCommentLevelList() {
-    return commentLevelList;
-  }
-
-  public void setCommentLevelList(List<CommentLevel> commentLevelList) {
-    this.commentLevelList = commentLevelList;
   }
 
   public List<News> getNewsBestList() {
