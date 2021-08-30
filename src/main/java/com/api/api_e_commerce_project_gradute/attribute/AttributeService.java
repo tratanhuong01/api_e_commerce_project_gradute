@@ -12,7 +12,7 @@ public class AttributeService {
   AttributeRepository attributeRepository;
 
   public List<Attribute> getAllAttributes() {
-    return getAllAttributes();
+    return attributeRepository.findAll();
   }
 
   public List<Attribute> getAllAttributesLimit(int offset,int limit) {

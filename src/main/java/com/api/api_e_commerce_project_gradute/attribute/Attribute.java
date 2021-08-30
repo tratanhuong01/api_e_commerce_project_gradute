@@ -18,6 +18,14 @@ public class Attribute {
   @Column
   private String nameAttribute;
 
+  public GroupAttribute getGroupAttribute() {
+    return groupAttribute;
+  }
+
+  public void setGroupAttribute(GroupAttribute groupAttribute) {
+    this.groupAttribute = groupAttribute;
+  }
+
   public String getId() {
     return id;
   }
