@@ -1,6 +1,7 @@
 package com.api.api_e_commerce_project_gradute.attribute_product;
 
 import com.api.api_e_commerce_project_gradute.attribute.Attribute;
+import com.api.api_e_commerce_project_gradute.function_product.FunctionProduct;
 import com.api.api_e_commerce_project_gradute.line_product.LineProduct;
 
 import javax.persistence.*;
@@ -21,8 +22,28 @@ public class AttributeProduct {
   @JoinColumn(name = "id_attribute")
   private Attribute attributeProduct;
 
+  @ManyToOne
+  @JoinColumn(name = "id_function_product")
+  private FunctionProduct functionProduct;
+
   @Column
-  private int display;
+  private String valueAttributeProduct;
+
+  public FunctionProduct getFunctionProduct() {
+    return functionProduct;
+  }
+
+  public void setFunctionProduct(FunctionProduct functionProduct) {
+    this.functionProduct = functionProduct;
+  }
+
+  public String getValueAttributeProduct() {
+    return valueAttributeProduct;
+  }
+
+  public void setValueAttributeProduct(String valueAttributeProduct) {
+    this.valueAttributeProduct = valueAttributeProduct;
+  }
 
   public Long getId() {
     return id;
@@ -48,11 +69,4 @@ public class AttributeProduct {
     this.attributeProduct = attributeProduct;
   }
 
-  public int getDisplay() {
-    return display;
-  }
-
-  public void setDisplay(int display) {
-    this.display = display;
-  }
 }

@@ -2,6 +2,9 @@ package com.api.api_e_commerce_project_gradute.filter_product;
 
 import com.api.api_e_commerce_project_gradute.attribute.Attribute;
 import com.api.api_e_commerce_project_gradute.category_product.CategoryProduct;
+import com.api.api_e_commerce_project_gradute.function_product.FunctionProduct;
+import com.api.api_e_commerce_project_gradute.group_filter_product.GroupFilterProduct;
+import com.api.api_e_commerce_project_gradute.group_product.GroupProduct;
 
 import javax.persistence.*;
 
@@ -14,15 +17,12 @@ public class FilterProduct {
   private Long id;
 
   @ManyToOne
-  @JoinColumn(name = "id_category_product")
-  private CategoryProduct categoryProductFilter;
+  @JoinColumn(name = "id_group_filter_product")
+  private GroupFilterProduct groupFilterProduct;
 
   @ManyToOne
-  @JoinColumn(name = "id_attribute")
-  private Attribute attributeFilterProduct;
-
-  @Column
-  private int status;
+  @JoinColumn(name = "id_function_product")
+  private FunctionProduct functionProductFilter;
 
   public Long getId() {
     return id;
@@ -32,27 +32,19 @@ public class FilterProduct {
     this.id = id;
   }
 
-  public CategoryProduct getCategoryProductFilter() {
-    return categoryProductFilter;
+  public GroupFilterProduct getGroupFilterProduct() {
+    return groupFilterProduct;
   }
 
-  public void setCategoryProductFilter(CategoryProduct categoryProductFilter) {
-    this.categoryProductFilter = categoryProductFilter;
+  public void setGroupFilterProduct(GroupFilterProduct groupFilterProduct) {
+    this.groupFilterProduct = groupFilterProduct;
   }
 
-  public Attribute getAttributeFilterProduct() {
-    return attributeFilterProduct;
+  public FunctionProduct getFunctionProductFilter() {
+    return functionProductFilter;
   }
 
-  public void setAttributeFilterProduct(Attribute attributeFilterProduct) {
-    this.attributeFilterProduct = attributeFilterProduct;
-  }
-
-  public int getStatus() {
-    return status;
-  }
-
-  public void setStatus(int status) {
-    this.status = status;
+  public void setFunctionProductFilter(FunctionProduct functionProductFilter) {
+    this.functionProductFilter = functionProductFilter;
   }
 }

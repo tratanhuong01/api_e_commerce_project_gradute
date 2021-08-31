@@ -18,6 +18,9 @@ public class Attribute {
   @Column
   private String nameAttribute;
 
+  @Column
+  private int typeAttribute;
+
   public GroupAttribute getGroupAttribute() {
     return groupAttribute;
   }
@@ -40,5 +43,13 @@ public class Attribute {
 
   public void setNameAttribute(String nameAttribute) {
     this.nameAttribute = nameAttribute;
+  }
+
+  public int getTypeAttribute() {
+    return typeAttribute;
+  }
+
+  public void setTypeAttribute(int typeAttribute) {
+    this.typeAttribute = typeAttribute;
   }
 }
