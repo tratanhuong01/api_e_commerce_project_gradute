@@ -1,5 +1,7 @@
 package com.api.api_e_commerce_project_gradute.function_product;
 
+import com.api.api_e_commerce_project_gradute.group_filter_product.GroupFilterProduct;
+
 import javax.persistence.*;
 
 @Entity
@@ -9,6 +11,10 @@ public class FunctionProduct {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+
+  @ManyToOne
+  @JoinColumn(name = "id_group_filter_product")
+  private GroupFilterProduct groupFilterFunctionProduct;
 
   @Column
   private String nameFunctionProduct;
@@ -22,6 +28,14 @@ public class FunctionProduct {
 
   public void setId(Long id) {
     this.id = id;
+  }
+
+  public GroupFilterProduct getGroupFilterFunctionProduct() {
+    return groupFilterFunctionProduct;
+  }
+
+  public void setGroupFilterFunctionProduct(GroupFilterProduct groupFilterFunctionProduct) {
+    this.groupFilterFunctionProduct = groupFilterFunctionProduct;
   }
 
   public String getNameFunctionProduct() {

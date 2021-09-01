@@ -22,20 +22,8 @@ public class AttributeProduct {
   @JoinColumn(name = "id_attribute")
   private Attribute attributeProduct;
 
-  @ManyToOne
-  @JoinColumn(name = "id_function_product")
-  private FunctionProduct functionProduct;
-
   @Column
   private String valueAttributeProduct;
-
-  public FunctionProduct getFunctionProduct() {
-    return functionProduct;
-  }
-
-  public void setFunctionProduct(FunctionProduct functionProduct) {
-    this.functionProduct = functionProduct;
-  }
 
   public String getValueAttributeProduct() {
     return valueAttributeProduct;
