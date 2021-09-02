@@ -28,7 +28,7 @@ public class ReviewProductController {
 
   @CrossOrigin
   @GetMapping("reviewProductByStarAll/{idProduct}/{star}")
-  public int getReviewProductByStartByIdProductAll(@PathVariable String idProduct,
+  public List<LevelReviewProduct> getReviewProductByStartByIdProductAll(@PathVariable String idProduct,
   @PathVariable int star) {
     return reviewProductService.getReviewProductByStartByIdProductAll(idProduct, star);
   }

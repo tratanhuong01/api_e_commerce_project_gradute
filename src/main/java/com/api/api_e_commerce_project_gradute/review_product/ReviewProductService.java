@@ -80,8 +80,16 @@ public class ReviewProductService {
     return levelReviewProductList;
   }
 
-  public int getReviewProductByStartByIdProductAll(String idProduct,int star) {
-    return reviewProductRepository.getReviewProductByStarByIdProductAll(idProduct, star);
+  public List<LevelReviewProduct> getReviewProductByStartByIdProductAll(String idProduct,int star) {
+    List<ReviewProduct> reviewProductList =  reviewProductRepository.getReviewProductByStarByIdProductAll(idProduct, star);
+    List<LevelReviewProduct> levelReviewProductList = new ArrayList<>();
+    for (ReviewProduct reviewProduct:reviewProductList) {
+      LevelReviewProduct levelReviewProduct = new LevelReviewProduct();
+      levelReviewProduct.setReviewProduct(reviewProduct);
+      levelReviewProduct.setReviewProductList(reviewProductRepository.getReviewProductByReply(reviewProduct.getId(),0,2));
+      levelReviewProductList.add(levelReviewProduct);
+    }
+    return levelReviewProductList;
   }
 
 }

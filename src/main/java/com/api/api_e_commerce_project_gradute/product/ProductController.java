@@ -82,9 +82,9 @@ public class ProductController {
   }
 
   @CrossOrigin
-  @PostMapping("getProductById")
-  public ProductFull getProductByIdProduct(@RequestParam String slug) {
-    return productService.getProductBySlug(slug,1);
+  @GetMapping("products/full/{id}")
+  public ProductFull getProductByIdProduct(@PathVariable String id) {
+    return productService.getProductBySlug(id,1);
   }
 
   @CrossOrigin

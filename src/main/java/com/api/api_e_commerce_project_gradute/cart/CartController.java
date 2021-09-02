@@ -20,15 +20,15 @@ public class CartController {
   }
 
   @CrossOrigin
-  @GetMapping("carts/{idCart}")
-  public Optional<Cart> getCartById(@PathVariable Long idCart) {
-    return cartService.getCartById(idCart);
+  @GetMapping("carts/{id}")
+  public Optional<Cart> getCartById(@PathVariable Long id) {
+    return cartService.getCartById(id);
   }
 
   @CrossOrigin
-  @GetMapping("getAllCartByIdUser/{idUser}")
-  public List<CartFull> getAllCartByIdUser(@PathVariable String idUser) {
-    return cartService.getAllCartByIdUser(idUser);
+  @GetMapping("carts/{id}/user")
+  public List<CartFull> getAllCartByIdUser(@PathVariable String id) {
+    return cartService.getAllCartByIdUser(id);
   }
 
   @CrossOrigin
@@ -38,13 +38,13 @@ public class CartController {
   }
 
   @CrossOrigin
-  @GetMapping("checkCart/{idUser}/{idProduct}")
+  @GetMapping("check-cart/{idUser}/{idProduct}")
   public Cart checkCart(@PathVariable String idUser,@PathVariable String idProduct) {
     return cartService.checkCart(idUser, idProduct);
   }
 
   @CrossOrigin
-  @PutMapping("updateCart")
+  @PutMapping("update-cart")
   public List<CartFull> updateCart(@RequestParam int amount,@RequestParam Long idCart,@RequestParam String idUser) {
     return cartService.updateCart(amount,idCart,idUser);
   }
