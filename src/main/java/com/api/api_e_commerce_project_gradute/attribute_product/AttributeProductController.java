@@ -1,5 +1,6 @@
 package com.api.api_e_commerce_project_gradute.attribute_product;
 
+import com.api.api_e_commerce_project_gradute.DTO.AttributeByGroupAttribute;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +22,12 @@ public class AttributeProductController {
   @GetMapping("attributeProducts")
   public List<AttributeProduct> getAllAttributeProductLimit() {
     return attributeProductService.getAllAttributeProductLimit(0,10);
+  }
+
+  @CrossOrigin
+  @GetMapping("attributeProducts/{idLineProduct}")
+  public List<AttributeByGroupAttribute> getAttributeProductByIdLineProduct(@PathVariable String idLineProduct) {
+    return attributeProductService.getAttributeProductByIdLineProduct(idLineProduct);
   }
 
   @CrossOrigin
