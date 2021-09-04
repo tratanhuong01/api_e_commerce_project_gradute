@@ -40,4 +40,7 @@ public interface NewsRepository extends JpaRepository<News,Long> {
   @Query(value = "SELECT * FROM news WHERE id_category_news = ?1 ORDER BY time_created LIMIT ?2 , ?3 ",nativeQuery = true)
   List<News> getListNewsLimit(String idCategoryNews,int offset,int limit);
 
+  @Query(value = "SELECT * FROM news ORDER BY time_created LIMIT ?1 , ?2 ",nativeQuery = true)
+  List<News> getNewsLimit(int offset,int limit);
+
 }

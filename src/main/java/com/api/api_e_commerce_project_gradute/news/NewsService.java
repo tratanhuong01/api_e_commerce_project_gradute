@@ -29,6 +29,10 @@ public class NewsService {
   @Autowired
   CommentRepository commentRepository;
 
+  public List<News> getNewsLimit(int offset,int limit) {
+    return newsRepository.getNewsLimit(offset, limit);
+  }
+
   public List<News> getAllNews() {
     return newsRepository.findAll();
   }

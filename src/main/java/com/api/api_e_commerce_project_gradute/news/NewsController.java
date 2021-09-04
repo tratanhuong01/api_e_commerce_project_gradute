@@ -16,7 +16,19 @@ public class  NewsController {
 
   @CrossOrigin
   @GetMapping("news")
+  public List<News> getNewsLimit() {
+    return newsService.getNewsLimit(0,10);
+  }
+
+  @CrossOrigin
+  @GetMapping("newsAll")
   public List<News> getAllNews() {
+    return newsService.getAllNews();
+  }
+
+  @CrossOrigin
+  @GetMapping("news/{offset}/{limit}")
+  public List<News> getAllNewsLimit(@PathVariable int offset, @PathVariable int limit) {
     return newsService.getAllNews();
   }
 

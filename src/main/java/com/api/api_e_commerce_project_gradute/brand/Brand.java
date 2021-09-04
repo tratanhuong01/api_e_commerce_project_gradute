@@ -19,6 +19,9 @@ public class Brand {
   private String nameBrand;
 
   @Column
+  private String imageBrand;
+
+  @Column
   private int type;
 
   public String getId() {
@@ -29,6 +32,13 @@ public class Brand {
     this.id = id;
   }
 
+  public String getImageBrand() {
+    return imageBrand;
+  }
+
+  public void setImageBrand(String imageBrand) {
+    this.imageBrand = imageBrand;
+  }
 
   public String getNameBrand() {
     return nameBrand;

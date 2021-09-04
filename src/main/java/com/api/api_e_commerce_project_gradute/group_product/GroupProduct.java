@@ -18,6 +18,14 @@ public class GroupProduct {
   @Column
   private String nameGroupProduct;
 
+  public CategoryProduct getCategoryGroupProduct() {
+    return categoryGroupProduct;
+  }
+
+  public void setCategoryGroupProduct(CategoryProduct categoryGroupProduct) {
+    this.categoryGroupProduct = categoryGroupProduct;
+  }
+
   @Column
   private String slugGroupProduct;
 
