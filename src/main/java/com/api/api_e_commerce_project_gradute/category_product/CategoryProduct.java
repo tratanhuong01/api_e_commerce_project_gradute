@@ -25,6 +25,17 @@ public class CategoryProduct {
   @Column
   private String icon;
 
+  @Column
+  private int typeCategoryProduct;
+
+  public int getTypeCategoryProduct() {
+    return typeCategoryProduct;
+  }
+
+  public void setTypeCategoryProduct(int typeCategoryProduct) {
+    this.typeCategoryProduct = typeCategoryProduct;
+  }
+
   public String getIcon() {
     return icon;
   }

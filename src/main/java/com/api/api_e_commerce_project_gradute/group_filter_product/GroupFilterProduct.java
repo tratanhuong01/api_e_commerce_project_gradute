@@ -10,7 +10,8 @@ import javax.persistence.*;
 public class GroupFilterProduct {
 
   @Id
-  private String id;
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
   @ManyToOne
   @JoinColumn(name = "id_group_product")
@@ -22,11 +23,11 @@ public class GroupFilterProduct {
   @Column
   private int typeGroupFilterProduct;
 
-  public String getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(String id) {
+  public void setId(Long id) {
     this.id = id;
   }
 

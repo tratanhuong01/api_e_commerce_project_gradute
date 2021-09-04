@@ -13,12 +13,12 @@ public interface FunctionProductRepository extends JpaRepository<FunctionProduct
   List<FunctionProduct> getAllFunctionProductLimit(int offset,int limit);
 
   @Query(value = "SELECT * FROM function_product WHERE id_group_filter_product = ? ",nativeQuery = true)
-  List<FunctionProduct> getFunctionProductById(String id);
+  List<FunctionProduct> getFunctionProductById(Long id);
 
   @Query(value = "SELECT DISTINCT fp.id_group_filter_product FROM function_product fp " +
       "INNER JOIN group_filter_product gfp ON fp.id_group_filter_product = gfp.id INNER JOIN group_product gp " +
       "ON gfp.id_group_product = gp.id WHERE gp.slug_group_product = ?1 ",nativeQuery = true)
-  List<String> getFilterByGroupProduct(String slug);
+  List<Long> getFilterByGroupProduct(String slug);
 
   @Query(value = "SELECT fp.* FROM function_product fp " +
       "INNER JOIN group_filter_product gfp ON fp.id_group_filter_product = gfp.id INNER JOIN group_product gp " +

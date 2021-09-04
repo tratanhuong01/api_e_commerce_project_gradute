@@ -32,16 +32,16 @@ public class FunctionProductService {
   }
 
   public List<FilterByGroupProduct> getFilterByGroupProduct(String slug) {
-    List<String> stringList =  functionProductRepository.getFilterByGroupProduct(slug);
+    List<Long> longList =  functionProductRepository.getFilterByGroupProduct(slug);
     List<FilterByGroupProduct> filterByGroupProductList = new ArrayList<>();
 
-    for (String string:stringList) {
+    for (Long data : longList) {
       FilterByGroupProduct filterByGroupProduct = new FilterByGroupProduct();
       filterByGroupProduct.setGroupFilterProduct(
-          groupFilterProductRepository.getGroupFilterProductById(string)
+          groupFilterProductRepository.getGroupFilterProductById(data)
       );
       filterByGroupProduct.setFunctionProductList(
-          functionProductRepository.getFunctionProductById(string)
+          functionProductRepository.getFunctionProductById(data)
       );
       filterByGroupProductList.add(filterByGroupProduct);
     }
