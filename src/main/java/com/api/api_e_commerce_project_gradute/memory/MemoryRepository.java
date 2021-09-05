@@ -10,7 +10,7 @@ import java.util.List;
 public interface MemoryRepository extends JpaRepository<Memory,String> {
 
   @Query(value = "SELECT * FROM memory WHERE id = ?1 ",nativeQuery = true)
-  Memory getMemoryByIdMemory(String idMemory);
+  Memory getMemoryByIdMemory(Long idMemory);
 
   @Query(value = "SELECT * FROM memory LIMIT ?1 , ?2 ",nativeQuery = true)
   List<Memory> getMemoriesLimit(int offset,int limit);

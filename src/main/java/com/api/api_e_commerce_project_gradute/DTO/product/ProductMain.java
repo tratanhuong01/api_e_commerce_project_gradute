@@ -19,8 +19,9 @@ import javax.persistence.SqlResultSetMapping;
             @ColumnResult(name = "priceInput", type = Integer.class),
             @ColumnResult(name = "priceOutput", type = Integer.class),
             @ColumnResult(name = "sale", type = Integer.class),
-            @ColumnResult(name = "idColor", type = String.class),
-            @ColumnResult(name = "idMemory", type = String.class),
+            @ColumnResult(name = "idColor", type = Long.class),
+            @ColumnResult(name = "idMemory", type = Long.class),
+            @ColumnResult(name = "idRam", type = Long.class),
             @ColumnResult(name = "isShow", type = Integer.class),
             @ColumnResult(name = "idImage", type = Long.class),
             @ColumnResult(name = "slug", type = String.class),
@@ -44,8 +45,9 @@ public interface ProductMain {
   int getPriceInput();
   int getPriceOutput();
   int getSale();
-  String getIdColor();
-  String getIdMemory();
+  Long getIdColor();
+  Long getIdMemory();
+  Long getIdRam();
   int getIsShow();
   Long getIdImage();
   String getSlug();

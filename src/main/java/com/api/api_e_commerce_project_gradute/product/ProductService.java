@@ -16,6 +16,7 @@ import com.api.api_e_commerce_project_gradute.image.ImageRepository;
 import com.api.api_e_commerce_project_gradute.memory.Memory;
 import com.api.api_e_commerce_project_gradute.memory.MemoryRepository;
 import com.api.api_e_commerce_project_gradute.news.NewsRepository;
+import com.api.api_e_commerce_project_gradute.ram.RamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -49,6 +50,9 @@ public class ProductService {
 
   @Autowired
   NewsRepository newsRepository;
+
+  @Autowired
+  RamRepository ramRepository;
 
   public Product getProductByIdMain(String id) {
     return productRepository.getProductById(id);
@@ -129,6 +133,7 @@ public class ProductService {
           productMainList.get(0).getSale(), imageRepository.getImageByIdImage(productMainList.get(0).getIdImage()),
           colorRepository.getColorByIdColor(productMainList.get(0).getIdColor()),
           memoryRepository.getMemoryByIdMemory(productMainList.get(0).getIdMemory()),
+          ramRepository.getRamByIdRam(productMainList.get(0).getIdRam()),
           brandRepository.getBrandByIdBrand(productMainList.get(0).getIdBrand()),
           productMainList.get(0).getDescribeProduct());
       productFullList.add(productFull);
@@ -183,6 +188,7 @@ public class ProductService {
           productMainList.get(0).getSale(), imageRepository.getImageByIdImage(productMainList.get(0).getIdImage()),
           colorRepository.getColorByIdColor(productMainList.get(0).getIdColor()),
           memoryRepository.getMemoryByIdMemory(productMainList.get(0).getIdMemory()),
+          ramRepository.getRamByIdRam(productMainList.get(0).getIdRam()),
           brandRepository.getBrandByIdBrand(productMainList.get(0).getIdBrand()),
           productMainList.get(0).getDescribeProduct());
       productFullList.add(productFull);
@@ -237,6 +243,7 @@ public class ProductService {
           productMainList.get(0).getSale(), imageRepository.getImageByIdImage(productMainList.get(0).getIdImage()),
           colorRepository.getColorByIdColor(productMainList.get(0).getIdColor()),
           memoryRepository.getMemoryByIdMemory(productMainList.get(0).getIdMemory()),
+          ramRepository.getRamByIdRam(productMainList.get(0).getIdRam()),
           brandRepository.getBrandByIdBrand(productMainList.get(0).getIdBrand()),
           productMainList.get(0).getDescribeProduct());
       productFullList.add(productFull);
@@ -291,6 +298,7 @@ public class ProductService {
           productMainList.get(0).getSale(), imageRepository.getImageByIdImage(productMainList.get(0).getIdImage()),
           colorRepository.getColorByIdColor(productMainList.get(0).getIdColor()),
           memoryRepository.getMemoryByIdMemory(productMainList.get(0).getIdMemory()),
+          ramRepository.getRamByIdRam(productMainList.get(0).getIdRam()),
           brandRepository.getBrandByIdBrand(productMainList.get(0).getIdBrand()),
           productMainList.get(0).getDescribeProduct());
       productFullList.add(productFull);
@@ -364,6 +372,7 @@ public class ProductService {
             productMainList.get(0).getSale(), imageRepository.getImageByIdImage(productMainList.get(0).getIdImage()),
             colorRepository.getColorByIdColor(productMainList.get(0).getIdColor()),
             memoryRepository.getMemoryByIdMemory(productMainList.get(0).getIdMemory()),
+            ramRepository.getRamByIdRam(productMainList.get(0).getIdRam()),
             brandRepository.getBrandByIdBrand(productMainList.get(0).getIdBrand()),
             productMainList.get(0).getDescribeProduct());
         productFullList.add(productFull);
@@ -435,6 +444,7 @@ public class ProductService {
         productMains.getSale(),imageRepository.getImageByIdImage(productMains.getIdImage()),
         colorRepository.getColorByIdColor(productMains.getIdColor()),
         memoryRepository.getMemoryByIdMemory(productMains.getIdMemory()),
+        ramRepository.getRamByIdRam(productMainList.get(0).getIdRam()),
         brandRepository.getBrandByIdBrand(productMains.getIdBrand()),
         productMains.getDescribeProduct());
     return productFull;

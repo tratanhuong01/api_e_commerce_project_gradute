@@ -43,8 +43,8 @@ public interface CartMain {
   int getPriceInput();
   int getPriceOutput();
   int getSale();
-  String getColor();
-  String getMemory();
+  Long getColor();
+  Long getMemory();
   Long getImage();
   String getSlug();
   String getBrand();

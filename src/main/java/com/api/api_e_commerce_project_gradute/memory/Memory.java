@@ -11,7 +11,8 @@ import java.util.Set;
 public class Memory {
 
   @Id
-  private String id;
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
   @OneToMany(mappedBy = "memoryProduct")
   private Set<Product> memoryProduct = new HashSet<>();
@@ -22,11 +23,11 @@ public class Memory {
   @Column
   private int type;
 
-  public String getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(String id) {
+  public void setId(Long id) {
     this.id = id;
   }
 

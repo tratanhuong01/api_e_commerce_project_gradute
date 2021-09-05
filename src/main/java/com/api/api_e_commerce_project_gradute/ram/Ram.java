@@ -9,7 +9,8 @@ import java.util.Set;
 public class Ram {
 
   @Id
-  private String id;
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
   @OneToMany(mappedBy = "ramProduct")
   private Set<Ram> ramProduct = new HashSet<>();
@@ -20,11 +21,11 @@ public class Ram {
   @Column
   private int isShow;
 
-  public String getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(String id) {
+  public void setId(Long id) {
     this.id = id;
   }
 

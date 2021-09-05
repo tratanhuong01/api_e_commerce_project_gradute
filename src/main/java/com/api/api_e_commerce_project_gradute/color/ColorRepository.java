@@ -10,7 +10,7 @@ import java.util.List;
 public interface ColorRepository extends JpaRepository<Color,String> {
 
   @Query(value = "SELECT * FROM color WHERE id = ?1 ",nativeQuery = true)
-  Color getColorByIdColor(String idColor);
+  Color getColorByIdColor(Long idColor);
 
   @Query(value = "SELECT * FROM color LIMIT ?1 , ?2 ",nativeQuery = true)
   List<Color> getColorsLimit(int offset,int limit);

@@ -9,7 +9,8 @@ import javax.persistence.*;
 public class Attribute {
 
   @Id
-  private String id;
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
   @ManyToOne
   @JoinColumn(name = "id_group_attribute")
@@ -29,11 +30,11 @@ public class Attribute {
     this.groupAttribute = groupAttribute;
   }
 
-  public String getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(String id) {
+  public void setId(Long id) {
     this.id = id;
   }
 

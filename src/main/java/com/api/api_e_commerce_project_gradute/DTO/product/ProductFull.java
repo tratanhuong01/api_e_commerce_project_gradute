@@ -4,6 +4,7 @@ import com.api.api_e_commerce_project_gradute.brand.Brand;
 import com.api.api_e_commerce_project_gradute.color.Color;
 import com.api.api_e_commerce_project_gradute.image.Image;
 import com.api.api_e_commerce_project_gradute.memory.Memory;
+import com.api.api_e_commerce_project_gradute.ram.Ram;
 
 import java.util.List;
 
@@ -25,12 +26,13 @@ public class ProductFull {
   private Image image;
   private Color color;
   private Memory memory;
+  private Ram ram;
   private Brand brand;
   private String describeProduct;
   public ProductFull(String idProduct, String idCategoryProduct, String nameCategoryProduct, String idGroupProduct,
  String nameGroupProduct, String idLineProduct, String nameLineProduct, List<Color> colorList,
  List<Memory> memoryList, List<Image> imageList, String slug, int priceInput, int priceOutput, int sale,
- Image image,Color color,Memory memory,Brand brand,String describeProduct){
+ Image image,Color color,Memory memory,Ram ram,Brand brand,String describeProduct){
     this.idProduct = idProduct;
     this.idCategoryProduct = idCategoryProduct;
     this.nameCategoryProduct = nameCategoryProduct;
@@ -48,8 +50,17 @@ public class ProductFull {
     this.image = image;
     this.color = color;
     this.memory = memory;
+    this.ram = ram;
     this.brand = brand;
     this.describeProduct = describeProduct;
+  }
+
+  public Ram getRam() {
+    return ram;
+  }
+
+  public void setRam(Ram ram) {
+    this.ram = ram;
   }
 
   public String getDescribeProduct() {
