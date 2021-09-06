@@ -7,40 +7,43 @@ import com.api.api_e_commerce_project_gradute.line_product.LineProduct;
 import com.api.api_e_commerce_project_gradute.memory.Memory;
 import com.api.api_e_commerce_project_gradute.ram.Ram;
 import com.api.api_e_commerce_project_gradute.user.User;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "product")
-public class Product {
+public class Product implements Serializable {
   @Id
   private String id;
 
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne
   @JoinColumn(name = "id_user")
   private User productUser;
 
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne
   @JoinColumn(name = "id_memory")
   private Memory memoryProduct;
 
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne
   @JoinColumn(name = "id_line_product")
   private LineProduct lineProduct;
 
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne
   @JoinColumn(name = "id_color")
   private Color colorProduct;
 
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne
   @JoinColumn(name = "id_ram")
   private Ram ramProduct;
 
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne
   @JoinColumn(name = "id_brand")
   private Brand brandProduct;
 
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne
   @JoinColumn(name = "id_image")
   private Image imageProduct;
 
@@ -52,6 +55,14 @@ public class Product {
 
   @Column
   private String describeProduct;
+
+  public String getId() {
+    return id;
+  }
+
+  public void setId(String id) {
+    this.id = id;
+  }
 
   public User getProductUser() {
     return productUser;
@@ -67,14 +78,6 @@ public class Product {
 
   public void setMemoryProduct(Memory memoryProduct) {
     this.memoryProduct = memoryProduct;
-  }
-
-  public String getSlug() {
-    return slug;
-  }
-
-  public void setSlug(String slug) {
-    this.slug = slug;
   }
 
   public LineProduct getLineProduct() {
@@ -117,20 +120,20 @@ public class Product {
     this.imageProduct = imageProduct;
   }
 
-  public String getId() {
-    return id;
-  }
-
-  public void setId(String id) {
-    this.id = id;
-  }
-
   public int getIsShow() {
     return isShow;
   }
 
   public void setIsShow(int isShow) {
     this.isShow = isShow;
+  }
+
+  public String getSlug() {
+    return slug;
+  }
+
+  public void setSlug(String slug) {
+    this.slug = slug;
   }
 
   public String getDescribeProduct() {

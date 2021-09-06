@@ -2,6 +2,8 @@ package com.api.api_e_commerce_project_gradute.color;
 
 import com.api.api_e_commerce_project_gradute.product.Product;
 import com.api.api_e_commerce_project_gradute.product_input.ProductInput;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -16,7 +18,7 @@ public class Color {
   private Long id;
 
   @OneToMany(mappedBy = "colorProduct")
-  private Set<Product> colorProduct = new HashSet<>();;
+  private Set<Product> colorProduct = new HashSet<>();
 
   @Column
   private String code;

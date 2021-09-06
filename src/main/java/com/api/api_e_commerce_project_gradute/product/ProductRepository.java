@@ -1,14 +1,21 @@
 package com.api.api_e_commerce_project_gradute.product;
 
 import com.api.api_e_commerce_project_gradute.DTO.product.ProductMain;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 @Repository
-public interface ProductRepository extends JpaRepository<Product,String> {
+public interface ProductRepository extends JpaRepository<Product,String> , JpaSpecificationExecutor<Product> {
+
+  List<Product> findAll(@Nullable Specification<Product> spec);
+
   //get id new of product table
   @Query(value = "SELECT * FROM product ORDER BY id DESC LIMIT 1",nativeQuery = true)
   Product getIdBestNew();

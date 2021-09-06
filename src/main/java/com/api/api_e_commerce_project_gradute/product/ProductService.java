@@ -1,10 +1,7 @@
 package com.api.api_e_commerce_project_gradute.product;
 
 import com.api.api_e_commerce_project_gradute.DTO.CategoryByGroupProduct;
-import com.api.api_e_commerce_project_gradute.DTO.product.ProductByCategory;
-import com.api.api_e_commerce_project_gradute.DTO.product.ProductFull;
-import com.api.api_e_commerce_project_gradute.DTO.product.ProductIndex;
-import com.api.api_e_commerce_project_gradute.DTO.product.ProductMain;
+import com.api.api_e_commerce_project_gradute.DTO.product.*;
 import com.api.api_e_commerce_project_gradute.brand.BrandRepository;
 import com.api.api_e_commerce_project_gradute.category_product.CategoryProduct;
 import com.api.api_e_commerce_project_gradute.category_product.CategoryProductRepository;
@@ -18,6 +15,7 @@ import com.api.api_e_commerce_project_gradute.memory.MemoryRepository;
 import com.api.api_e_commerce_project_gradute.news.NewsRepository;
 import com.api.api_e_commerce_project_gradute.ram.RamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -477,6 +475,11 @@ public class ProductService {
 
   public List<Product> getProductLimit(int offset,int limit) {
     return productRepository.getProductLimit(offset, limit);
+  }
+
+  public List<Product> filterProduct(ProductCriteria productCriteria) {
+    Specification<Product> productSpecification = ProductSpecifications.createProductSpecifications(productCriteria);
+    return productRepository.findAll(productSpecification);
   }
 
 }

@@ -1,12 +1,16 @@
 package com.api.api_e_commerce_project_gradute.ram;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "ram")
-public class Ram {
+public class Ram implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

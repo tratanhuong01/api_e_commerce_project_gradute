@@ -1,19 +1,41 @@
 package com.api.api_e_commerce_project_gradute.product;
 
 import com.api.api_e_commerce_project_gradute.DTO.CategoryByGroupProduct;
+import com.api.api_e_commerce_project_gradute.DTO.product.ProductCriteria;
 import com.api.api_e_commerce_project_gradute.DTO.product.ProductFull;
 import com.api.api_e_commerce_project_gradute.DTO.product.ProductIndex;
+import com.api.api_e_commerce_project_gradute.color.Color;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.PersistenceContext;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 public class ProductController {
 
   @Autowired
   ProductService productService;
+
+  @CrossOrigin
+  @GetMapping("productsFilter")
+  public List<Product> filterProduct(@RequestParam(name="feature", required = false) Set<Long> feature,
+                                     @RequestParam(name="color", required = false) Set<Long> color,
+                                     @RequestParam(name="ram", required = false) Set<Long> ram,
+                                     @RequestParam(name="rom", required = false) Set<Long> rom,
+                                     @RequestParam(name="brand", required = false) Set<String> brand) {
+    ProductCriteria productCriteria = ProductCriteria.builder().
+        feature(feature).
+        rom(rom).
+        ram(ram).
+        brand(brand).
+        color(color).
+        build();
+    return productService.filterProduct(productCriteria);
+  }
 
   @CrossOrigin
   @GetMapping("products/{offset}/{limit}")
