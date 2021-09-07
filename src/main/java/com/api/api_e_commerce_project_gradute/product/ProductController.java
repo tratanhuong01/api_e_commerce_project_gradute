@@ -26,13 +26,17 @@ public class ProductController {
                                      @RequestParam(name="color", required = false) Set<Long> color,
                                      @RequestParam(name="ram", required = false) Set<Long> ram,
                                      @RequestParam(name="rom", required = false) Set<Long> rom,
-                                     @RequestParam(name="brand", required = false) Set<String> brand) {
+                                     @RequestParam(name="brand", required = false) Set<String> brand,
+                                     @RequestParam(name="priceFrom", required = false) Integer priceFrom,
+                                     @RequestParam(name="priceTo", required = false) Integer priceTo) {
     ProductCriteria productCriteria = ProductCriteria.builder().
         feature(feature).
         rom(rom).
         ram(ram).
         brand(brand).
         color(color).
+        priceFrom(priceFrom).
+        priceTo(priceTo).
         build();
     return productService.filterProduct(productCriteria);
   }
