@@ -2,7 +2,6 @@ package com.api.api_e_commerce_project_gradute.line_product;
 
 import com.api.api_e_commerce_project_gradute.group_product.GroupProduct;
 import com.api.api_e_commerce_project_gradute.product.Product;
-import com.api.api_e_commerce_project_gradute.product_input.ProductInput;
 
 import javax.persistence.*;
 import java.util.HashSet;

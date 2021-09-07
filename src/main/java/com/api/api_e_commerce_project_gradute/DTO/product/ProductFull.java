@@ -9,6 +9,7 @@ import com.api.api_e_commerce_project_gradute.ram.Ram;
 import java.util.List;
 
 public class ProductFull {
+
   private String idProduct;
   private String idCategoryProduct;
   private String nameCategoryProduct;
@@ -29,10 +30,11 @@ public class ProductFull {
   private Ram ram;
   private Brand brand;
   private String describeProduct;
+
   public ProductFull(String idProduct, String idCategoryProduct, String nameCategoryProduct, String idGroupProduct,
- String nameGroupProduct, String idLineProduct, String nameLineProduct, List<Color> colorList,
- List<Memory> memoryList, List<Image> imageList, String slug, int priceInput, int priceOutput, int sale,
- Image image,Color color,Memory memory,Ram ram,Brand brand,String describeProduct){
+   String nameGroupProduct, String idLineProduct, String nameLineProduct, List<Color> colorList,
+   List<Memory> memoryList, List<Image> imageList, String slug, int priceInput, int priceOutput, int sale,
+   Image image,Color color,Memory memory,Ram ram,Brand brand,String describeProduct){
     this.idProduct = idProduct;
     this.idCategoryProduct = idCategoryProduct;
     this.nameCategoryProduct = nameCategoryProduct;

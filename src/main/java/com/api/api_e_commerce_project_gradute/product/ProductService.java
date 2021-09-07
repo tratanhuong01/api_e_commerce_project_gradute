@@ -17,13 +17,15 @@ import com.api.api_e_commerce_project_gradute.ram.RamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Transactional(readOnly = true)
 @Service
-public class ProductService {
+public class ProductService{
 
   @Autowired
   ProductRepository productRepository;
@@ -251,56 +253,9 @@ public class ProductService {
 
   public List<ProductFull> getProductBySlugCategoryAndSlugGroup(String slugCategory,String slugGroup) {
     List<ProductFull> productFullList = new ArrayList<>();
-    List<String> stringList = productRepository.getDistinctIdLineProductBySlugCategoryAndSlugGroupProduct(slugCategory,slugGroup);
-    for (String string: stringList) {
-      List<ProductMain> productMainList = productRepository.getProductByIdLineProduct(string);
-      List<Color> colorList = new ArrayList<>();
-      List<Image> imageList = new ArrayList<>();
-      List<Memory> memoryList = new ArrayList<>();
-      for (ProductMain productMain: productMainList) {
-        if (productMain.getIdColor() != null) {
-          int count = 0;
-          for (Color color : colorList) {
-            if (color.getId().equals(productMain.getIdColor())) {
-              count++;
-            }
-          }
-          if (count == 0)
-            colorList.add(colorRepository.getColorByIdColor(productMain.getIdColor()));
-        }
-        if (productMain.getIdImage() != null) {
-          int count = 0;
-          for (Image image : imageList) {
-            if (image.getId().equals(productMain.getIdImage())) {
-              count++;
-            }
-          }
-          if (count == 0)
-            imageList.add(imageRepository.getImageByIdImage(productMain.getIdImage()));
-        }
-        if (productMain.getIdMemory() != null) {
-          int count = 0;
-          for (Memory memory : memoryList) {
-            if (memory.getId().equals(productMain.getIdMemory())) {
-              count++;
-            }
-          }
-          if (count == 0)
-            memoryList.add(memoryRepository.getMemoryByIdMemory(productMain.getIdMemory()));
-        }
-      }
-      ProductFull productFull = new ProductFull(productMainList.get(0).getIdProduct(),productMainList.get(0).getIdCategoryProduct(),
-          productMainList.get(0).getNameCategoryProduct(),productMainList.get(0).getIdGroupProduct(),productMainList.get(0).getNameGroupProduct(),
-          productMainList.get(0).getIdLineProduct(),productMainList.get(0).getNameLineProduct(),colorList,memoryList,imageList,
-          productMainList.get(0).getSlug(),productMainList.get(0).getPriceInput(),productMainList.get(0).getPriceOutput(),
-          productMainList.get(0).getSale(), imageRepository.getImageByIdImage(productMainList.get(0).getIdImage()),
-          colorRepository.getColorByIdColor(productMainList.get(0).getIdColor()),
-          memoryRepository.getMemoryByIdMemory(productMainList.get(0).getIdMemory()),
-          ramRepository.getRamByIdRam(productMainList.get(0).getIdRam()),
-          brandRepository.getBrandByIdBrand(productMainList.get(0).getIdBrand()),
-          productMainList.get(0).getDescribeProduct());
-      productFullList.add(productFull);
-    }
+    List<Product> productList = productRepository.getDistinctIdLineProductBySlugCategoryAndSlugGroupProduct(slugCategory,slugGroup);
+    for (Product product: productList)
+      productFullList.add(getProductBySlug(product.getId(),-1));
     return productFullList;
   }
 
@@ -397,7 +352,6 @@ public class ProductService {
       productMains = productRepository.getProductBySlug(slug);
     else
       productMains = productRepository.getProductByIdProduct(slug);
-
     List<ProductMain> productMainList = productRepository.getProductByIdLineProduct(productMains.getIdLineProduct());
     List<Color> colorList = new ArrayList<>();
     List<Image> imageList = new ArrayList<>();
@@ -479,6 +433,10 @@ public class ProductService {
 
   public List<Product> filterProduct(ProductCriteria productCriteria) {
     Specification<Product> productSpecification = ProductSpecifications.createProductSpecifications(productCriteria);
+//    List<Product> productList = productRepository.findAll(productSpecification);
+//    List<ProductFull> productFullList = new ArrayList<>();
+//    for (Product product: productList)
+//      productFullList.add(getProductBySlug(product.getId(),-1));
     return productRepository.findAll(productSpecification);
   }
 

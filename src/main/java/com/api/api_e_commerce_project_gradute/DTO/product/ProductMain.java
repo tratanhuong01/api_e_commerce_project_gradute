@@ -1,9 +1,6 @@
 package com.api.api_e_commerce_project_gradute.DTO.product;
 
-import javax.persistence.ColumnResult;
-import javax.persistence.ConstructorResult;
-import javax.persistence.NamedNativeQuery;
-import javax.persistence.SqlResultSetMapping;
+import javax.persistence.*;
 
 @SqlResultSetMapping(name = "customDataMapping",
     classes = @ConstructorResult(
@@ -27,6 +24,7 @@ import javax.persistence.SqlResultSetMapping;
             @ColumnResult(name = "slug", type = String.class),
             @ColumnResult(name = "idBrand" , type = String.class),
             @ColumnResult(name = "describeProduct",type = String.class)
+//            @ColumnResult(name = "typeProduct",type = Integer.class)
         }
     )
 )
@@ -53,4 +51,5 @@ public interface ProductMain {
   String getSlug();
   String getIdBrand();
   String getDescribeProduct();
+//  int typeProduct();
 }
