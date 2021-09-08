@@ -16,12 +16,12 @@ public final class ProductSpecifications {
   public static Specification<Product> createProductSpecifications(ProductCriteria productCriteria) {
     productSpecification = null;
     groupProduct(productCriteria.getSlugGroupProduct());
-    feature(productCriteria.getFeature());
     brand(productCriteria.getBrand());
     color(productCriteria.getColor());
     ram(productCriteria.getRam());
     rom(productCriteria.getRom());
-    price(productCriteria.getPriceFrom(),productCriteria.getPriceTo());
+    price(productCriteria.getPriceFrom(),productCriteria.getPriceTo(),productCriteria.getSlugGroupProduct());
+    feature(productCriteria.getFeature());
     return productSpecification;
   }
 
@@ -92,28 +92,29 @@ public final class ProductSpecifications {
     return productSpecification;
   }
 
-  public static Specification<Product> price(Integer priceFrom , Integer priceTo) {
+  public static Specification<Product> price(Integer priceFrom , Integer priceTo,String slug) {
     if (priceFrom != null && priceTo != null)
       if (productSpecification != null)
         productSpecification.and(productSpecification = (root, query, builder) -> {
           query.distinct(true);
           Subquery<InfoProduct> queryData = query.subquery(InfoProduct.class);
           Root<InfoProduct> infoProductRoot = queryData.from(InfoProduct.class);
-          queryData.select(infoProductRoot);
-          queryData.where(builder.greaterThanOrEqualTo(infoProductRoot.get("priceOutput"), priceFrom),
-              builder.lessThan(infoProductRoot.get("priceOutput"), priceTo));
-
-          return builder.exists(queryData);
+          return root.get("id").in(queryData.select(infoProductRoot.get("infoProduct").get("id"))
+              .where(builder.greaterThanOrEqualTo(infoProductRoot.get("priceOutput"), priceFrom),
+                  builder.lessThan(infoProductRoot.get("priceOutput"), priceTo),
+                  builder.equal(infoProductRoot.get("infoProduct").get("lineProduct").
+                      get("groupProduct").get("slugGroupProduct"),slug)));
         });
       else
         productSpecification = (root, query, builder) -> {
           query.distinct(true);
           Subquery<InfoProduct> queryData = query.subquery(InfoProduct.class);
           Root<InfoProduct> infoProductRoot = queryData.from(InfoProduct.class);
-          queryData.select(infoProductRoot);
-          queryData.where(builder.greaterThanOrEqualTo(infoProductRoot.get("priceOutput"), priceFrom),
-              builder.lessThan(infoProductRoot.get("priceOutput"), priceTo));
-          return builder.exists(queryData);
+          return root.get("id").in(queryData.select(infoProductRoot.get("infoProduct").get("id"))
+              .where(builder.greaterThanOrEqualTo(infoProductRoot.get("priceOutput"), priceFrom),
+                  builder.lessThan(infoProductRoot.get("priceOutput"), priceTo),
+                  builder.equal(infoProductRoot.get("infoProduct").get("lineProduct").
+                      get("groupProduct").get("slugGroupProduct"),slug)));
         };
     return productSpecification;
   }

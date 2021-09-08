@@ -7,6 +7,8 @@ import com.api.api_e_commerce_project_gradute.category_product.CategoryProduct;
 import com.api.api_e_commerce_project_gradute.category_product.CategoryProductRepository;
 import com.api.api_e_commerce_project_gradute.color.Color;
 import com.api.api_e_commerce_project_gradute.color.ColorRepository;
+import com.api.api_e_commerce_project_gradute.detail_function_product.DetailFunctionProduct;
+import com.api.api_e_commerce_project_gradute.detail_function_product.DetailFunctionProductRepository;
 import com.api.api_e_commerce_project_gradute.group_product.GroupProductRepository;
 import com.api.api_e_commerce_project_gradute.image.Image;
 import com.api.api_e_commerce_project_gradute.image.ImageRepository;
@@ -53,6 +55,10 @@ public class ProductService{
 
   @Autowired
   RamRepository ramRepository;
+
+  @Autowired
+  DetailFunctionProductRepository detailFunctionProductRepository;
+
 
   public Product getProductByIdMain(String id) {
     return productRepository.getProductById(id);
@@ -436,6 +442,9 @@ public class ProductService{
     List<Product> productList = productRepository.findAll(productSpecification);
     List<ProductFull> productFullList = new ArrayList<>();
     List<String> lineProductId = new ArrayList<>();
+
+    List<Product> listProductMain = new ArrayList<>();
+
     for (Product product: productList){
       int count = 0;
       for (String string :lineProductId) {
@@ -443,10 +452,34 @@ public class ProductService{
       }
       if (count == 0) lineProductId.add(product.getLineProduct().getId());
     }
-    for (String string :lineProductId) {
-      List<Product> list = (productRepository.getFirstProductByIdLineProduct(string));
-      if (list.size() > 0)
-        productFullList.add(getProductBySlug(list.get(0).getId(),-1));
+
+    for (String string:lineProductId) {
+      int countFeature = 0;
+      int countTypeProduct = 0;
+      if (productCriteria.getFeature() != null) {
+        for (Long longData : productCriteria.getFeature()) {
+          DetailFunctionProduct detailFunctionProduct = detailFunctionProductRepository.getDetailFunctionProduct(longData,string);
+          if (detailFunctionProduct != null) {
+            if (detailFunctionProduct.getFunctionProductDetail().getTypeFunctionProduct() == 1 &&
+                productCriteria.getFeature().size() == 1){
+            }
+            else
+              countFeature++;
+            if (detailFunctionProduct.getFunctionProductDetail().getTypeFunctionProduct() == 1) countTypeProduct++;
+          }
+        }
+        if (countFeature == productCriteria.getFeature().size() - countTypeProduct) {
+          List<Product> list = (productRepository.getFirstProductByIdLineProduct(string));
+          if (list.size() > 0 || countTypeProduct > 0)
+            productFullList.add(getProductBySlug(list.get(0).getId(),-1));
+        }
+        System.out.println(countTypeProduct);
+      }
+      else {
+        List<Product> list = (productRepository.getFirstProductByIdLineProduct(string));
+        if (list.size() > 0)
+          productFullList.add(getProductBySlug(list.get(0).getId(),-1));
+      }
     }
     return productFullList;
   }
