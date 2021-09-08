@@ -22,7 +22,8 @@ public class ProductController {
 
   @CrossOrigin
   @GetMapping("productsFilter")
-  public List<Product> filterProduct(@RequestParam(name="feature", required = false) Set<Long> feature,
+  public List<ProductFull> filterProduct(@RequestParam(name="feature", required = false) Set<Long> feature,
+                                     @RequestParam(name="slugGroupProduct", required = false) String slugGroupProduct,
                                      @RequestParam(name="color", required = false) Set<Long> color,
                                      @RequestParam(name="ram", required = false) Set<Long> ram,
                                      @RequestParam(name="rom", required = false) Set<Long> rom,
@@ -30,6 +31,7 @@ public class ProductController {
                                      @RequestParam(name="priceFrom", required = false) Integer priceFrom,
                                      @RequestParam(name="priceTo", required = false) Integer priceTo) {
     ProductCriteria productCriteria = ProductCriteria.builder().
+        slugGroupProduct(slugGroupProduct).
         feature(feature).
         rom(rom).
         ram(ram).

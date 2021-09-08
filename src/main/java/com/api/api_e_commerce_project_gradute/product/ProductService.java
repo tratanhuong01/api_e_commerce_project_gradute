@@ -431,13 +431,24 @@ public class ProductService{
     return productRepository.getProductLimit(offset, limit);
   }
 
-  public List<Product> filterProduct(ProductCriteria productCriteria) {
+  public List<ProductFull> filterProduct(ProductCriteria productCriteria) {
     Specification<Product> productSpecification = ProductSpecifications.createProductSpecifications(productCriteria);
-//    List<Product> productList = productRepository.findAll(productSpecification);
-//    List<ProductFull> productFullList = new ArrayList<>();
-//    for (Product product: productList)
-//      productFullList.add(getProductBySlug(product.getId(),-1));
-    return productRepository.findAll(productSpecification);
+    List<Product> productList = productRepository.findAll(productSpecification);
+    List<ProductFull> productFullList = new ArrayList<>();
+    List<String> lineProductId = new ArrayList<>();
+    for (Product product: productList){
+      int count = 0;
+      for (String string :lineProductId) {
+        if (string.equals(product.getLineProduct().getId())) count++;
+      }
+      if (count == 0) lineProductId.add(product.getLineProduct().getId());
+    }
+    for (String string :lineProductId) {
+      List<Product> list = (productRepository.getFirstProductByIdLineProduct(string));
+      if (list.size() > 0)
+        productFullList.add(getProductBySlug(list.get(0).getId(),-1));
+    }
+    return productFullList;
   }
 
 }

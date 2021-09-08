@@ -4,7 +4,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Optional;
 import java.util.Set;
 
 @Builder
@@ -19,4 +18,6 @@ public class ProductCriteria {
   private Set<Long> feature;
   private Integer priceTo;
   private Integer priceFrom;
+  private String slugGroupProduct;
+
 }

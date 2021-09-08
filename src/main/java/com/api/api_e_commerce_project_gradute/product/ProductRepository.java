@@ -107,4 +107,7 @@ public interface ProductRepository extends JpaRepository<Product,String> , JpaSp
       " ORDER BY info_product.sale DESC LIMIT 0,4",nativeQuery = true)
   List<Product> getProductSaleToday();
 
+  @Query(value = "SELECT * FROM product WHERE id_line_product = ?1 LIMIT 0 , 1 ",nativeQuery = true)
+  List<Product> getFirstProductByIdLineProduct(String idLineProduct);
+
 }

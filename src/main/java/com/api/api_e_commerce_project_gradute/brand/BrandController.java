@@ -48,4 +48,10 @@ public class BrandController {
     return brandService.addBrand(brand);
   }
 
+  @CrossOrigin
+  @GetMapping("brands/slugGroupProduct/{slugGroupProduct}")
+  public List<Brand> getBrandBySlugGroupProduct(@PathVariable String slugGroupProduct) {
+    return brandService.getBrandBySlugGroupProduct(slugGroupProduct);
+  }
+
 }
