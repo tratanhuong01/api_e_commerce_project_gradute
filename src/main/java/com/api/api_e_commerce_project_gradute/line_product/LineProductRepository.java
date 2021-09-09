@@ -19,4 +19,12 @@ public interface LineProductRepository extends JpaRepository<LineProduct,String>
   @Query(value = "SELECT * FROM line_product WHERE id_group_product = ?1 ",nativeQuery = true)
   List<LineProduct> getLineProductByIdGroupProduct(String idGroupProduct);
 
+  @Query(value = "SELECT DISTINCT line_product.id FROM line_product INNER JOIN group_product " +
+      "ON line_product.id_group_product = group_product.id INNER JOIN category_product " +
+      "ON group_product.id_category_product = category_product.id WHERE " +
+      "line_product.name_line_product LIKE %:keyword% AND " +
+      "category_product.id LIKE %:id% LIMIT 0 , 5 ",nativeQuery = true)
+  List<String> searchProduct(String keyword,String id);
+
+
 }

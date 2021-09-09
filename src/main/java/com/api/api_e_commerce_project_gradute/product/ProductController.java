@@ -62,6 +62,13 @@ public class ProductController {
   }
 
   @CrossOrigin
+  @GetMapping("products/search/")
+  public List<ProductFull> searchProduct(@RequestParam(required = false) String keyword,
+                                         @RequestParam(required = false) String slug) {
+    return productService.searchProduct(keyword,slug);
+  }
+
+  @CrossOrigin
   @GetMapping("products/{idProduct}")
   public Product getProductById(@PathVariable String idProduct) {
     return productService.getProductByIdMain(idProduct);
