@@ -22,7 +22,18 @@ public class BillDetail {
   private Product productDetailBill;
 
   @Column
+  private int price;
+
+  @Column
   private int amount;
+
+  public int getPrice() {
+    return price;
+  }
+
+  public void setPrice(int price) {
+    this.price = price;
+  }
 
   public Long getId() {
     return id;
