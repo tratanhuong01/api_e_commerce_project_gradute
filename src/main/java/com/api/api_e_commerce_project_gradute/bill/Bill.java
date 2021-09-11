@@ -14,8 +14,10 @@ import java.util.Set;
 @Entity
 @Table(name = "bill")
 public class Bill {
+
   @Id
-  private String id;
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
   @OneToMany(mappedBy = "billDetail")
   private Set<BillDetail> billDetail = new HashSet<>();
@@ -28,7 +30,7 @@ public class Bill {
   private int status;
 
   @ManyToOne
-  @JoinColumn(name = "id_payment_method")
+  @JoinColumn(name = "id_method_payment")
   private PaymentMethod paymentMethodBill;
 
   @ManyToOne
@@ -45,11 +47,11 @@ public class Bill {
   @Column
   private Timestamp timeCreated;
 
-  public String getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(String id) {
+  public void setId(Long id) {
     this.id = id;
   }
 
