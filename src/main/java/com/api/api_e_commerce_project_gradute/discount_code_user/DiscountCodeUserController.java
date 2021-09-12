@@ -25,4 +25,10 @@ public class DiscountCodeUserController {
     return discountCodeUserService.addDiscountCodeUser(discountCodeUser);
   }
 
+  @CrossOrigin
+  @GetMapping("discountCodeUsers/{idDiscountCode}/{idUser}")
+  public DiscountCodeUser checkDiscountCodeUserHave(@PathVariable Long idDiscountCode,@PathVariable String idUser) {
+    return discountCodeUserService.checkDiscountCodeUserHave(idDiscountCode, idUser);
+  }
+
 }

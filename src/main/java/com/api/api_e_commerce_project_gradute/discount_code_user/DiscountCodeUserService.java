@@ -24,4 +24,8 @@ public class DiscountCodeUserService {
     return discountCodeUserRepository.save(discountCodeUser);
   }
 
+  public DiscountCodeUser checkDiscountCodeUserHave(Long idDiscountCode,String idUser) {
+    return discountCodeUserRepository.checkDiscountCodeUserHave(idDiscountCode, idUser);
+  }
+
 }

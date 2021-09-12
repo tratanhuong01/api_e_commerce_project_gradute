@@ -33,19 +33,39 @@ public class Bill {
   @JoinColumn(name = "id_method_payment")
   private PaymentMethod paymentMethodBill;
 
-  @ManyToOne
-  @JoinColumn(name = "id_bank")
-  private Bank bankBill;
+  @Column
+  private String bank;
 
-  @ManyToOne
-  @JoinColumn(name = "id_address")
-  private Address addressBill;
+  @Column
+  private String address;
+
+  @Column
+  private int sale;
+
+  @Column
+  private int fee;
 
   @Column
   private int total;
 
   @Column
   private Timestamp timeCreated;
+
+  public String getBank() {
+    return bank;
+  }
+
+  public void setBank(String bank) {
+    this.bank = bank;
+  }
+
+  public String getAddress() {
+    return address;
+  }
+
+  public void setAddress(String address) {
+    this.address = address;
+  }
 
   public Long getId() {
     return id;
@@ -79,22 +99,6 @@ public class Bill {
     this.paymentMethodBill = paymentMethodBill;
   }
 
-  public Bank getBankBill() {
-    return bankBill;
-  }
-
-  public void setBankBill(Bank bankBill) {
-    this.bankBill = bankBill;
-  }
-
-  public Address getAddressBill() {
-    return addressBill;
-  }
-
-  public void setAddressBill(Address addressBill) {
-    this.addressBill = addressBill;
-  }
-
   public int getTotal() {
     return total;
   }
@@ -109,5 +113,29 @@ public class Bill {
 
   public void setTimeCreated(Timestamp timeCreated) {
     this.timeCreated = timeCreated;
+  }
+
+  public Set<BillDetail> getBillDetail() {
+    return billDetail;
+  }
+
+  public void setBillDetail(Set<BillDetail> billDetail) {
+    this.billDetail = billDetail;
+  }
+
+  public int getSale() {
+    return sale;
+  }
+
+  public void setSale(int sale) {
+    this.sale = sale;
+  }
+
+  public int getFee() {
+    return fee;
+  }
+
+  public void setFee(int fee) {
+    this.fee = fee;
   }
 }
