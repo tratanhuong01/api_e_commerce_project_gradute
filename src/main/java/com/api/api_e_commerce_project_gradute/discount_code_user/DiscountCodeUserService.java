@@ -11,8 +11,13 @@ public class DiscountCodeUserService {
   @Autowired
   DiscountCodeUserRepository discountCodeUserRepository;
 
-  public List<DiscountCodeUser> getAllDiscountCodeUsers() {
-    return discountCodeUserRepository.findAll();
+  public List<DiscountCodeUser> getDiscountCodeUserByIdUser(String idUser,int isUsed,int type) {
+    if (type == 0)
+      return discountCodeUserRepository.getDiscountCodeUserByIdUser(idUser, isUsed);
+    else if (type == 2)
+      return discountCodeUserRepository.getDiscountCodeUserNearExpired(idUser,isUsed);
+    else
+      return discountCodeUserRepository.getDiscountCodeUserExpired(idUser);
   }
 
   public DiscountCodeUser addDiscountCodeUser(DiscountCodeUser discountCodeUser) {

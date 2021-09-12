@@ -19,4 +19,8 @@ public class DiscountCodeService {
     return discountCodeRepository.save(discountCode);
   }
 
+  public DiscountCode checkDiscountCodeValid(String code) {
+    return discountCodeRepository.checkDiscountCodeIsValid(code);
+  }
+
 }

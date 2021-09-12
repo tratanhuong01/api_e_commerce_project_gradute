@@ -15,6 +15,9 @@ public class DiscountCode {
   private String code;
 
   @Column
+  private String nameDiscountCode;
+
+  @Column
   private Timestamp timeStart;
 
   @Column
@@ -28,6 +31,14 @@ public class DiscountCode {
 
   @Column
   private int type;
+
+  public String getNameDiscountCode() {
+    return nameDiscountCode;
+  }
+
+  public void setNameDiscountCode(String nameDiscountCode) {
+    this.nameDiscountCode = nameDiscountCode;
+  }
 
   public Long getId() {
     return id;

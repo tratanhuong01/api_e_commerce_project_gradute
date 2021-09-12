@@ -13,8 +13,10 @@ public class DiscountCodeUserController {
 
   @CrossOrigin
   @GetMapping("discountCodeUsers")
-  public List<DiscountCodeUser> getDiscountCodeUsers() {
-    return discountCodeUserService.getAllDiscountCodeUsers();
+  public List<DiscountCodeUser> getDiscountCodeUsers(@RequestParam(required = false) String idUser,
+                                                     @RequestParam(required = false) int isUsed,
+                                                     @RequestParam(required = false) int type) {
+    return discountCodeUserService.getDiscountCodeUserByIdUser(idUser, isUsed,type);
   }
 
   @CrossOrigin

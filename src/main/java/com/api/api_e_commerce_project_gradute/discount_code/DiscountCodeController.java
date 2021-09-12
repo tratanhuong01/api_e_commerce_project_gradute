@@ -23,4 +23,10 @@ public class DiscountCodeController {
     return discountCodeService.addDiscountCode(discountCode);
   }
 
+  @CrossOrigin
+  @GetMapping("discountCodes/check/valid/")
+  public DiscountCode checkDiscountCodeIsValid(@RequestParam(required = false) String code) {
+    return discountCodeService.checkDiscountCodeValid(code);
+  }
+
 }
