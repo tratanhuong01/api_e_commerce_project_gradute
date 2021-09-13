@@ -31,7 +31,10 @@ public class BillService {
   ProductService productService;
 
   public List<Bill> getAllBills(String id,int type) {
-    return billRepository.getBillByIdUserAndTypeAll(id,type);
+    if (type == -2)
+      return billRepository.getBillByIdUserAll(id);
+    else
+      return billRepository.getBillByIdUserAndTypeAll(id,type);
   }
 
   public Optional<Bill> getBillById(String idBill) {
@@ -77,7 +80,7 @@ public class BillService {
   }
 
   public int updateStatusBill(Long idBill,int status) {
-    return billRepository.updateStatusBill(idBill,status);
+    return billRepository.updateStatusBill(status,idBill);
   }
 
   public BillFull getBillById(Long id) {
@@ -88,6 +91,22 @@ public class BillService {
     billFull.setBillDetailList(returnBillDetailFull(billDetailList));
     billFull.setBillReview(billReviewRepository.getBillReviewByIdBill(bill.getId()));
     return billFull;
+  }
+
+  public List<BillFull> searchBill(String keyword,String idUser,int offset, int limit) {
+    List<BillFull> billFullList = new ArrayList<>();
+    List<Bill> billList = billRepository.searchBill(keyword,idUser,offset,limit);
+
+    for (Bill bill: billList) {
+      BillFull billFull = new BillFull();
+      billFull.setBill(bill);
+      List<BillDetail> billDetailList = billDetailRepository.getBillDetailByIdBill(bill.getId());
+      billFull.setBillDetailList(returnBillDetailFull(billDetailList));
+      billFull.setBillReview(billReviewRepository.getBillReviewByIdBill(bill.getId()));
+      billFullList.add(billFull);
+    }
+
+    return billFullList;
   }
 
 }

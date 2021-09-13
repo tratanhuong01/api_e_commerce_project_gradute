@@ -52,7 +52,18 @@ public class Bill {
   private int total;
 
   @Column
+  private String phone;
+
+  @Column
   private Timestamp timeCreated;
+
+  public String getPhone() {
+    return phone;
+  }
+
+  public void setPhone(String phone) {
+    this.phone = phone;
+  }
 
   public String getFullName() {
     return fullName;

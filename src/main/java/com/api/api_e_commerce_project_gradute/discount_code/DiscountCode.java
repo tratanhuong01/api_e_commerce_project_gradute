@@ -24,13 +24,43 @@ public class DiscountCode {
   private Timestamp timeExpired;
 
   @Column
-  private int percentOrPrice;
+  private int percent;
 
   @Column
   private int amount;
 
   @Column
   private int type;
+
+  @Column
+  private int min;
+
+  @Column
+  private int max;
+
+  public int getPercent() {
+    return percent;
+  }
+
+  public void setPercent(int percent) {
+    this.percent = percent;
+  }
+
+  public int getMin() {
+    return min;
+  }
+
+  public void setMin(int min) {
+    this.min = min;
+  }
+
+  public int getMax() {
+    return max;
+  }
+
+  public void setMax(int max) {
+    this.max = max;
+  }
 
   public String getNameDiscountCode() {
     return nameDiscountCode;
@@ -70,14 +100,6 @@ public class DiscountCode {
 
   public void setTimeExpired(Timestamp timeExpired) {
     this.timeExpired = timeExpired;
-  }
-
-  public int getPercentOrPrice() {
-    return percentOrPrice;
-  }
-
-  public void setPercentOrPrice(int percentOrPrice) {
-    this.percentOrPrice = percentOrPrice;
   }
 
   public int getAmount() {

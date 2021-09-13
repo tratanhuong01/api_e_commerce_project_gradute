@@ -50,4 +50,11 @@ public class BillController {
     return billService.updateStatusBill(idBill,status);
   }
 
+  @CrossOrigin
+  @GetMapping("bills/search/")
+  public List<BillFull> searchBill(@RequestParam(required = false) String keyword,@RequestParam String idUser,
+                                   @RequestParam(required = false) int offset , @RequestParam int limit) {
+    return billService.searchBill(keyword,idUser,offset,limit);
+  }
+
 }
