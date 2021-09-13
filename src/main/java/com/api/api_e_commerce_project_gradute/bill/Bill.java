@@ -37,6 +37,9 @@ public class Bill {
   private String bank;
 
   @Column
+  private String fullName;
+
+  @Column
   private String address;
 
   @Column
@@ -50,6 +53,14 @@ public class Bill {
 
   @Column
   private Timestamp timeCreated;
+
+  public String getFullName() {
+    return fullName;
+  }
+
+  public void setFullName(String fullName) {
+    this.fullName = fullName;
+  }
 
   public String getBank() {
     return bank;
@@ -113,14 +124,6 @@ public class Bill {
 
   public void setTimeCreated(Timestamp timeCreated) {
     this.timeCreated = timeCreated;
-  }
-
-  public Set<BillDetail> getBillDetail() {
-    return billDetail;
-  }
-
-  public void setBillDetail(Set<BillDetail> billDetail) {
-    this.billDetail = billDetail;
   }
 
   public int getSale() {

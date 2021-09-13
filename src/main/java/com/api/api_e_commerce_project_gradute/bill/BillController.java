@@ -27,6 +27,12 @@ public class BillController {
   }
 
   @CrossOrigin
+  @GetMapping("bills/{id}")
+  public BillFull getBillById(@PathVariable Long id) {
+    return billService.getBillById(id);
+  }
+
+  @CrossOrigin
   @PostMapping("bills")
   public Bill addBill(@RequestBody Bill bill) {
     return billService.addBill(bill);
@@ -36,6 +42,12 @@ public class BillController {
   @PutMapping("bills")
   public Bill updateBill(@RequestBody Bill bill) {
     return billService.addBill(bill);
+  }
+
+  @CrossOrigin
+  @GetMapping("bills/update/status/")
+  public int cancelOrder(@RequestParam(required = false) Long idBill,@RequestParam(required = false) int status) {
+    return billService.updateStatusBill(idBill,status);
   }
 
 }
