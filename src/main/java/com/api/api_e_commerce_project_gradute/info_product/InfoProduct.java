@@ -12,7 +12,7 @@ public class InfoProduct {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   Long id;
 
-  @OneToOne
+  @ManyToOne
   @JoinColumn(name = "id_product")
   private Product infoProduct;
 
@@ -33,6 +33,17 @@ public class InfoProduct {
 
   @Column
   private int typeInfoProduct;
+
+  @Column
+  private int review;
+
+  public int getReview() {
+    return review;
+  }
+
+  public void setReview(int review) {
+    this.review = review;
+  }
 
   public Long getId() {
     return id;

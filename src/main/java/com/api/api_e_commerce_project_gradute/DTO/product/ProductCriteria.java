@@ -19,5 +19,6 @@ public class ProductCriteria {
   private Integer priceTo;
   private Integer priceFrom;
   private String slugGroupProduct;
+  private String filter;
 
 }

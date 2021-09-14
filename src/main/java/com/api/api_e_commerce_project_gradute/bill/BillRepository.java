@@ -37,9 +37,15 @@ public interface BillRepository extends JpaRepository<Bill,String> {
 
   @Query(value = "SELECT b.* FROM bill b INNER JOIN bill_detail bd ON b.id = bd.id_bill " +
       "INNER JOIN product p ON bd.id_product = p.id INNER JOIN line_product lp ON " +
-      "p.id_line_product = lp.id WHERE (lp.name_line_product LIKE %:keyword:% OR " +
-      "b.id = %:keyword:% ) AND b.id_user = :idUser ORDER BY b.time_created DESC LIMIT :offset , :limit ",nativeQuery = true)
-  List<Bill> searchBill(@Param("keyword") String keyword, @Param("idUser") String idUser,
+      "p.id_line_product = lp.id WHERE (lp.name_line_product LIKE CONCAT('%',:keyword,'%') OR " +
+      "b.id = :keyword ) AND b.id_user = :idUser ORDER BY b.time_created DESC LIMIT :offset , :limit ",nativeQuery = true)
+  List<Bill> searchBillLimit(@Param("keyword") String keyword, @Param("idUser") String idUser,
                         @Param("offset")  int offset, @Param("limit") int limit);
+
+  @Query(value = "SELECT b.* FROM bill b INNER JOIN bill_detail bd ON b.id = bd.id_bill " +
+      "INNER JOIN product p ON bd.id_product = p.id INNER JOIN line_product lp ON " +
+      "p.id_line_product = lp.id WHERE (lp.name_line_product LIKE CONCAT('%',:keyword,'%') OR " +
+      "b.id = :keyword ) AND b.id_user = :idUser ORDER BY b.time_created DESC  ",nativeQuery = true)
+  List<Bill> searchBill(@Param("keyword") String keyword, @Param("idUser") String idUser);
 
 }

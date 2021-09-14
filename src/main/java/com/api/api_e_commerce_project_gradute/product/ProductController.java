@@ -29,7 +29,8 @@ public class ProductController {
                                      @RequestParam(name="rom", required = false) Set<Long> rom,
                                      @RequestParam(name="brand", required = false) Set<String> brand,
                                      @RequestParam(name="priceFrom", required = false) Integer priceFrom,
-                                     @RequestParam(name="priceTo", required = false) Integer priceTo) {
+                                     @RequestParam(name="priceTo", required = false) Integer priceTo,
+                                     @RequestParam(name = "filter",required = false) String filter) {
     ProductCriteria productCriteria = ProductCriteria.builder().
         slugGroupProduct(slugGroupProduct).
         feature(feature).
@@ -39,6 +40,7 @@ public class ProductController {
         color(color).
         priceFrom(priceFrom).
         priceTo(priceTo).
+        filter(filter).
         build();
     return productService.filterProduct(productCriteria);
   }

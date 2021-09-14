@@ -3,6 +3,7 @@ package com.api.api_e_commerce_project_gradute.product;
 import com.api.api_e_commerce_project_gradute.brand.Brand;
 import com.api.api_e_commerce_project_gradute.color.Color;
 import com.api.api_e_commerce_project_gradute.image.Image;
+import com.api.api_e_commerce_project_gradute.info_product.InfoProduct;
 import com.api.api_e_commerce_project_gradute.line_product.LineProduct;
 import com.api.api_e_commerce_project_gradute.memory.Memory;
 import com.api.api_e_commerce_project_gradute.ram.Ram;
@@ -12,12 +13,16 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Table(name = "product")
 public class Product implements Serializable {
   @Id
   private String id;
+
+  @OneToMany(mappedBy = "infoProduct")
+  private Set<InfoProduct> infoProduct;
 
   @ManyToOne
   @JoinColumn(name = "id_user")

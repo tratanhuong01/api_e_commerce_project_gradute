@@ -53,8 +53,9 @@ public class BillController {
   @CrossOrigin
   @GetMapping("bills/search/")
   public List<BillFull> searchBill(@RequestParam(required = false) String keyword,@RequestParam String idUser,
-                                   @RequestParam(required = false) int offset , @RequestParam int limit) {
-    return billService.searchBill(keyword,idUser,offset,limit);
+                                   @RequestParam(required = false) int offset , @RequestParam int limit,
+                                   @RequestParam(required = false) int type) {
+    return billService.searchBill(keyword,idUser,offset,limit,type);
   }
 
 }

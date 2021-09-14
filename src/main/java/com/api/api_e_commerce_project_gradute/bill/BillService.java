@@ -93,9 +93,14 @@ public class BillService {
     return billFull;
   }
 
-  public List<BillFull> searchBill(String keyword,String idUser,int offset, int limit) {
+  public List<BillFull> searchBill(String keyword,String idUser,int offset, int limit,int type) {
     List<BillFull> billFullList = new ArrayList<>();
-    List<Bill> billList = billRepository.searchBill(keyword,idUser,offset,limit);
+    List<Bill> billList = new ArrayList<>();
+
+    if (type == -2)
+      billList = billRepository.searchBill(keyword, idUser);
+    else
+      billList = billRepository.searchBillLimit(keyword,idUser,offset,limit);
 
     for (Bill bill: billList) {
       BillFull billFull = new BillFull();

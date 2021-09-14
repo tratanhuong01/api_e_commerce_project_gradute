@@ -1,6 +1,8 @@
 package com.api.api_e_commerce_project_gradute.product;
 
 import com.api.api_e_commerce_project_gradute.DTO.product.ProductMain;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -8,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Nullable;
+import java.awt.print.Pageable;
 import java.util.List;
 
 @Repository
@@ -32,6 +35,7 @@ public interface ProductRepository extends JpaRepository<Product,String> , JpaSp
       " LEFT JOIN ram r ON p.id_ram = r.id ";
 
   List<Product> findAll(@Nullable Specification<Product> spec);
+
 
   //get id new of product table
   @Query(value = "SELECT * FROM product ORDER BY id DESC LIMIT 1",nativeQuery = true)
@@ -107,7 +111,8 @@ public interface ProductRepository extends JpaRepository<Product,String> , JpaSp
       " ORDER BY info_product.sale DESC LIMIT 0,4",nativeQuery = true)
   List<Product> getProductSaleToday();
 
-  @Query(value = "SELECT * FROM product WHERE id_line_product = ?1 LIMIT 0 , 1 ",nativeQuery = true)
+  @Query(value = "SELECT * FROM product INNER JOIN info_product ON product.id = info_product.id_product  " +
+      "WHERE product.id_line_product = ?1 ORDER BY info_product.sale DESC LIMIT 0 , 1",nativeQuery = true)
   List<Product> getFirstProductByIdLineProduct(String idLineProduct);
 
 }
