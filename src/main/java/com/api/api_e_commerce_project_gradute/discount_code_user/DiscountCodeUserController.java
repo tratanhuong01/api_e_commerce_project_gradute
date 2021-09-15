@@ -31,4 +31,11 @@ public class DiscountCodeUserController {
     return discountCodeUserService.checkDiscountCodeUserHave(idDiscountCode, idUser);
   }
 
+  @CrossOrigin
+  @GetMapping("discountCodeUsers/update/isUsed/")
+  public int updateDiscountCodeUser(@RequestParam(required = false) int isUsed,@RequestParam(required = false) String idUser,
+                                    @RequestParam(required = false) Long idDiscountCode) {
+    return discountCodeUserService.updateDiscountCode(idUser,idDiscountCode,isUsed);
+  }
+
 }

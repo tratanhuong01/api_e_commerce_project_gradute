@@ -28,4 +28,8 @@ public class DiscountCodeUserService {
     return discountCodeUserRepository.checkDiscountCodeUserHave(idDiscountCode, idUser);
   }
 
+  public int updateDiscountCode(String idUser,Long idDiscountCode,int type) {
+    return discountCodeUserRepository.updateDiscountCodeUserIsUsed(type,idDiscountCode,idUser);
+  }
+
 }

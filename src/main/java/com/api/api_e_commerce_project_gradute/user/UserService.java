@@ -32,17 +32,21 @@ public class UserService {
   }
 
   public User addUser(User user) {
-    User userBestNew = userRepository.getIdBestNew();
-    int id = Config.ID_USER_DEFAULT;
-    if (userBestNew == null) {
+    if (user.getId() != null) {
     }
     else {
-      id = Integer.parseInt(userBestNew.getId());
-      id++;
+      User userBestNew = userRepository.getIdBestNew();
+      int id = Config.ID_USER_DEFAULT;
+      if (userBestNew == null) {
+      }
+      else {
+        id = Integer.parseInt(userBestNew.getId());
+        id++;
+      }
+      user.setId(String.valueOf(id));
+      user.setPassword(DigestUtils.md5Hex(user.getPassword()).toUpperCase());
+      user.setTimeCreated((new Timestamp(new Date().getTime())));
     }
-    user.setPassword(DigestUtils.md5Hex(user.getPassword()).toUpperCase());
-    user.setId(String.valueOf(id));
-    user.setTimeCreated((new Timestamp(new Date().getTime())));
     return userRepository.save(user);
   }
 
