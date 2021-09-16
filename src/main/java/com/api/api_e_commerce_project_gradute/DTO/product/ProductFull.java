@@ -30,11 +30,15 @@ public class ProductFull {
   private Ram ram;
   private Brand brand;
   private String describeProduct;
+  private int typeProduct;
+  private int review;
+  private int itemCurrent;
 
   public ProductFull(String idProduct, String idCategoryProduct, String nameCategoryProduct, String idGroupProduct,
    String nameGroupProduct, String idLineProduct, String nameLineProduct, List<Color> colorList,
    List<Memory> memoryList, List<Image> imageList, String slug, int priceInput, int priceOutput, int sale,
-   Image image,Color color,Memory memory,Ram ram,Brand brand,String describeProduct){
+   Image image,Color color,Memory memory,Ram ram,Brand brand,String describeProduct,int typeProduct,
+   int review,int itemCurrent){
     this.idProduct = idProduct;
     this.idCategoryProduct = idCategoryProduct;
     this.nameCategoryProduct = nameCategoryProduct;
@@ -55,6 +59,33 @@ public class ProductFull {
     this.ram = ram;
     this.brand = brand;
     this.describeProduct = describeProduct;
+    this.typeProduct = typeProduct;
+    this.review = review;
+    this.itemCurrent = itemCurrent;
+  }
+
+  public int getTypeProduct() {
+    return typeProduct;
+  }
+
+  public void setTypeProduct(int typeProduct) {
+    this.typeProduct = typeProduct;
+  }
+
+  public int getReview() {
+    return review;
+  }
+
+  public void setReview(int review) {
+    this.review = review;
+  }
+
+  public int getItemCurrent() {
+    return itemCurrent;
+  }
+
+  public void setItemCurrent(int itemCurrent) {
+    this.itemCurrent = itemCurrent;
   }
 
   public Ram getRam() {

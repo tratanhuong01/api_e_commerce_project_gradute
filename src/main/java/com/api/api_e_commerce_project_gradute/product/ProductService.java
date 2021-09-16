@@ -221,7 +221,8 @@ public class ProductService{
         memoryRepository.getMemoryByIdMemory(productMains.getIdMemory()),
         ramRepository.getRamByIdRam(productMainList.get(0).getIdRam()),
         brandRepository.getBrandByIdBrand(productMains.getIdBrand()),
-        productMains.getDescribeProduct());
+        productMains.getDescribeProduct(),productMains.getTypeProduct(),productMains.getReview(),
+        productMains.getItemCurrent());
   }
 
   public ProductFull getProductBySlug(String slug, int type) {
@@ -306,8 +307,12 @@ public class ProductService{
     return productFullList;
   }
 
-  public List<ProductFull> searchProduct(String keyword,String slug) {
-    List<String> stringList = lineProductRepository.searchProduct(keyword,slug);
+  public List<ProductFull> searchProduct(String keyword,String slug,int offset,int limit,int type) {
+    List<String> stringList = new ArrayList<>();
+    if (type == 0)
+      stringList = lineProductRepository.searchProduct(keyword,slug);
+    else
+      stringList = lineProductRepository.searchProductLimit(keyword,slug,offset,limit);
     return returnListProductFull(stringList);
   }
 

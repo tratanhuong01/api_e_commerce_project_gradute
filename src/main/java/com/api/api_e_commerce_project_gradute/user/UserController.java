@@ -77,4 +77,18 @@ public class UserController {
     return userService.updateCodeEmail(user);
   }
 
+  @CrossOrigin
+  @GetMapping("users/password/")
+  public String checkPasswordUser(@RequestParam(required = false) String idUser,
+                                  @RequestParam(required = false) String password) {
+    return userService.checkPasswordUser(idUser, password);
+  }
+
+  @CrossOrigin
+  @GetMapping("users/password/update/")
+  public int changePasswordUser(@RequestParam(required = false) String password,
+                                @RequestParam(required = false) String idUser) {
+    return userService.updatePasswordUser(password, idUser);
+  }
+
 }

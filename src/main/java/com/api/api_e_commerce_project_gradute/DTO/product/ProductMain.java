@@ -23,8 +23,10 @@ import javax.persistence.*;
             @ColumnResult(name = "idImage", type = Long.class),
             @ColumnResult(name = "slug", type = String.class),
             @ColumnResult(name = "idBrand" , type = String.class),
-            @ColumnResult(name = "describeProduct",type = String.class)
-//            @ColumnResult(name = "typeProduct",type = Integer.class)
+            @ColumnResult(name = "describeProduct",type = String.class),
+            @ColumnResult(name = "typeProduct",type = Integer.class),
+            @ColumnResult(name = "review",type = Integer.class),
+            @ColumnResult(name = "itemCurrent",type = Integer.class)
         }
     )
 )
@@ -51,5 +53,7 @@ public interface ProductMain {
   String getSlug();
   String getIdBrand();
   String getDescribeProduct();
-//  int typeProduct();
+  int getTypeProduct();
+  int getReview();
+  int getItemCurrent();
 }

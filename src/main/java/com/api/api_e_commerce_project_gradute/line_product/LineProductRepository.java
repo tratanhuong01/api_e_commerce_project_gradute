@@ -23,8 +23,15 @@ public interface LineProductRepository extends JpaRepository<LineProduct,String>
       "ON line_product.id_group_product = group_product.id INNER JOIN category_product " +
       "ON group_product.id_category_product = category_product.id WHERE " +
       "line_product.name_line_product LIKE %:keyword% AND " +
-      "category_product.id LIKE %:id% LIMIT 0 , 5 ",nativeQuery = true)
+      "category_product.slug_category_product LIKE %:id% ",nativeQuery = true)
   List<String> searchProduct(String keyword,String id);
+
+  @Query(value = "SELECT DISTINCT line_product.id FROM line_product INNER JOIN group_product " +
+      "ON line_product.id_group_product = group_product.id INNER JOIN category_product " +
+      "ON group_product.id_category_product = category_product.id WHERE " +
+      "line_product.name_line_product LIKE %:keyword% AND " +
+      "category_product.slug_category_product LIKE %:id% LIMIT :offset , :limit ",nativeQuery = true)
+  List<String> searchProductLimit(String keyword,String id,int offset, int limit);
 
 
 }

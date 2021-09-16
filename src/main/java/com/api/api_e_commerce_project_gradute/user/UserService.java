@@ -59,7 +59,12 @@ public class UserService {
   }
 
   public User checkLogin(AccountLogin accountLogin) {
-    return userRepository.checkLogin(accountLogin.getEmailOrPhone(),DigestUtils.md5Hex(accountLogin.getPassword()).toUpperCase());
+    return userRepository.checkLogin(accountLogin.getEmailOrPhone(),
+        DigestUtils.md5Hex(accountLogin.getPassword()).toUpperCase());
+  }
+
+  public String checkPasswordUser(String idUser,String password) {
+    return userRepository.checkPasswordUser(idUser,DigestUtils.md5Hex(password).toUpperCase());
   }
 
   public String updateCodeEmail(User user) {
@@ -76,6 +81,10 @@ public class UserService {
 
   public List<User> getAllUsersLimit(int offset,int limit) {
     return userRepository.getAllUsersLimit(offset, limit);
+  }
+
+  public int updatePasswordUser(String password,String idUser) {
+    return userRepository.updatePasswordUser(DigestUtils.md5Hex(password),idUser);
   }
 
 }
