@@ -39,4 +39,8 @@ public interface UserRepository extends JpaRepository<User,String> {
   @Query(value = "UPDATE user SET password = ?1 WHERE id = ?2 ",nativeQuery = true)
   int updatePasswordUser(String password,String idUser);
 
+  @Query(value = "SELECT u.* FROM messages m INNER JOIN user u ON m.id_user = u.id WHERE" +
+      " m.id_group_chat = ?1 LIMIT 0,1 ",nativeQuery = true)
+  User getAdmin(Long idGroupChat);
+
 }

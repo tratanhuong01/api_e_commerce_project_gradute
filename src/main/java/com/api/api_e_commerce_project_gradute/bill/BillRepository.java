@@ -32,6 +32,10 @@ public interface BillRepository extends JpaRepository<Bill,String> {
       " LIMIT ?2 , ?3 ",nativeQuery = true)
   List<Bill> getBillByIdUserLimit(String idUSer,int offset, int limit);
 
+  @Query(value = "SELECT * FROM bill ORDER BY time_created DESC " +
+      " LIMIT ?1 , ?2 ",nativeQuery = true)
+  List<Bill> getBillByIdUserLimitAdmin(int offset, int limit);
+
   @Query(value = "SELECT * FROM bill WHERE id = ?1 ",nativeQuery = true)
   Bill getBillById(Long id);
 

@@ -30,6 +30,14 @@ public class BillService {
   @Autowired
   ProductService productService;
 
+  public List<Bill> getAllBillsMain() {
+    return billRepository.findAll();
+  }
+
+  public List<Bill> getAllBillsMainLimit(int offset,int limit) {
+    return billRepository.getBillByIdUserLimitAdmin(offset, limit);
+  }
+
   public List<Bill> getAllBills(String id,int type) {
     if (type == -2)
       return billRepository.getBillByIdUserAll(id);
