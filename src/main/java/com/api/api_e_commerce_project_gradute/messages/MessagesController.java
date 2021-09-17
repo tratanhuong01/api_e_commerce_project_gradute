@@ -39,4 +39,9 @@ public class MessagesController {
     return messagesService.getMessagesByIdUser(idUser);
   }
 
+  @GetMapping("messages/group/{id}")
+  public MessagesCustom getMessageByIdGroupChat(@PathVariable Long id) {
+    return messagesService.getMessageByIdGroupChat(id);
+  }
+
 }

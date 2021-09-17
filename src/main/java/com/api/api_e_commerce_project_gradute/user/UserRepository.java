@@ -43,4 +43,7 @@ public interface UserRepository extends JpaRepository<User,String> {
       " m.id_group_chat = ?1 LIMIT 0,1 ",nativeQuery = true)
   User getAdmin(Long idGroupChat);
 
+  @Query(value = "SELECT * FROM user WHERE type = 2 ",nativeQuery = true)
+  List<User> getTeleSupport();
+
 }

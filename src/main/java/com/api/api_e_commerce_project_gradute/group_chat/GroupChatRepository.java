@@ -12,8 +12,4 @@ public interface GroupChatRepository extends JpaRepository<GroupChat,Long> {
   @Query(value = "SELECT * FROM group_chat WHERE id = ?1 ",nativeQuery = true)
   GroupChat getGroupChatByIdGroupChat(Long idGroupChat);
 
-  @Query(value = "SELECT DISTINCT messages.id_group_chat FROM group_chat INNER JOIN messages ON group_chat.id " +
-      " = messages.id_group_chat WHERE messages.id_user = ?1 ",nativeQuery = true)
-  List<Long> getDistinctIdGroupChatByIdUser(String idUser);
-
 }

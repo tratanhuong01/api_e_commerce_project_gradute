@@ -87,4 +87,12 @@ public class UserService {
     return userRepository.updatePasswordUser(DigestUtils.md5Hex(password),idUser);
   }
 
+  public User getTeleSupport() {
+    List<User> userList = userRepository.getTeleSupport();
+    if (userList.size() == 0)
+      return null;
+    else
+      return userList.get(0 + (int)(Math.random() * (((userList.size() - 1) - 0) + 1)));
+  }
+
 }

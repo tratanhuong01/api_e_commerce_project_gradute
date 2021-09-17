@@ -80,4 +80,9 @@ public class UserController {
     return userService.updatePasswordUser(password, idUser);
   }
 
+  @GetMapping("getTeleSupport")
+  public User getTeleSupport() {
+    return userService.getTeleSupport();
+  }
+
 }
