@@ -29,6 +29,9 @@ public class Address {
   private String details;
 
   @Column
+  private String infoAddress;
+
+  @Column
   private int statusAddress;
 
   @Column
@@ -42,6 +45,14 @@ public class Address {
 
   @Column
   private int isDefault;
+
+  public String getInfoAddress() {
+    return infoAddress;
+  }
+
+  public void setInfoAddress(String infoAddress) {
+    this.infoAddress = infoAddress;
+  }
 
   public int getIsDefault() {
     return isDefault;

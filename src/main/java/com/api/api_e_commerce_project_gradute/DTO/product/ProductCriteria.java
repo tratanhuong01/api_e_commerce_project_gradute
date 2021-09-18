@@ -19,6 +19,7 @@ public class ProductCriteria {
   private Integer priceTo;
   private Integer priceFrom;
   private String slugGroupProduct;
-  private String filter;
+  private String sorter;
+  private Set<Integer> typeProduct;
 
 }

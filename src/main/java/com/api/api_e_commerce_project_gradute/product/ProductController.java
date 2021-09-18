@@ -30,7 +30,8 @@ public class ProductController {
                                      @RequestParam(name="brand", required = false) Set<String> brand,
                                      @RequestParam(name="priceFrom", required = false) Integer priceFrom,
                                      @RequestParam(name="priceTo", required = false) Integer priceTo,
-                                     @RequestParam(name = "filter",required = false) String filter) {
+                                     @RequestParam(name = "sorter",required = false) String sorter,
+                                     @RequestParam(name = "typeProduct",required = false) Set<Integer> typeProduct) {
     ProductCriteria productCriteria = ProductCriteria.builder().
         slugGroupProduct(slugGroupProduct).
         feature(feature).
@@ -40,7 +41,8 @@ public class ProductController {
         color(color).
         priceFrom(priceFrom).
         priceTo(priceTo).
-        filter(filter).
+        sorter(sorter).
+        typeProduct(typeProduct).
         build();
     return productService.filterProduct(productCriteria);
   }

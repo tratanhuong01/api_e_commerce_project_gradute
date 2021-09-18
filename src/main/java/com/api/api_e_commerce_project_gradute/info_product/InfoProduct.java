@@ -3,6 +3,7 @@ package com.api.api_e_commerce_project_gradute.info_product;
 import com.api.api_e_commerce_project_gradute.product.Product;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "info_product")
@@ -36,6 +37,17 @@ public class InfoProduct {
 
   @Column
   private int review;
+
+  @Column
+  private Timestamp timeInput;
+
+  public Timestamp getTimeInput() {
+    return timeInput;
+  }
+
+  public void setTimeInput(Timestamp timeInput) {
+    this.timeInput = timeInput;
+  }
 
   public int getReview() {
     return review;
