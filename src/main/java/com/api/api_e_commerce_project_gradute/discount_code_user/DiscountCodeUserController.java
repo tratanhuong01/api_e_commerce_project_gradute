@@ -5,13 +5,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin("*")
 @RestController
 public class DiscountCodeUserController {
 
   @Autowired
   DiscountCodeUserService discountCodeUserService;
 
-  @CrossOrigin
   @GetMapping("discountCodeUsers")
   public List<DiscountCodeUser> getDiscountCodeUsers(@RequestParam(required = false) String idUser,
                                                      @RequestParam(required = false) int isUsed,
@@ -19,19 +19,16 @@ public class DiscountCodeUserController {
     return discountCodeUserService.getDiscountCodeUserByIdUser(idUser, isUsed,type);
   }
 
-  @CrossOrigin
   @PostMapping("discountCodeUsers")
   public DiscountCodeUser addDiscountCodeUser(@RequestBody DiscountCodeUser discountCodeUser) {
     return discountCodeUserService.addDiscountCodeUser(discountCodeUser);
   }
 
-  @CrossOrigin
   @GetMapping("discountCodeUsers/{idDiscountCode}/{idUser}")
   public DiscountCodeUser checkDiscountCodeUserHave(@PathVariable Long idDiscountCode,@PathVariable String idUser) {
     return discountCodeUserService.checkDiscountCodeUserHave(idDiscountCode, idUser);
   }
 
-  @CrossOrigin
   @GetMapping("discountCodeUsers/update/isUsed/")
   public int updateDiscountCodeUser(@RequestParam(required = false) int isUsed,@RequestParam(required = false) String idUser,
                                     @RequestParam(required = false) Long idDiscountCode) {

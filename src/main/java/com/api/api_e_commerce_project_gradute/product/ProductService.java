@@ -12,6 +12,7 @@ import com.api.api_e_commerce_project_gradute.detail_function_product.DetailFunc
 import com.api.api_e_commerce_project_gradute.group_product.GroupProductRepository;
 import com.api.api_e_commerce_project_gradute.image.Image;
 import com.api.api_e_commerce_project_gradute.image.ImageRepository;
+import com.api.api_e_commerce_project_gradute.line_product.LineProduct;
 import com.api.api_e_commerce_project_gradute.line_product.LineProductRepository;
 import com.api.api_e_commerce_project_gradute.memory.Memory;
 import com.api.api_e_commerce_project_gradute.memory.MemoryRepository;
@@ -123,7 +124,6 @@ public class ProductService{
   public ProductIndex getProductIndex() {
     ProductIndex productIndex = new ProductIndex();
     productIndex.setListProductSaleToday(new ArrayList<>());
-    productIndex.setListProductTopSell(new ArrayList<>());
 
     List<ProductByCategory> productByCategoryList = new ArrayList<>();
     List<CategoryProduct> categoryProductList = categoryProductRepository.findAll();
@@ -161,7 +161,22 @@ public class ProductService{
     for (Product product: productRepository.getProductSaleToday())
       listProductSaleToday.add(getProductBySlug(product.getId(),-1));
     productIndex.setListProductSaleToday(listProductSaleToday);
-
+    List<Product> productListTopSell = productRepository.getProductTopSale();
+    List<ProductFull> productTopSell = new ArrayList<>();
+    for (Product product: productListTopSell) {
+      List<ProductMain> productMainList = productRepository.getProductByIdLineProduct(product.getLineProduct().getId());
+      List<Color> colorList = checkListColor(productMainList);
+      List<Image> imageList = checkListImage(productMainList);
+      List<Memory> memoryList = checkListMemory(productMainList);
+      int index = -1;
+      for (int i = 0; i < productMainList.size(); i++)
+        if (productMainList.get(i).getIdProduct().equals(product.getId())) {
+          index = i;
+          break;
+        }
+      productTopSell.add(returnProductFull(productMainList.get(index),colorList,memoryList,imageList,productMainList));
+    }
+    productIndex.setListProductTopSell(productTopSell);
     return productIndex;
   }
 
@@ -314,6 +329,24 @@ public class ProductService{
     else
       stringList = lineProductRepository.searchProductLimit(keyword,slug,offset,limit);
     return returnListProductFull(stringList);
+  }
+
+  public List<ProductFull> getProductAllMain(int offset,int limit,int type) {
+    List<LineProduct> lineProductList = new ArrayList<>();
+    if (type == 0)
+      lineProductList = lineProductRepository.getAllLineProduct();
+    else
+      lineProductList = lineProductRepository.getAllLineProductLimit(offset, limit);
+
+    List<ProductFull> productFullList = new ArrayList<>();
+    for (LineProduct lineProduct: lineProductList) {
+      List<ProductMain> productMainList = productRepository.getProductByIdLineProduct(lineProduct.getId());
+      List<Color> colorList = checkListColor(productMainList);
+      List<Image> imageList = checkListImage(productMainList);
+      List<Memory> memoryList = checkListMemory(productMainList);
+      productFullList.add(returnProductFull(productMainList.get(0),colorList,memoryList,imageList,productMainList));
+    }
+    return productFullList;
   }
 
 }

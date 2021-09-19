@@ -6,43 +6,38 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin("*")
 @RestController
 public class CategoryProductController {
 
   @Autowired
   CategoryProductService categoryProductService;
 
-  @CrossOrigin
   @GetMapping("categoryProductsAll")
   public List<CategoryProduct> getAllCategoryProducts() {
     return categoryProductService.getAllCategoryProducts();
   }
 
-  @CrossOrigin
   @GetMapping("categoryProducts")
   public List<CategoryProduct> getAllCategoryProductLimit() {
     return categoryProductService.getAllCategoryProductLimit(0,10);
   }
 
-  @CrossOrigin
   @GetMapping("categoryProducts/{offset}/{limit}")
   public List<CategoryProduct> getAllCategoryProducts(@PathVariable int offset,@PathVariable int limit) {
     return categoryProductService.getAllCategoryProductLimit(offset, limit);
   }
 
-  @CrossOrigin
   @GetMapping("categoryProducts/{idCategoryProduct}")
   public Optional<CategoryProduct> getCategoryProductById(@PathVariable String idCategoryProduct) {
     return categoryProductService.getCategoryProductById(idCategoryProduct);
   }
 
-  @CrossOrigin
   @PostMapping("categoryProducts")
   public CategoryProduct addCategoryProduct(@RequestBody CategoryProduct categoryProduct) {
     return categoryProductService.addCategoryProduct(categoryProduct);
   }
 
-  @CrossOrigin
   @PutMapping("categoryProducts")
   public CategoryProduct updateCategoryProduct(@RequestBody CategoryProduct categoryProduct) {
     return categoryProductService.addCategoryProduct(categoryProduct);

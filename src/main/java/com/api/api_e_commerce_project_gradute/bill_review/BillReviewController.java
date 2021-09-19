@@ -6,31 +6,28 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin("*")
 @RestController
 public class BillReviewController {
 
   @Autowired
   BillReviewService billReviewService;
 
-  @CrossOrigin
   @GetMapping("billReviews")
   public List<BillReview> getAllBillReviews() {
     return billReviewService.getAllBillReviews();
   }
 
-  @CrossOrigin
   @GetMapping("billReviews/{idBillReview}")
   public Optional<BillReview> getBillReviewById(@PathVariable Long idBillReview) {
     return billReviewService.getBillReviewById(idBillReview);
   }
 
-  @CrossOrigin
   @PostMapping("billReviews")
   public BillReview addBillReviews(@RequestBody BillReview billReview) {
     return billReviewService.addBillReview(billReview);
   }
 
-  @CrossOrigin
   @PutMapping("billReviews")
   public BillReview updateBillReviews(@RequestBody BillReview billReview) {
     return billReviewService.addBillReview(billReview);

@@ -32,4 +32,8 @@ public class GroupProductService {
     return groupProductRepository.getGroupProductByIdCategoryProduct(idCategory);
   }
 
+  public List<GroupProduct> getGroupProductBySlugCategoryProduct(String slugCategory) {
+    return groupProductRepository.getGroupProductBySlugCategoryProduct(slugCategory);
+  }
+
 }

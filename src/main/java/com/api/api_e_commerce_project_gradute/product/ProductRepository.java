@@ -116,4 +116,7 @@ public interface ProductRepository extends JpaRepository<Product,String> , JpaSp
       "WHERE product.id_line_product = ?1 ORDER BY info_product.sale DESC LIMIT 0 , 1",nativeQuery = true)
   List<Product> getFirstProductByIdLineProduct(String idLineProduct);
 
+  @Query(value = "SELECT * FROM product INNER JOIN info_product ON product.id = info_product.id_product " +
+      "ORDER BY MAX(info_product.item_sold) DESC",nativeQuery = true)
+  List<Product> getProductTopSale();
 }

@@ -7,7 +7,7 @@ import com.api.api_e_commerce_project_gradute.news.News;
 import java.util.List;
 
 public class ProductIndex {
-  List<ProductFull> listProductTopSell;
+    List<ProductFull> listProductTopSell;
   List<ProductFull> listProductSaleToday;
   List<ProductByCategory> listProductByCategory;
   List<CategoryByGroupProduct> listCategoryByGroupProduct;

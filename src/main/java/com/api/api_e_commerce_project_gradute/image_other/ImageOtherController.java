@@ -5,31 +5,28 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin("*")
 @RestController
 public class ImageOtherController {
 
   @Autowired
   ImageOtherService imageOtherService;
 
-  @CrossOrigin
   @GetMapping("imageOthers")
   public List<ImageOther> getAllImageOthers() {
     return imageOtherService.getAllImageOthers();
   }
 
-  @CrossOrigin
   @GetMapping("imageOthers/{idLineProduct}")
   public List<ImageOther> getImageOtherByIdLineProduct(@PathVariable String idLineProduct) {
     return imageOtherService.getImageOtherByIdLineProduct(idLineProduct);
   }
 
-  @CrossOrigin
   @PostMapping("imageOthers")
   public ImageOther addImageOther(@RequestBody ImageOther imageOther) {
     return imageOtherService.addImageOther(imageOther);
   }
 
-  @CrossOrigin
   @PutMapping("imageOthers")
   public ImageOther updateImageOther(@RequestBody ImageOther imageOther) {
     return imageOtherService.addImageOther(imageOther);

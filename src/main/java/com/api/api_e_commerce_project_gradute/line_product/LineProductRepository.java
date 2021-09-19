@@ -13,7 +13,10 @@ public interface LineProductRepository extends JpaRepository<LineProduct,String>
   @Query(value = "SELECT * FROM line_product ORDER BY id DESC LIMIT 1 ",nativeQuery = true)
   LineProduct getIdBestNew();
 
-  @Query(value = "SELECT * FROM line_product LIMIT ?1 , ?2 ",nativeQuery = true)
+  @Query(value = "SELECT * FROM line_product  ",nativeQuery = true)
+  List<LineProduct> getAllLineProduct();
+
+  @Query(value = "SELECT * FROM line_product LIMIT ?1 , ?2  ",nativeQuery = true)
   List<LineProduct> getAllLineProductLimit(int offset,int limit);
 
   @Query(value = "SELECT * FROM line_product WHERE id_group_product = ?1 ",nativeQuery = true)

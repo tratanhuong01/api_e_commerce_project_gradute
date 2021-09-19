@@ -6,31 +6,28 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin("*")
 @RestController
 public class CategoryNewsController {
 
   @Autowired
   CategoryNewsService categoryNewsService;
 
-  @CrossOrigin
   @GetMapping("categoryNews")
   public List<CategoryNews> getAllCategoryNews() {
     return categoryNewsService.getAllCategoryNews();
   }
 
-  @CrossOrigin
   @GetMapping("categoryNews/{idCategoryNews}")
   public Optional<CategoryNews> getCategoryNewsById(@PathVariable Long idCategoryNews) {
     return categoryNewsService.getCategoryNewsById(idCategoryNews);
   }
 
-  @CrossOrigin
   @PostMapping("categoryNews")
   public CategoryNews addCategoryNews(@RequestBody CategoryNews categoryNews) {
     return categoryNewsService.addCategoryNews(categoryNews);
   }
 
-  @CrossOrigin
   @PutMapping("categoryNews")
   public CategoryNews updateCategoryNews(@RequestBody CategoryNews categoryNews) {
     return categoryNewsService.addCategoryNews(categoryNews);

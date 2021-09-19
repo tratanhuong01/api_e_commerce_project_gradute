@@ -14,13 +14,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+@CrossOrigin("*")
 @RestController
 public class ProductController {
 
   @Autowired
   ProductService productService;
 
-  @CrossOrigin
   @GetMapping("productsFilter")
   public List<ProductFull> filterProduct(@RequestParam(name="feature", required = false) Set<Long> feature,
                                      @RequestParam(name="slugGroupProduct", required = false) String slugGroupProduct,
@@ -47,25 +47,21 @@ public class ProductController {
     return productService.filterProduct(productCriteria);
   }
 
-  @CrossOrigin
   @GetMapping("products/{offset}/{limit}")
   public List<ProductFull> getProductLimit(@PathVariable int offset,@PathVariable int limit) {
     return productService.getAllProductLimit(offset, limit);
   }
 
-  @CrossOrigin
   @GetMapping("productsAll")
   public List<ProductFull> getAll() {
     return productService.getAllProducts();
   }
 
-  @CrossOrigin
   @GetMapping("products")
   public List<ProductFull> getAllProducts() {
     return productService.getAllProductLimit(0,10);
   }
 
-  @CrossOrigin
   @GetMapping("products/search/")
   public List<ProductFull> searchProduct(@RequestParam(required = false) String keyword,
                                          @RequestParam(required = false) String slug,
@@ -75,83 +71,77 @@ public class ProductController {
     return productService.searchProduct(keyword,slug,offset,limit,type);
   }
 
-  @CrossOrigin
   @GetMapping("products/{idProduct}")
   public Product getProductById(@PathVariable String idProduct) {
     return productService.getProductByIdMain(idProduct);
   }
 
-  @CrossOrigin
   @PostMapping("products")
   public Product addProduct(@RequestBody Product product) {
     return productService.addProduct(product);
   }
 
-  @CrossOrigin
   @PutMapping("products")
   public Product updateProduct(@RequestBody Product product) {
     return productService.addProduct(product);
   }
 
-  @CrossOrigin
   @GetMapping("getIdBestNew")
   public Product getIdBestNew() {
     return productService.getIdBestNew();
   }
 
-  @CrossOrigin
   @GetMapping("getAllProductFull")
   public List<ProductFull> getAllProductFull() {
     return productService.getAllProductFull();
   }
 
-  @CrossOrigin
   @GetMapping("getProductByCategory/{category}")
   public List<ProductFull> getAllProductFull(@PathVariable String category) {
     return productService.getProductByCategory(category);
   }
 
-  @CrossOrigin
   @GetMapping("getProductIndex")
   public ProductIndex getProductIndex() {
     return productService.getProductIndex();
   }
 
-  @CrossOrigin
   @PostMapping("getProductBySlug")
   public ProductFull getProductBySlug(@RequestParam String slug) {
     return productService.getProductBySlug(slug,0);
   }
 
-  @CrossOrigin
   @GetMapping("products/full/{id}")
   public ProductFull getProductByIdProduct(@PathVariable String id) {
     return productService.getProductBySlug(id,1);
   }
 
-  @CrossOrigin
   @PostMapping("getSlug")
   public String getSlugByColorAndMemory(@RequestParam String idColor,@RequestParam String idMemory,
                                         @RequestParam String idLineProduct) {
     return productService.getSlugByColorAndMemory(idColor,idMemory,idLineProduct);
   }
 
-  @CrossOrigin
   @PostMapping("getProductBySlugCategory")
   public List<ProductFull> getProductBySlugCategory(@RequestParam String slugCategoryProduct) {
     return productService.getProductBySlugCategory(slugCategoryProduct);
   }
 
-  @CrossOrigin
   @PostMapping("getProductBySlugCategoryAndSlugGroup")
   public List<ProductFull> getProductBySlugCategoryAndSlugGroup(@RequestParam String slugCategoryProduct,
                                                             @RequestParam String slugGroupProduct) {
     return productService.getProductBySlugCategoryAndSlugGroup(slugCategoryProduct,slugGroupProduct);
   }
-  @CrossOrigin
+
   @GetMapping("getCategoryByGroupProducts")
   public List<CategoryByGroupProduct> getCategoryByGroupProducts() {
     return productService.getCategoryByGroupProducts();
+  }
+
+  @GetMapping("productsAll/main/")
+  public List<ProductFull> getProductAllMain(@RequestParam(required = false) int offset,@RequestParam(required = false) int limit,
+                                             @RequestParam(required = false) int type) {
+    return productService.getProductAllMain(offset, limit, type);
   }
 
 }
