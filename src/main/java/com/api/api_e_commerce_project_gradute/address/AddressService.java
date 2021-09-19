@@ -24,16 +24,16 @@ public class AddressService {
     if (address.getIsDefault() == 1)
       addressRepository.setDefaultAddressMain(address.getAddressUser().getId());
      addressRepository.save(address);
-     return addressRepository.findAll();
+     return addressRepository.getAddressByIdUser(address.getAddressUser().getId());
   }
 
   public List<Address> getAddressByIdUser(String id) {
     return addressRepository.getAddressByIdUser(id);
   }
 
-  public List<Address> deleteAddress(Long id) {
-    addressRepository.deleteById(id);
-    return addressRepository.findAll();
+  public List<Address> deleteAddress(Long idAddress,String idUser) {
+    addressRepository.deleteById(idAddress);
+    return addressRepository.getAddressByIdUser(idUser);
   }
 
   public List<Address> setDefaultAddress(String idUser,Long idAddress) {

@@ -283,7 +283,6 @@ public class ProductService{
     List<Product> productList = productRepository.findAll(productSpecification);
     List<ProductFull> productFullList = new ArrayList<>();
     List<String> lineProductId = new ArrayList<>();
-
     for (Product product: productList){
       int count = 0;
       for (String string :lineProductId)
@@ -307,13 +306,31 @@ public class ProductService{
           }
         }
         if (countFeature == productCriteria.getFeature().size() - countTypeProduct) {
-          List<Product> list = (productRepository.getFirstProductByIdLineProduct(string));
-          if (list.size() > 0 || countTypeProduct > 0)
-            productFullList.add(getProductBySlug(list.get(0).getId(),-1));
+          List<Product> list = new ArrayList<>();
+          if (productCriteria.getSorter() != null) {
+            if (productCriteria.getSorter().equals("5"))
+              list = (productRepository.getFirstProductByIdLineProductReview(string));
+            else
+              list = (productRepository.getFirstProductByIdLineProduct(string));
+          }
+          else {
+            list = (productRepository.getFirstProductByIdLineProduct(string));
+          }
+          if (countTypeProduct > 0)
+            if (list.size() > 0)
+              productFullList.add(getProductBySlug(list.get(0).getId(),-1));
         }
       }
       else {
-        List<Product> list = (productRepository.getFirstProductByIdLineProduct(string));
+        List<Product> list = new ArrayList<>();
+        if (productCriteria.getSorter() != null) {
+          if (productCriteria.getSorter().equals("5"))
+            list = (productRepository.getFirstProductByIdLineProductReview(string));
+          else
+            list = (productRepository.getFirstProductByIdLineProduct(string));
+        }
+        else
+          list = (productRepository.getFirstProductByIdLineProduct(string));
         if (list.size() > 0)
           productFullList.add(getProductBySlug(list.get(0).getId(),-1));
       }

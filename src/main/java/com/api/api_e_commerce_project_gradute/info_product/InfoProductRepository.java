@@ -19,4 +19,15 @@ public interface InfoProductRepository extends JpaRepository<InfoProduct,Long> {
       " WHERE id_product = ?2",nativeQuery = true)
   int updateItemProductCurrentAndBold(int amount,String idProduct);
 
+  @Transactional
+  @Modifying
+  @Query(value = "UPDATE info_product SET item_current = item_current + ?1 , item_sold = item_sold - ?1" +
+      " WHERE id_product = ?2",nativeQuery = true)
+  int updateItemProductCurrentAndBoldAgain(int amount,String idProduct);
+
+  @Transactional
+  @Modifying
+  @Query(value = "UPDATE info_product SET review = ?1 WHERE id_product = ?2 ",nativeQuery = true)
+  int updateReviewProduct(int review,String idProduct);
+
 }

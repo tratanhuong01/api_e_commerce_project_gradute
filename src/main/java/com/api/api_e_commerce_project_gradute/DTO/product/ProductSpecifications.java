@@ -51,12 +51,30 @@ public final class ProductSpecifications {
                 get("slugGroupProduct").in(slugGroupProduct);
           });
       }
+     else {
+      if (sorter != null) {
+        if (productSpecification == null)
+          productSpecification = returnSorter(sorter);
+        else
+          productSpecification = productSpecification.and(returnSorter(sorter));
+      }
+      else {
+        if (productSpecification == null)
+          productSpecification = (root, query, builder) -> {
+            return root.join("lineProduct").join("groupProduct").join("categoryGroupProduct").isNotNull();
+          };
+        else
+          productSpecification = productSpecification.and((root, query, builder) -> {
+            return root.join("lineProduct").join("groupProduct").join("categoryGroupProduct").isNotNull();
+          });
+      }
+    }
     return productSpecification;
   }
 
-  public static Specification<Product> returnSorter(String filter,String slugGroupProduct) {
+  public static Specification<Product> returnSorter(String sorter,String slugGroupProduct) {
     Specification<Product> specification = null;
-    switch (filter) {
+    switch (sorter) {
       case "0" :
         specification =  (root, query, builder) -> {
           Join<Product, InfoProduct> joinInfoProduct = root.join(Product_.infoProduct);
@@ -76,7 +94,8 @@ public final class ProductSpecifications {
       case "2" :
         specification =  (root, query, builder) -> {
           Join<Product, InfoProduct> joinInfoProduct = root.join(Product_.infoProduct);
-          query.orderBy(builder.desc(joinInfoProduct.get("sale")));
+          query.orderBy(builder.desc(builder.max(joinInfoProduct.get("sale")))).
+              groupBy(joinInfoProduct.get("infoProduct").get("id"));
           return joinInfoProduct.join("infoProduct").join("lineProduct",JoinType.INNER).join("groupProduct").
               get("slugGroupProduct").in(slugGroupProduct);
         };
@@ -84,7 +103,8 @@ public final class ProductSpecifications {
       case "3" :
         specification =  (root, query, builder) -> {
           Join<Product, InfoProduct> joinInfoProduct = root.join(Product_.infoProduct);
-          query.orderBy(builder.desc(joinInfoProduct.get("priceOutput")));
+          query.orderBy(builder.desc(builder.max(joinInfoProduct.get("priceOutput")))).
+              groupBy(joinInfoProduct.get("infoProduct").get("id"));
           return joinInfoProduct.join("infoProduct").join("lineProduct",JoinType.INNER).join("groupProduct").
               get("slugGroupProduct").in(slugGroupProduct);
         };
@@ -92,7 +112,8 @@ public final class ProductSpecifications {
       case "4" :
         specification =  (root, query, builder) -> {
           Join<Product, InfoProduct> joinInfoProduct = root.join(Product_.infoProduct);
-          query.orderBy(builder.asc(joinInfoProduct.get("priceOutput")));
+          query.orderBy(builder.asc(builder.max(joinInfoProduct.get("priceOutput")))).
+              groupBy(joinInfoProduct.get("infoProduct").get("id"));
           return joinInfoProduct.join("infoProduct").join("lineProduct",JoinType.INNER).join("groupProduct").
               get("slugGroupProduct").in(slugGroupProduct);
         };
@@ -100,7 +121,7 @@ public final class ProductSpecifications {
       case "5" :
         specification =  (root, query, builder) -> {
           Join<Product, InfoProduct> joinInfoProduct = root.join(Product_.infoProduct);
-          query.orderBy(builder.desc(joinInfoProduct.get("review")));
+          query.orderBy(builder.desc(builder.max(joinInfoProduct.get("review")))).groupBy(joinInfoProduct.get("infoProduct").get("id"));
           return joinInfoProduct.join("infoProduct").join("lineProduct",JoinType.INNER).join("groupProduct").
               get("slugGroupProduct").in(slugGroupProduct);
         };
@@ -109,6 +130,63 @@ public final class ProductSpecifications {
         specification = (root,query,builder) -> {
           return root.join("lineProduct", JoinType.INNER).join("groupProduct").
               get("slugGroupProduct").in(slugGroupProduct);
+        };
+        break;
+    }
+    return specification;
+  }
+
+  public static Specification<Product> returnSorter(String sorter) {
+    Specification<Product> specification = null;
+    switch (sorter) {
+      case "0" :
+        specification =  (root, query, builder) -> {
+          Join<Product, InfoProduct> joinInfoProduct = root.join(Product_.infoProduct);
+          query.orderBy(builder.desc(joinInfoProduct.get("timeInput")));
+          return root.join("lineProduct").join("groupProduct").join("categoryGroupProduct").isNotNull();
+        };
+        break;
+      case "1" :
+        specification =  (root, query, builder) -> {
+          Join<Product, InfoProduct> joinInfoProduct = root.join(Product_.infoProduct);
+          query.orderBy(builder.desc(joinInfoProduct.get("itemSold")));
+          return root.join("lineProduct").join("groupProduct").join("categoryGroupProduct").isNotNull();
+        };
+        break;
+      case "2" :
+        specification =  (root, query, builder) -> {
+          Join<Product, InfoProduct> joinInfoProduct = root.join(Product_.infoProduct);
+          query.orderBy(builder.desc(builder.max(joinInfoProduct.get("sale")))).
+              groupBy(joinInfoProduct.get("infoProduct").get("id"));
+          return root.join("lineProduct").join("groupProduct").join("categoryGroupProduct").isNotNull();
+        };
+        break;
+      case "3" :
+        specification =  (root, query, builder) -> {
+          Join<Product, InfoProduct> joinInfoProduct = root.join(Product_.infoProduct);
+          query.orderBy(builder.desc(builder.max(joinInfoProduct.get("priceOutput")))).
+              groupBy(joinInfoProduct.get("infoProduct").get("id"));
+          return root.join("lineProduct").join("groupProduct").join("categoryGroupProduct").isNotNull();
+        };
+        break;
+      case "4" :
+        specification =  (root, query, builder) -> {
+          Join<Product, InfoProduct> joinInfoProduct = root.join(Product_.infoProduct);
+          query.orderBy(builder.asc(builder.max(joinInfoProduct.get("priceOutput")))).
+              groupBy(joinInfoProduct.get("infoProduct").get("id"));
+          return root.join("lineProduct").join("groupProduct").join("categoryGroupProduct").isNotNull();
+        };
+        break;
+      case "5" :
+        specification =  (root, query, builder) -> {
+          Join<Product, InfoProduct> joinInfoProduct = root.join(Product_.infoProduct);
+          query.orderBy(builder.desc(builder.max(joinInfoProduct.get("review")))).groupBy(joinInfoProduct.get("infoProduct").get("id"));
+          return root.join("lineProduct").join("groupProduct").join("categoryGroupProduct").isNotNull();
+        };
+        break;
+      default:
+        specification = (root,query,builder) -> {
+          return root.join("lineProduct").join("groupProduct").join("categoryGroupProduct").isNotNull();
         };
         break;
     }
@@ -184,28 +262,52 @@ public final class ProductSpecifications {
 
   public static Specification<Product> price(Integer priceFrom , Integer priceTo,String slug) {
     if (priceFrom != null && priceTo != null)
-      if (productSpecification != null)
-        productSpecification.and(productSpecification = (root, query, builder) -> {
-          query.distinct(true);
-          Subquery<InfoProduct> queryData = query.subquery(InfoProduct.class);
-          Root<InfoProduct> infoProductRoot = queryData.from(InfoProduct.class);
-          return root.get("id").in(queryData.select(infoProductRoot.get("infoProduct").get("id"))
-              .where(builder.greaterThanOrEqualTo(infoProductRoot.get("priceOutput"), priceFrom),
-                  builder.lessThan(infoProductRoot.get("priceOutput"), priceTo),
-                  builder.equal(infoProductRoot.get("infoProduct").get("lineProduct").
-                      get("groupProduct").get("slugGroupProduct"),slug)));
-        });
-      else
-        productSpecification = (root, query, builder) -> {
-          query.distinct(true);
-          Subquery<InfoProduct> queryData = query.subquery(InfoProduct.class);
-          Root<InfoProduct> infoProductRoot = queryData.from(InfoProduct.class);
-          return root.get("id").in(queryData.select(infoProductRoot.get("infoProduct").get("id"))
-              .where(builder.greaterThanOrEqualTo(infoProductRoot.get("priceOutput"), priceFrom),
-                  builder.lessThan(infoProductRoot.get("priceOutput"), priceTo),
-                  builder.equal(infoProductRoot.get("infoProduct").get("lineProduct").
-                      get("groupProduct").get("slugGroupProduct"),slug)));
-        };
+    {
+      if (slug == null) {
+        if (productSpecification != null)
+          productSpecification.and(productSpecification = (root, query, builder) -> {
+            query.distinct(true);
+            Subquery<InfoProduct> queryData = query.subquery(InfoProduct.class);
+            Root<InfoProduct> infoProductRoot = queryData.from(InfoProduct.class);
+            return root.get("id").in(queryData.select(infoProductRoot.get("infoProduct").get("id"))
+                .where(builder.greaterThanOrEqualTo(infoProductRoot.get("priceOutput"), priceFrom),
+                    builder.lessThan(infoProductRoot.get("priceOutput"), priceTo)));
+          });
+        else
+          productSpecification = (root, query, builder) -> {
+            query.distinct(true);
+            Subquery<InfoProduct> queryData = query.subquery(InfoProduct.class);
+            Root<InfoProduct> infoProductRoot = queryData.from(InfoProduct.class);
+            return root.get("id").in(queryData.select(infoProductRoot.get("infoProduct").get("id"))
+                .where(builder.greaterThanOrEqualTo(infoProductRoot.get("priceOutput"), priceFrom),
+                    builder.lessThan(infoProductRoot.get("priceOutput"), priceTo)));
+          };
+      }
+      else {
+        if (productSpecification != null)
+          productSpecification.and(productSpecification = (root, query, builder) -> {
+            query.distinct(true);
+            Subquery<InfoProduct> queryData = query.subquery(InfoProduct.class);
+            Root<InfoProduct> infoProductRoot = queryData.from(InfoProduct.class);
+            return root.get("id").in(queryData.select(infoProductRoot.get("infoProduct").get("id"))
+                .where(builder.greaterThanOrEqualTo(infoProductRoot.get("priceOutput"), priceFrom),
+                    builder.lessThan(infoProductRoot.get("priceOutput"), priceTo),
+                    builder.equal(infoProductRoot.get("infoProduct").get("lineProduct").
+                        get("groupProduct").get("slugGroupProduct"),slug)));
+          });
+        else
+          productSpecification = (root, query, builder) -> {
+            query.distinct(true);
+            Subquery<InfoProduct> queryData = query.subquery(InfoProduct.class);
+            Root<InfoProduct> infoProductRoot = queryData.from(InfoProduct.class);
+            return root.get("id").in(queryData.select(infoProductRoot.get("infoProduct").get("id"))
+                .where(builder.greaterThanOrEqualTo(infoProductRoot.get("priceOutput"), priceFrom),
+                    builder.lessThan(infoProductRoot.get("priceOutput"), priceTo),
+                    builder.equal(infoProductRoot.get("infoProduct").get("lineProduct").
+                        get("groupProduct").get("slugGroupProduct"),slug)));
+          };
+      }
+    }
     return productSpecification;
   }
 

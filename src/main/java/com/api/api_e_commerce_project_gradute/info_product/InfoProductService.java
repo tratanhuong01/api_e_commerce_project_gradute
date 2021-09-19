@@ -27,4 +27,8 @@ public class InfoProductService {
     return infoProductRepository.updateItemProductCurrentAndBold(amount, idProduct);
   }
 
+  public int updateReviewProduct(int review,String idProduct) {
+    return infoProductRepository.updateReviewProduct(review, idProduct);
+  }
+
 }

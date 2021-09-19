@@ -24,7 +24,7 @@ public class AddressController {
   }
 
   @PostMapping("addresses")
-  public List<Address> addAddress(@RequestBody Address address) {
+  public List<Address> addAddress(@RequestParam(required = false) String idUser,@RequestBody Address address) {
     return addressService.addAddress(address);
   }
 
@@ -33,9 +33,9 @@ public class AddressController {
     return addressService.addAddress(address);
   }
 
-  @DeleteMapping("addresses/{id}")
-  public List<Address> deleteAddress(@PathVariable Long id) {
-    return addressService.deleteAddress(id);
+  @DeleteMapping("addresses")
+  public List<Address> deleteAddress(@RequestParam(required = false) Long idAddress,@RequestParam(required = false) String idUser) {
+    return addressService.deleteAddress(idAddress,idUser);
   }
 
   @PutMapping("setDefaultAddress/{idUser}/{idAddress}")
