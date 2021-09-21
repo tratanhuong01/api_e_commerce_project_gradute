@@ -9,6 +9,8 @@ import com.api.api_e_commerce_project_gradute.color.Color;
 import com.api.api_e_commerce_project_gradute.color.ColorRepository;
 import com.api.api_e_commerce_project_gradute.detail_function_product.DetailFunctionProduct;
 import com.api.api_e_commerce_project_gradute.detail_function_product.DetailFunctionProductRepository;
+import com.api.api_e_commerce_project_gradute.function_product.FunctionProduct;
+import com.api.api_e_commerce_project_gradute.function_product.FunctionProductRepository;
 import com.api.api_e_commerce_project_gradute.group_product.GroupProductRepository;
 import com.api.api_e_commerce_project_gradute.image.Image;
 import com.api.api_e_commerce_project_gradute.image.ImageRepository;
@@ -19,16 +21,15 @@ import com.api.api_e_commerce_project_gradute.memory.MemoryRepository;
 import com.api.api_e_commerce_project_gradute.news.NewsRepository;
 import com.api.api_e_commerce_project_gradute.ram.RamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.awt.print.Pageable;
+
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
+import java.util.Set;
 
 @Transactional(readOnly = true)
 @Service
@@ -57,6 +58,8 @@ public class ProductService{
   DetailFunctionProductRepository detailFunctionProductRepository;
   @Autowired
   LineProductRepository lineProductRepository;
+  @Autowired
+  FunctionProductRepository functionProductRepository;
 
   public Product getProductByIdMain(String id) {
     return productRepository.getProductById(id);
@@ -182,7 +185,7 @@ public class ProductService{
 
   public List<Color> checkListColor(List<ProductMain> productMainList) {
     List<Color> colorList = new ArrayList<>();
-    for (ProductMain productMain: productMainList) {
+    for (ProductMain productMain: productMainList)
       if (productMain.getIdColor() != null) {
         int count = 0;
         for (Color color : colorList)
@@ -191,13 +194,12 @@ public class ProductService{
         if (count == 0)
           colorList.add(colorRepository.getColorByIdColor(productMain.getIdColor()));
       }
-    }
     return colorList;
   }
 
   public List<Image> checkListImage(List<ProductMain> productMainList) {
     List<Image> imageList = new ArrayList<>();
-    for (ProductMain productMain: productMainList) {
+    for (ProductMain productMain: productMainList)
       if (productMain.getIdImage() != null) {
         int count = 0;
         for (Image image : imageList)
@@ -206,7 +208,6 @@ public class ProductService{
         if (count == 0)
           imageList.add(imageRepository.getImageByIdImage(productMain.getIdImage()));
       }
-    }
     return imageList;
   }
 
@@ -278,6 +279,40 @@ public class ProductService{
     return categoryByGroupProductList;
   }
 
+  public boolean checkFeatureHaveUnique(Set<Long> featureClient, List<DetailFunctionProduct> detailFunctionProductList) {
+    for (Long longData: featureClient) {
+      for (DetailFunctionProduct detailFunctionProduct: detailFunctionProductList) {
+        if (detailFunctionProduct.getFunctionProductDetail().getId().equals(longData))
+          if (detailFunctionProduct.getFunctionProductDetail().getTypeFunctionProduct() == 1)
+            return true;
+      }
+    }
+    return false;
+  }
+
+  public boolean checkFeatureHaveNotFunc(Set<Long> featureClient, List<DetailFunctionProduct> detailFunctionProductList) {
+    int count = 0;
+    for (Long longData: featureClient) {
+      FunctionProduct functionProduct = functionProductRepository.getFunctionProductByIdFunctionProduct(longData);
+      for (DetailFunctionProduct detailFunctionProduct: detailFunctionProductList)
+        if (detailFunctionProduct.getFunctionProductDetail().getId().equals(longData))
+          count++;
+    }
+    return count == featureClient.size() ? true : false;
+  }
+
+  public boolean checkFeatureLineProduct(Set<Long> featureClient, List<DetailFunctionProduct> detailFunctionProductList) {
+    List<DetailFunctionProduct> detailFunctionProducts = new ArrayList<>();
+    for (Long longData : featureClient) {
+      for (DetailFunctionProduct detailFunctionProduct : detailFunctionProductList)
+        if (detailFunctionProduct.getFunctionProductDetail().getId().equals(longData))
+          detailFunctionProducts.add(detailFunctionProduct);
+    }
+    if(checkFeatureHaveNotFunc(featureClient,detailFunctionProducts))
+     return true;
+    return false;
+  }
+
   public List<ProductFull> filterProduct(ProductCriteria productCriteria) {
     Specification<Product> productSpecification = ProductSpecifications.createProductSpecifications(productCriteria);
     List<Product> productList = productRepository.findAll(productSpecification);
@@ -291,21 +326,9 @@ public class ProductService{
     }
 
     for (String string:lineProductId) {
-      int countFeature = 0;
-      int countTypeProduct = 0;
       if (productCriteria.getFeature() != null) {
-        for (Long longData : productCriteria.getFeature()) {
-          DetailFunctionProduct detailFunctionProduct = detailFunctionProductRepository.getDetailFunctionProduct(longData,string);
-          if (detailFunctionProduct != null) {
-            if (detailFunctionProduct.getFunctionProductDetail().getTypeFunctionProduct() == 1 &&
-                productCriteria.getFeature().size() == 1){
-            }
-            else
-              countFeature++;
-            if (detailFunctionProduct.getFunctionProductDetail().getTypeFunctionProduct() == 1) countTypeProduct++;
-          }
-        }
-        if (countFeature == productCriteria.getFeature().size() - countTypeProduct) {
+        if (checkFeatureLineProduct(productCriteria.getFeature(), detailFunctionProductRepository.
+            getDetailFunctionProductByLineProduct(string))) {
           List<Product> list = new ArrayList<>();
           if (productCriteria.getSorter() != null) {
             if (productCriteria.getSorter().equals("5"))
@@ -316,7 +339,7 @@ public class ProductService{
           else {
             list = (productRepository.getFirstProductByIdLineProduct(string));
           }
-          if (countTypeProduct > 0)
+//          if (countTypeProduct > 0)
             if (list.size() > 0)
               productFullList.add(getProductBySlug(list.get(0).getId(),-1));
         }
