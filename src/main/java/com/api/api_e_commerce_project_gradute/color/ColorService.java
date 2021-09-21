@@ -28,6 +28,16 @@ public class ColorService {
     return colorRepository.save(color);
   }
 
+  public List<Color> searchColorAll(String keyword) {
+    return colorRepository.searchColorAll(keyword);
+  }
 
+  public List<Color> searchColorLimit(String keyword, int offset, int limit) {
+    return colorRepository.searchColorLimit(keyword,offset,limit);
+  }
+
+  public void deleteColor(Color color) {
+    colorRepository.delete(color);
+  }
 
 }

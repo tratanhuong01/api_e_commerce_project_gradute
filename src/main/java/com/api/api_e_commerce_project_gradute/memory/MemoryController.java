@@ -13,6 +13,25 @@ public class MemoryController {
   @Autowired
   MemoryService memoryService;
 
+  // admin
+
+  @GetMapping("memoriesAll/search/")
+  public List<Memory> searchMemoryAll(String keyword) {
+    return memoryService.searchMemoryAll(keyword);
+  }
+
+  @GetMapping("memories/search/")
+  public List<Memory> searchMemoryLimit(String keyword, int offset, int limit) {
+    return memoryService.searchMemoryLimit(keyword,offset,limit);
+  }
+
+  @DeleteMapping("memories")
+  public void deleteMemory(Memory memory) {
+    memoryService.deleteBrand(memory);
+  }
+
+  // user
+
   @GetMapping("memoriesAll")
   public List<Memory> getAllMemories() {
     return memoryService.getAllMemories();

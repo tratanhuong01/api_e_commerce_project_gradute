@@ -3,7 +3,6 @@ package com.api.api_e_commerce_project_gradute.line_product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.sound.sampled.Line;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,6 +38,18 @@ public class LineProductService {
 
   public List<LineProduct> getLineProductByIdGroupProduct(String idGroupProduct) {
     return lineProductRepository.getLineProductByIdGroupProduct(idGroupProduct);
+  }
+
+  public List<LineProduct> searchLineProductAll(String keyword) {
+    return lineProductRepository.searchLineProductAll(keyword);
+  }
+
+  public List<LineProduct> searchLineProductLimit(String keyword, int offset, int limit) {
+    return lineProductRepository.searchLineProductLimit(keyword,offset,limit);
+  }
+
+  public void deleteLineProduct(LineProduct LineProduct) {
+    lineProductRepository.delete(LineProduct);
   }
 
 }

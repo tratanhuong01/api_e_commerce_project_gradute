@@ -3,7 +3,6 @@ package com.api.api_e_commerce_project_gradute.group_attribute;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.acl.Group;
 import java.util.List;
 
 @CrossOrigin("*")
@@ -12,6 +11,26 @@ public class GroupAttributesController {
 
   @Autowired
   GroupAttributesService groupAttributesService;
+
+  // admin
+  @GetMapping("groupAttributesAll/search/")
+  public List<GroupAttribute> searchGroupAttributeAll(@RequestParam(required = false) String keyword) {
+    return groupAttributesService.searchGroupAttributeAll(keyword);
+  }
+
+  @GetMapping("groupAttributes/search/")
+  public List<GroupAttribute> searchGroupAttributeLimit(@RequestParam(required = false) String keyword,
+                                                          @RequestParam(required = false) int offset,
+                                                          @RequestParam(required = false) int limit) {
+    return groupAttributesService.searchGroupAttributeLimit(keyword,offset,limit);
+  }
+
+  @DeleteMapping("groupAttributes")
+  public void deleteGroupAttribute(@RequestBody GroupAttribute groupAttribute) {
+    groupAttributesService.deleteGroupAttribute(groupAttribute);
+  }
+
+  // user
 
   @GetMapping("groupAttributesAll")
   public List<GroupAttribute> getAllGroupAttributes() {

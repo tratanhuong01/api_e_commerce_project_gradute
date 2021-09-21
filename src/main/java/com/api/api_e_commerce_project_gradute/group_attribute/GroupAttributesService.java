@@ -1,5 +1,6 @@
 package com.api.api_e_commerce_project_gradute.group_attribute;
 
+import com.api.api_e_commerce_project_gradute.category_product.CategoryProduct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,18 @@ public class GroupAttributesService {
   public List<GroupAttribute> addGroupAttribute(GroupAttribute groupAttribute) {
     groupAttributesRepository.save(groupAttribute);
     return groupAttributesRepository.findAll();
+  }
+
+  public List<GroupAttribute> searchGroupAttributeAll(String keyword) {
+    return groupAttributesRepository.searchGroupAttributeAll(keyword);
+  }
+
+  public List<GroupAttribute> searchGroupAttributeLimit(String keyword,int offset,int limit) {
+    return groupAttributesRepository.searchGroupAttributeLimit(keyword,offset,limit);
+  }
+
+  public void deleteGroupAttribute(GroupAttribute groupAttribute) {
+    groupAttributesRepository.delete(groupAttribute);
   }
 
 }

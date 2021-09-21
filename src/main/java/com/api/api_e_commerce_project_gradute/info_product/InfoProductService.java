@@ -1,5 +1,6 @@
 package com.api.api_e_commerce_project_gradute.info_product;
 
+import com.api.api_e_commerce_project_gradute.product.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +12,15 @@ public class InfoProductService {
   @Autowired
   InfoProductRepository infoProductRepository;
 
+  @Autowired
+  ProductRepository productRepository;
+
   public InfoProduct addInfoProduct(InfoProduct infoProduct) {
+    return infoProductRepository.save(infoProduct);
+  }
+
+  public InfoProduct addInfoProduct(InfoProduct infoProduct,String idProduct) {
+    infoProduct.setInfoProduct(productRepository.getProductById(idProduct));
     return infoProductRepository.save(infoProduct);
   }
 

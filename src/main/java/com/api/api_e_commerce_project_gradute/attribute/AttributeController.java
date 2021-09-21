@@ -12,6 +12,26 @@ public class AttributeController {
   @Autowired
   AttributeService attributeService;
 
+  // admin
+
+  @GetMapping("attributesAll/search/")
+  public List<Attribute> searchAttributeAll(@RequestParam(required = false) String keyword) {
+    return attributeService.searchAttributeAll(keyword);
+  }
+
+  @GetMapping("attributes/search/")
+  public List<Attribute> searchAttributeLimit(@RequestParam(required = false) String keyword, @RequestParam(required = false) int offset,
+                                                  @RequestParam(required = false) int limit) {
+    return attributeService.searchAttributeLimit(keyword,offset,limit);
+  }
+
+  @DeleteMapping("attributes")
+  public void deleteAttribute(@RequestBody Attribute attribute) {
+    attributeService.deleteAttribute(attribute);
+  }
+
+  // user
+
   @GetMapping("attributesAll")
   public List<Attribute> getAllAttributes() {
     return attributeService.getAllAttributes();

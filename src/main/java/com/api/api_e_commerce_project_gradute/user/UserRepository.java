@@ -28,8 +28,8 @@ public interface UserRepository extends JpaRepository<User,String> {
   @Query(value = "UPDATE user SET code_email = ?1 WHERE id = ?2 ",nativeQuery = true)
   int updateCodeEmail(String codeEmail,String idUser);
 
-  @Query(value = "SELECT * FROM user LIMIT ?1 , ?2 ",nativeQuery = true)
-  List<User> getAllUsersLimit(int offset,int limit);
+  @Query(value = "SELECT * FROM user WHERE type = ?1 LIMIT ?2 , ?3 ",nativeQuery = true)
+  List<User> getAllUsersLimit(int type,int offset,int limit);
 
   @Query(value = "SELECT password FROM user WHERE id = ?1 AND password = ?2 ",nativeQuery = true)
   String checkPasswordUser(String idUser,String password);

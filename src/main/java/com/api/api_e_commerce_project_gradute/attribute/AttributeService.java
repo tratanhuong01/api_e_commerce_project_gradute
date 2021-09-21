@@ -28,4 +28,16 @@ public class AttributeService {
     return attributeRepository.getAttributeByIdGroupAttribute(id);
   }
 
+  public List<Attribute> searchAttributeAll(String keyword) {
+    return attributeRepository.searchAttributeAll(keyword);
+  }
+
+  public List<Attribute> searchAttributeLimit(String keyword, int offset, int limit) {
+    return attributeRepository.searchAttributeLimit(keyword,offset,limit);
+  }
+
+  public void deleteAttribute(Attribute attribute) {
+    attributeRepository.delete(attribute);
+  }
+
 }

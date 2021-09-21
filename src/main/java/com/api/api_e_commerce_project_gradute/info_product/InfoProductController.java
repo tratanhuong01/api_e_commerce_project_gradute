@@ -18,8 +18,9 @@ public class InfoProductController {
   }
 
   @PostMapping("infoProducts")
-  public InfoProduct addInfoProduct(@RequestBody InfoProduct infoProduct) {
-    return infoProductService.addInfoProduct(infoProduct);
+  public InfoProduct addInfoProduct(@RequestParam(required = false) String idProduct,
+                                    @RequestBody InfoProduct infoProduct) {
+    return infoProductService.addInfoProduct(infoProduct,idProduct);
   }
 
   @PutMapping("infoProducts")

@@ -12,6 +12,26 @@ public class BrandController {
 
   @Autowired
   BrandService brandService;
+  // admin
+
+  @GetMapping("brandsAll/search/")
+  public List<Brand> searchCategoryProductAll(@RequestParam(required = false) String keyword) {
+    return brandService.searchBrandAll(keyword);
+  }
+
+  @GetMapping("brands/search/")
+  public List<Brand> searchCategoryProductLimit(@RequestParam(required = false) String keyword,
+                                                @RequestParam(required = false) int offset,
+                                                @RequestParam(required = false) int limit) {
+    return brandService.searchBrandLimit(keyword,offset,limit);
+  }
+
+  @DeleteMapping("brands")
+  public void deleteBrand(@RequestBody Brand brand) {
+    brandService.deleteBrand(brand);
+  }
+
+  // user
 
   @GetMapping("brandsAll")
   public List<Brand> getAll() {
@@ -47,5 +67,6 @@ public class BrandController {
   public List<Brand> getBrandBySlugGroupProduct(@PathVariable String slugGroupProduct) {
     return brandService.getBrandBySlugGroupProduct(slugGroupProduct);
   }
+
 
 }

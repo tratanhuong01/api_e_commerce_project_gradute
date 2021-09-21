@@ -13,6 +13,26 @@ public class GroupProductController {
   @Autowired
   GroupProductService groupProductService;
 
+  // admin
+
+  @GetMapping("groupProductsAll/search/")
+  public List<GroupProduct> searchGroupProductAll(@RequestParam(required = false) String keyword) {
+    return groupProductService.searchGroupProductAll(keyword);
+  }
+
+  @GetMapping("groupProducts/search/")
+  public List<GroupProduct> searchGroupProductLimit(@RequestParam(required = false) String keyword, @RequestParam(required = false) int offset,
+                                      @RequestParam(required = false) int limit) {
+    return groupProductService.searchGroupProductLimit(keyword,offset,limit);
+  }
+
+  @DeleteMapping("groupProducts")
+  public void deleteGroupProduct(@RequestBody GroupProduct groupProduct) {
+    groupProductService.deleteGroupProduct(groupProduct);
+  }
+
+  // user
+
   @GetMapping("groupProductsAll")
   public List<GroupProduct> getAllGroupProducts() {
     return groupProductService.getAllGroupProducts();

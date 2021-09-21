@@ -1,5 +1,4 @@
 package com.api.api_e_commerce_project_gradute.brand;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +34,18 @@ public class BrandService {
     for (String string: stringList)
       brandList.add(brandRepository.getBrandByIdBrand(string));
     return brandList;
+  }
+
+  public List<Brand> searchBrandAll(String keyword) {
+    return brandRepository.searchBrandAll(keyword);
+  }
+
+  public List<Brand> searchBrandLimit(String keyword, int offset, int limit) {
+    return brandRepository.searchBrandLimit(keyword,offset,limit);
+  }
+
+  public void deleteBrand(Brand categoryProduct) {
+    brandRepository.delete(categoryProduct);
   }
 
 }

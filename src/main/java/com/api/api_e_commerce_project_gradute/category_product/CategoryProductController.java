@@ -13,6 +13,21 @@ public class CategoryProductController {
   @Autowired
   CategoryProductService categoryProductService;
 
+  // admin
+  @GetMapping("categoryProductsAll/search/")
+  public List<CategoryProduct> searchCategoryProductAll(@RequestParam(required = false) String keyword) {
+    return categoryProductService.searchCategoryProductAll(keyword);
+  }
+
+  @GetMapping("categoryProducts/search/")
+  public List<CategoryProduct> searchCategoryProductLimit(@RequestParam(required = false) String keyword,
+                                                        @RequestParam(required = false) int offset,
+                                                        @RequestParam(required = false) int limit) {
+    return categoryProductService.searchCategoryProductLimit(keyword,offset,limit);
+  }
+
+  // user
+
   @GetMapping("categoryProductsAll")
   public List<CategoryProduct> getAllCategoryProducts() {
     return categoryProductService.getAllCategoryProducts();
@@ -41,6 +56,11 @@ public class CategoryProductController {
   @PutMapping("categoryProducts")
   public CategoryProduct updateCategoryProduct(@RequestBody CategoryProduct categoryProduct) {
     return categoryProductService.addCategoryProduct(categoryProduct);
+  }
+
+  @DeleteMapping("categoryProducts")
+  public void deleteCategoryProduct(@RequestBody CategoryProduct categoryProduct) {
+    categoryProductService.deleteCategoryProduct(categoryProduct);
   }
 
 }

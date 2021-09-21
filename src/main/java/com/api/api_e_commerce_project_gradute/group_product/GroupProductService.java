@@ -36,4 +36,16 @@ public class GroupProductService {
     return groupProductRepository.getGroupProductBySlugCategoryProduct(slugCategory);
   }
 
+  public List<GroupProduct> searchGroupProductAll(String keyword) {
+    return groupProductRepository.searchGroupProductAll(keyword);
+  }
+
+  public List<GroupProduct> searchGroupProductLimit(String keyword, int offset, int limit) {
+    return groupProductRepository.searchGroupProductLimit(keyword,offset,limit);
+  }
+
+  public void deleteGroupProduct(GroupProduct groupProduct) {
+    groupProductRepository.delete(groupProduct);
+  }
+
 }

@@ -18,19 +18,20 @@ public class UserController {
   @Autowired
   MailService mailService;
 
+//  @GetMapping("usersAll")
+//  public List<User> getAllUsers() {
+//    return userService.getAllUsers();
+//  }
+
   @GetMapping("usersAll")
-  public List<User> getAllUsers() {
-    return userService.getAllUsers();
+  public List<User> getAllUsersLimit(@RequestParam(required = false) int type) {
+    return userService.getAllUsersLimit(type,0,10);
   }
 
   @GetMapping("users")
-  public List<User> getAllUsersLimit() {
-    return userService.getAllUsersLimit(0,10);
-  }
-
-  @GetMapping("users/{offset}/{limit}")
-  public List<User> getAllUsersLimit(@PathVariable int offset,@PathVariable int limit) {
-    return userService.getAllUsersLimit(offset,limit);
+  public List<User> getAllUsersLimit(@RequestParam(required = false) int offset,@RequestParam(required = false) int limit,
+                                     @RequestParam(required = false) int type) {
+    return userService.getAllUsersLimit(type,offset,limit);
   }
 
   @GetMapping("users/{idUser}")

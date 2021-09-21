@@ -3,7 +3,6 @@ package com.api.api_e_commerce_project_gradute.line_product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.sound.sampled.Line;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,6 +12,26 @@ public class LineProductController {
 
   @Autowired
   LineProductService lineProductService;
+
+  // admin
+
+  @GetMapping("lineProductsAll/search/")
+  public List<LineProduct> searchLineProductAll(@RequestParam(required = false) String keyword) {
+    return lineProductService.searchLineProductAll(keyword);
+  }
+
+  @GetMapping("lineProducts/search/")
+  public List<LineProduct> searchLineProductLimit(@RequestParam(required = false) String keyword, @RequestParam(required = false) int offset,
+                                                    @RequestParam(required = false) int limit) {
+    return lineProductService.searchLineProductLimit(keyword,offset,limit);
+  }
+
+  @DeleteMapping("lineProducts")
+  public void deleteLineProduct(@RequestBody LineProduct lineProduct) {
+    lineProductService.deleteLineProduct(lineProduct);
+  }
+
+  // user
 
   @GetMapping("lineProductsAll")
   public List<LineProduct> getAllLineProducts() {

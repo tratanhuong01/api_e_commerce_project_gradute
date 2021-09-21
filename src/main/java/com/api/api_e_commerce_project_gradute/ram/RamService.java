@@ -24,4 +24,16 @@ public class RamService {
     return ramRepository.save(ram);
   }
 
+  public List<Ram> searchRamAll(String keyword) {
+    return ramRepository.searchRamAll(keyword);
+  }
+
+  public List<Ram> searchRamLimit(String keyword, int offset, int limit) {
+    return ramRepository.searchRamLimit(keyword,offset,limit);
+  }
+
+  public void deleteRam(Ram ram) {
+    ramRepository.delete(ram);
+  }
+
 }

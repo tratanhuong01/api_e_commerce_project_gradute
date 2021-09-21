@@ -2,6 +2,7 @@ package com.api.api_e_commerce_project_gradute.brand;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -19,5 +20,14 @@ public interface BrandRepository extends JpaRepository<Brand,String> {
       "line_product.id INNER JOIN group_product ON group_product.id = line_product.id_group_product " +
       "WHERE group_product.slug_group_product = ? ",nativeQuery = true)
   List<String> getBrandBySlugGroupProduct(String slugGroupProduct);
+
+  @Query(value = "SELECT * FROM brand WHERE id = :keyword OR name_brand LIKE CONCAT('%',:keyword,'%') " +
+      "LIMIT :offset , :limit ",nativeQuery = true)
+  List<Brand> searchBrandLimit(@Param("keyword") String keyword, @Param("offset") int offset,
+                                                   @Param("limit") int limit);
+
+  @Query(value = "SELECT * FROM brand WHERE id = :keyword OR name_brand LIKE CONCAT('%',:keyword,'%') ",
+      nativeQuery = true)
+  List<Brand> searchBrandAll(@Param("keyword") String keyword);
 
 }

@@ -37,7 +37,7 @@ public interface BillRepository extends JpaRepository<Bill,String> {
   @Query(value = "SELECT SUM(bill.total) FROM bill WHERE bill.time_created >= CONCAT(DATE(NOW()),' 00:00:00' ) ",nativeQuery = true)
   int getTotalMoneyBillToday();
 
-  @Query(value = "SELECT SUM(info_product.price_input*bill_detail.amount) FROM bill INNER JOIN bill_detail ON bill.id = " +
+  @Query(value = "SELECT SUM(bill.total - info_product.price_input*bill_detail.amount) FROM bill INNER JOIN bill_detail ON bill.id = " +
       "bill_detail.id_bill INNER JOIN product ON product.id = bill_detail.id_product INNER JOIN info_product ON product.id = " +
       "info_product.id_product WHERE bill.time_created >= CONCAT(DATE(NOW()),' 00:00:00' ) ",nativeQuery = true)
   int getTotalProfitToday();

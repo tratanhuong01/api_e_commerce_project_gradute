@@ -2,6 +2,7 @@ package com.api.api_e_commerce_project_gradute.group_product;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -18,5 +19,14 @@ public interface GroupProductRepository extends JpaRepository<GroupProduct,Strin
 
   @Query(value = "SELECT * FROM group_product LIMIT ?1 , ?2 ",nativeQuery = true)
   List<GroupProduct> getAllGroupProductLimit(int offset,int limit);
+
+  @Query(value = "SELECT * FROM group_product WHERE id = :keyword OR name_group_product LIKE CONCAT('%',:keyword,'%')" +
+      " LIMIT :offset , :limit ",nativeQuery = true)
+  List<GroupProduct> searchGroupProductLimit(@Param("keyword") String keyword, @Param("offset") int offset,
+                               @Param("limit") int limit);
+
+  @Query(value = "SELECT * FROM group_product WHERE id = :keyword OR name_group_product LIKE CONCAT('%',:keyword,'%') ",
+      nativeQuery = true)
+  List<GroupProduct> searchGroupProductAll(@Param("keyword") String keyword);
 
 }

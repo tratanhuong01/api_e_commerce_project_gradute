@@ -28,4 +28,16 @@ public class CategoryProductService {
     return categoryProductRepository.getAllCategoryProductLimit(offset, limit);
   }
 
+  public List<CategoryProduct> searchCategoryProductAll(String keyword) {
+    return categoryProductRepository.searchCategoryProductAll(keyword);
+  }
+
+  public List<CategoryProduct> searchCategoryProductLimit(String keyword,int offset,int limit) {
+    return categoryProductRepository.searchCategoryProductLimit(keyword,offset,limit);
+  }
+
+  public void deleteCategoryProduct(CategoryProduct categoryProduct) {
+    categoryProductRepository.delete(categoryProduct);
+  }
+
 }

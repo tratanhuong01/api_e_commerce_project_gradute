@@ -79,8 +79,8 @@ public class UserService {
     return String.valueOf(number);
   }
 
-  public List<User> getAllUsersLimit(int offset,int limit) {
-    return userRepository.getAllUsersLimit(offset, limit);
+  public List<User> getAllUsersLimit(int type,int offset,int limit) {
+    return userRepository.getAllUsersLimit(type,offset, limit);
   }
 
   public int updatePasswordUser(String password,String idUser) {

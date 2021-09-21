@@ -28,4 +28,16 @@ public class MemoryService {
     return memoryRepository.getMemoriesLimit(offset, limit);
   }
 
+  public List<Memory> searchMemoryAll(String keyword) {
+    return memoryRepository.searchMemoryAll(keyword);
+  }
+
+  public List<Memory> searchMemoryLimit(String keyword, int offset, int limit) {
+    return memoryRepository.searchMemoryLimit(keyword,offset,limit);
+  }
+
+  public void deleteBrand(Memory memory) {
+    memoryRepository.delete(memory);
+  }
+
 }
