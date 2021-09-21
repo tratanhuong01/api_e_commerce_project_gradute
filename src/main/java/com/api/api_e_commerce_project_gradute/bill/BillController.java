@@ -1,5 +1,6 @@
 package com.api.api_e_commerce_project_gradute.bill;
 
+import com.api.api_e_commerce_project_gradute.DTO.DashboardHeader;
 import com.api.api_e_commerce_project_gradute.DTO.bill.BillFull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,12 +21,12 @@ public class BillController {
 
   @GetMapping("billsAll/admin/")
   public List<Bill> getBillByIdAllAdmin() {
-    return billService.getAllBillsMain();
+    return billService.getAllBillAdminAll();
   }
 
   @GetMapping("bills/admin/")
-  public List<Bill> getBillByIdAllAdmin(@RequestParam(required = false) int offset,@RequestParam(required = false) int limit) {
-    return billService.getAllBillsMainLimit(offset, limit);
+  public List<Bill> getAllBillAdminAllLimit(@RequestParam(required = false) int offset,@RequestParam(required = false) int limit) {
+    return billService.getAllBillAdminAllLimit(offset, limit);
   }
 
   @GetMapping("bills")
@@ -59,6 +60,11 @@ public class BillController {
                                    @RequestParam(required = false) int offset , @RequestParam int limit,
                                    @RequestParam(required = false) int type) {
     return billService.searchBill(keyword,idUser,offset,limit,type);
+  }
+
+  @GetMapping("getDashboardHeader")
+  public DashboardHeader getDashboardHeader() {
+    return billService.getDashboardHeader();
   }
 
 }

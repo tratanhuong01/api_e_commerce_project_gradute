@@ -46,4 +46,10 @@ public interface UserRepository extends JpaRepository<User,String> {
   @Query(value = "SELECT * FROM user WHERE type = 2 ",nativeQuery = true)
   List<User> getTeleSupport();
 
+  @Query(value = "SELECT * FROM user WHERE type = ?1 ORDER BY time_created DESC LIMIT ?2 , ?3 ",nativeQuery = true)
+  List<User> getUserByTypeLimit(int type,int offset,int limit);
+
+  @Query(value = "SELECT COUNT(*) FROM user WHERE user.time_created > CONCAT(DATE(NOW()),' 00:00:00' ) ",nativeQuery = true)
+  int getUserRegisterToDay();
+
 }

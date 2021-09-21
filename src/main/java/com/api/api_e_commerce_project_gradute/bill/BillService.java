@@ -1,11 +1,13 @@
 package com.api.api_e_commerce_project_gradute.bill;
 
+import com.api.api_e_commerce_project_gradute.DTO.DashboardHeader;
 import com.api.api_e_commerce_project_gradute.DTO.bill.BillDetailFull;
 import com.api.api_e_commerce_project_gradute.DTO.bill.BillFull;
 import com.api.api_e_commerce_project_gradute.bill_detail.BillDetail;
 import com.api.api_e_commerce_project_gradute.bill_detail.BillDetailRepository;
 import com.api.api_e_commerce_project_gradute.bill_review.BillReviewRepository;
 import com.api.api_e_commerce_project_gradute.product.ProductService;
+import com.api.api_e_commerce_project_gradute.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +24,9 @@ public class BillService {
   BillRepository billRepository;
 
   @Autowired
+  UserRepository userRepository;
+
+  @Autowired
   BillDetailRepository billDetailRepository;
 
   @Autowired
@@ -29,6 +34,26 @@ public class BillService {
 
   @Autowired
   ProductService productService;
+
+  //admin
+
+  public List<Bill> getAllBillAdminAllByStatus(int status) {
+    return billRepository.getBillAllByStatus(status);
+  }
+
+  public List<Bill> getAllBillAdminAllByStatusLimit(int status,int offset, int limit) {
+    return billRepository.getBillAllByStatusLimit(status,offset,limit);
+  }
+
+  public List<Bill> getAllBillAdminAll() {
+    return billRepository.getBillAll();
+  }
+
+  public List<Bill> getAllBillAdminAllLimit(int offset, int limit) {
+    return billRepository.getBillAllLimit(offset, limit);
+  }
+
+  //user
 
   public List<Bill> getAllBillsMain() {
     return billRepository.findAll();
@@ -120,6 +145,16 @@ public class BillService {
     }
 
     return billFullList;
+  }
+
+  public DashboardHeader getDashboardHeader() {
+    DashboardHeader dashboardHeader = new DashboardHeader();
+    dashboardHeader.setTotalBill(billRepository.getBillToday());
+    dashboardHeader.setTotalProfit(billRepository.getTotalProfitToday());
+    dashboardHeader.setTotalRegister(userRepository.getUserRegisterToDay());
+    dashboardHeader.setTotalRevenue(billRepository.getTotalMoneyBillToday());
+    dashboardHeader.setTotalSold(billRepository.getProductSellToday());
+    return dashboardHeader;
   }
 
 }

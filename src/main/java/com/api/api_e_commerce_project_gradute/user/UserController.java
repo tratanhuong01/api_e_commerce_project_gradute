@@ -85,4 +85,10 @@ public class UserController {
     return userService.getTeleSupport();
   }
 
+  @GetMapping("getUserByTypeLimit/")
+  public List<User> getUserByTypeLimit(@RequestParam(required = false) int type , @RequestParam(required = false) int offset,
+                                       @RequestParam(required = false) int limit) {
+    return userService.getUserByTypeLimit(type, offset, limit);
+  }
+
 }

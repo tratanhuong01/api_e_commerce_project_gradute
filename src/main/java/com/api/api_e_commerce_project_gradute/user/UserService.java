@@ -95,4 +95,8 @@ public class UserService {
       return userList.get(0 + (int)(Math.random() * (((userList.size() - 1) - 0) + 1)));
   }
 
+  public List<User> getUserByTypeLimit(int type,int offset,int limit) {
+    return userRepository.getUserByTypeLimit(type,offset,limit);
+  }
+
 }

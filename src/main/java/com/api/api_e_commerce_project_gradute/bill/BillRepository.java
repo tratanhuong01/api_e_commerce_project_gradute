@@ -13,6 +13,36 @@ import java.util.List;
 @Repository
 public interface BillRepository extends JpaRepository<Bill,String> {
 
+  //admin
+
+  @Query(value = "SELECT * FROM bill WHERE status = ?1 ORDER BY time_created DESC ",nativeQuery = true)
+  List<Bill> getBillAllByStatus(int status);
+
+  @Query(value = "SELECT * FROM bill ORDER BY time_created DESC ",nativeQuery = true)
+  List<Bill> getBillAll();
+
+  @Query(value = "SELECT * FROM bill WHERE status = ?1 ORDER BY time_created DESC LIMIT ?2 , ?3 ",nativeQuery = true)
+  List<Bill> getBillAllByStatusLimit(int status,int offset, int limit);
+
+  @Query(value = "SELECT * FROM bill ORDER BY time_created DESC  LIMIT ?1 , ?2 ",nativeQuery = true)
+  List<Bill> getBillAllLimit(int offset,int limit);
+
+  @Query(value = "SELECT COUNT(*) FROM bill WHERE bill.time_created >=  CONCAT(DATE(NOW()),' 00:00:00' )",nativeQuery = true)
+  int getBillToday();
+
+  @Query(value = "SELECT SUM(bill_detail.amount) FROM bill INNER JOIN bill_detail ON bill.id = \n" +
+      "bill_detail.id_bill WHERE bill.time_created >= CONCAT(DATE(NOW()),' 00:00:00' )",nativeQuery = true)
+  int getProductSellToday();
+
+  @Query(value = "SELECT SUM(bill.total) FROM bill WHERE bill.time_created >= CONCAT(DATE(NOW()),' 00:00:00' ) ",nativeQuery = true)
+  int getTotalMoneyBillToday();
+
+  @Query(value = "SELECT SUM(info_product.price_input*bill_detail.amount) FROM bill INNER JOIN bill_detail ON bill.id = " +
+      "bill_detail.id_bill INNER JOIN product ON product.id = bill_detail.id_product INNER JOIN info_product ON product.id = " +
+      "info_product.id_product WHERE bill.time_created >= CONCAT(DATE(NOW()),' 00:00:00' ) ",nativeQuery = true)
+  int getTotalProfitToday();
+  //user
+
   @Query(value = "SELECT * FROM bill WHERE id_user = ?1 AND status = ?2 ORDER BY time_created DESC ",nativeQuery = true)
   List<Bill> getBillByIdUserAndTypeAll(String idUSer,int type);
 
@@ -51,5 +81,6 @@ public interface BillRepository extends JpaRepository<Bill,String> {
       "p.id_line_product = lp.id WHERE (lp.name_line_product LIKE CONCAT('%',:keyword,'%') OR " +
       "b.id = :keyword ) AND b.id_user = :idUser ORDER BY b.time_created DESC  ",nativeQuery = true)
   List<Bill> searchBill(@Param("keyword") String keyword, @Param("idUser") String idUser);
+
 
 }
