@@ -17,7 +17,7 @@ public interface GroupProductRepository extends JpaRepository<GroupProduct,Strin
       " ct.id  WHERE ct.slug_category_product = ?1 ",nativeQuery = true)
   List<GroupProduct> getGroupProductBySlugCategoryProduct(String slugCategoryProduct);
 
-  @Query(value = "SELECT * FROM group_product LIMIT ?1 , ?2 ",nativeQuery = true)
+  @Query(value = "SELECT * FROM group_product ORDER BY time_created DESC LIMIT ?1 , ?2 ",nativeQuery = true)
   List<GroupProduct> getAllGroupProductLimit(int offset,int limit);
 
   @Query(value = "SELECT * FROM group_product WHERE id = :keyword OR name_group_product LIKE CONCAT('%',:keyword,'%')" +

@@ -3,6 +3,8 @@ package com.api.api_e_commerce_project_gradute.attribute;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -20,6 +22,12 @@ public class AttributeService {
   }
 
   public List<Attribute> addAttribute(Attribute attribute) {
+    attribute.setTimeCreated((new Timestamp(new Date().getTime())));
+    attributeRepository.save(attribute);
+    return attributeRepository.findAll();
+  }
+
+  public List<Attribute> updateAttribute(Attribute attribute) {
     attributeRepository.save(attribute);
     return attributeRepository.findAll();
   }

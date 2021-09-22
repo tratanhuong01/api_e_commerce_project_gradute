@@ -2,7 +2,9 @@ package com.api.api_e_commerce_project_gradute.brand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +23,11 @@ public class BrandService {
   }
 
   public Brand addBrand(Brand brand) {
+    brand.setTimeCreated((new Timestamp(new Date().getTime())));
+    return brandRepository.save(brand);
+  }
+
+  public Brand updateBrand(Brand brand) {
     return brandRepository.save(brand);
   }
 

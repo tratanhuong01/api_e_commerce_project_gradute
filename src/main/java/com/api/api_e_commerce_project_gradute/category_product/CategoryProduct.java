@@ -3,6 +3,7 @@ package com.api.api_e_commerce_project_gradute.category_product;
 import com.api.api_e_commerce_project_gradute.group_product.GroupProduct;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -27,6 +28,17 @@ public class CategoryProduct {
 
   @Column
   private int typeCategoryProduct;
+
+  @Column
+  private Timestamp timeCreated;
+
+  public Timestamp getTimeCreated() {
+    return timeCreated;
+  }
+
+  public void setTimeCreated(Timestamp timeCreated) {
+    this.timeCreated = timeCreated;
+  }
 
   public int getTypeCategoryProduct() {
     return typeCategoryProduct;

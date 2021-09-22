@@ -3,6 +3,7 @@ package com.api.api_e_commerce_project_gradute.color;
 import com.api.api_e_commerce_project_gradute.product.Product;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,6 +23,17 @@ public class Color {
 
   @Column
   private String description;
+
+  @Column
+  private Timestamp timeCreated;
+
+  public Timestamp getTimeCreated() {
+    return timeCreated;
+  }
+
+  public void setTimeCreated(Timestamp timeCreated) {
+    this.timeCreated = timeCreated;
+  }
 
   public Long getId() {
     return id;

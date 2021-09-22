@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "group_attribute")
@@ -14,6 +15,17 @@ public class GroupAttribute {
 
   @Column
   private String nameGroupAttribute;
+
+  @Column
+  private Timestamp timeCreated;
+
+  public Timestamp getTimeCreated() {
+    return timeCreated;
+  }
+
+  public void setTimeCreated(Timestamp timeCreated) {
+    this.timeCreated = timeCreated;
+  }
 
   public String getId() {
     return id;

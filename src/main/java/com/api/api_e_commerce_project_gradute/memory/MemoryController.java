@@ -16,18 +16,19 @@ public class MemoryController {
   // admin
 
   @GetMapping("memoriesAll/search/")
-  public List<Memory> searchMemoryAll(String keyword) {
+  public List<Memory> searchMemoryAll(@RequestParam(required = false) String keyword) {
     return memoryService.searchMemoryAll(keyword);
   }
 
   @GetMapping("memories/search/")
-  public List<Memory> searchMemoryLimit(String keyword, int offset, int limit) {
+  public List<Memory> searchMemoryLimit(@RequestParam(required = false) String keyword, @RequestParam(required = false) int offset,
+                                        @RequestParam(required = false) int limit) {
     return memoryService.searchMemoryLimit(keyword,offset,limit);
   }
 
   @DeleteMapping("memories")
-  public void deleteMemory(Memory memory) {
-    memoryService.deleteBrand(memory);
+  public void deleteMemory(@RequestBody Memory memory) {
+    memoryService.deleteMemory(memory);
   }
 
   // user
@@ -59,7 +60,7 @@ public class MemoryController {
 
   @PutMapping("memories")
   public Memory updateMemory(@RequestBody Memory memory) {
-    return memoryService.addMemory(memory);
+    return memoryService.updateMemory(memory);
   }
 
 }

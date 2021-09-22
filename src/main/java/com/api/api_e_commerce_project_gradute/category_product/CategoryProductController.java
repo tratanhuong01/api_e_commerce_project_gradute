@@ -55,7 +55,7 @@ public class CategoryProductController {
 
   @PutMapping("categoryProducts")
   public CategoryProduct updateCategoryProduct(@RequestBody CategoryProduct categoryProduct) {
-    return categoryProductService.addCategoryProduct(categoryProduct);
+    return categoryProductService.updateCategoryProduct(categoryProduct);
   }
 
   @DeleteMapping("categoryProducts")

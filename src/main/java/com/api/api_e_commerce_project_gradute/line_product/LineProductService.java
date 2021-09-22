@@ -3,6 +3,8 @@ package com.api.api_e_commerce_project_gradute.line_product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,6 +31,11 @@ public class LineProductService {
       id++;
       lineProduct.setId(String.valueOf("LP"+id));
     }
+    lineProduct.setTimeCreated(new Timestamp(new Date().getTime()));
+    return lineProductRepository.save(lineProduct);
+  }
+
+  public LineProduct updateLineProduct(LineProduct lineProduct) {
     return lineProductRepository.save(lineProduct);
   }
 

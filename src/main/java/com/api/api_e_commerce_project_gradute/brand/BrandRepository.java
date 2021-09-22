@@ -13,7 +13,7 @@ public interface BrandRepository extends JpaRepository<Brand,String> {
   @Query(value = "SELECT * FROM brand WHERE id = ?1 ",nativeQuery = true)
   Brand getBrandByIdBrand(String idBrand);
 
-  @Query(value = "SELECT * FROM brand LIMIT ?1 , ?2 ",nativeQuery = true)
+  @Query(value = "SELECT * FROM brand ORDER BY time_created DESC LIMIT ?1 , ?2 ",nativeQuery = true)
   List<Brand> getBrandsLimit(int offset,int limit);
 
   @Query(value = "SELECT DISTINCT id_brand from product INNER JOIN line_product ON product.id_line_product = " +

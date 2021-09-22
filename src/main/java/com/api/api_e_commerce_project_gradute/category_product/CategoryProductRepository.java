@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface CategoryProductRepository extends JpaRepository<CategoryProduct,String> {
 
-  @Query(value = "SELECT * FROM category_product LIMIT ?1 , ?2 ",nativeQuery = true)
+  @Query(value = "SELECT * FROM category_product ORDER BY time_created DESC LIMIT ?1 , ?2 ",nativeQuery = true)
   List<CategoryProduct> getAllCategoryProductLimit(int offset,int limit);
 
   @Query(value = "SELECT * FROM category_product WHERE id = :keyword OR name_category_product LIKE CONCAT('%',:keyword,'%') " +

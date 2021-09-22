@@ -4,6 +4,7 @@ import com.api.api_e_commerce_project_gradute.attribute.Attribute;
 import com.api.api_e_commerce_project_gradute.group_product.GroupProduct;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "group_filter_product")
@@ -22,6 +23,17 @@ public class GroupFilterProduct {
 
   @Column
   private int typeGroupFilterProduct;
+
+  @Column
+  private Timestamp timeCreated;
+
+  public Timestamp getTimeCreated() {
+    return timeCreated;
+  }
+
+  public void setTimeCreated(Timestamp timeCreated) {
+    this.timeCreated = timeCreated;
+  }
 
   public Long getId() {
     return id;

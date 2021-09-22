@@ -3,6 +3,8 @@ package com.api.api_e_commerce_project_gradute.ram;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +23,11 @@ public class RamService {
   }
 
   public Ram addRam(Ram ram) {
+    ram.setTimeCreated(new Timestamp(new Date().getTime()));
+    return ramRepository.save(ram);
+  }
+
+  public Ram updateRam(Ram ram) {
     return ramRepository.save(ram);
   }
 
@@ -34,6 +41,10 @@ public class RamService {
 
   public void deleteRam(Ram ram) {
     ramRepository.delete(ram);
+  }
+
+  public List<Ram> getRamLimit(int offset,int limit) {
+    return ramRepository.getRamLimit(offset, limit);
   }
 
 }

@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -25,6 +26,17 @@ public class Memory implements Serializable {
 
   @Column
   private int type;
+
+  @Column
+  private Timestamp timeCreated;
+
+  public Timestamp getTimeCreated() {
+    return timeCreated;
+  }
+
+  public void setTimeCreated(Timestamp timeCreated) {
+    this.timeCreated = timeCreated;
+  }
 
   public Long getId() {
     return id;

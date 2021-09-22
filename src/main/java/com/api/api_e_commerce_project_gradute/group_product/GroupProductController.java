@@ -70,7 +70,7 @@ public class GroupProductController {
 
   @PutMapping("groupProducts")
   public GroupProduct updateGroupProduct(@RequestBody GroupProduct groupProduct) {
-    return groupProductService.addGroupProduct(groupProduct);
+    return groupProductService.updateGroupProduct(groupProduct);
   }
 
 }

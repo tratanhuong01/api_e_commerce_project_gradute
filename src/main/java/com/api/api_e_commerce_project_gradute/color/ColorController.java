@@ -60,7 +60,7 @@ public class ColorController {
 
   @PutMapping("colors")
   public Color updateColor(@RequestBody Color color) {
-    return colorService.addColor(color);
+    return colorService.updateColor(color);
   }
 
 }

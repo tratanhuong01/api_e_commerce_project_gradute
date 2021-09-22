@@ -10,10 +10,10 @@ import java.util.List;
 @Repository
 public interface AttributeRepository extends JpaRepository<Attribute,String> {
 
-  @Query(value = "SELECT * FROM attribute LIMIT ?1 , ?2 ",nativeQuery = true)
+  @Query(value = "SELECT * FROM attribute ORDER BY time_created DESC LIMIT ?1 , ?2 ",nativeQuery = true)
   List<Attribute> getAllAttributeLimit(int offset,int limit);
 
-  @Query(value = "SELECT * FROM attribute WHERE id_group_attribute = ?1 ",nativeQuery = true)
+  @Query(value = "SELECT * FROM attribute  WHERE id_group_attribute = ?1 ",nativeQuery = true)
   List<Attribute> getAttributeByIdGroupAttribute(String id);
 
   @Query(value = "SELECT * FROM attribute WHERE id = :keyword OR name_attribute LIKE CONCAT('%',:keyword,'%')" +

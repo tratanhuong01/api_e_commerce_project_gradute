@@ -39,6 +39,16 @@ public class RamController {
     return ramService.getAllRams();
   }
 
+  @GetMapping("rams")
+  public List<Ram> getRamLimitS() {
+    return getRamsLimit(0,10);
+  }
+
+  @GetMapping("rams/{offset}/{limit}")
+  public List<Ram> getRamsLimit(@PathVariable int offset, @PathVariable int limit) {
+    return ramService.getRamLimit(offset,limit);
+  }
+
   @GetMapping("rams/{idRam}")
   public Optional<Ram> getRamById(@PathVariable String idRam) {
     return ramService.getRamById(idRam);
@@ -51,7 +61,7 @@ public class RamController {
 
   @PutMapping("rams")
   public Ram updateRam(@RequestBody Ram ram) {
-    return ramService.addRam(ram);
+    return ramService.updateRam(ram);
   }
 
 }

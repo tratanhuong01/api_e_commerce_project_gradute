@@ -3,6 +3,7 @@ package com.api.api_e_commerce_project_gradute.attribute;
 import com.api.api_e_commerce_project_gradute.group_attribute.GroupAttribute;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "attribute")
@@ -21,6 +22,17 @@ public class Attribute {
 
   @Column
   private int typeAttribute;
+
+  @Column
+  private Timestamp timeCreated;
+
+  public Timestamp getTimeCreated() {
+    return timeCreated;
+  }
+
+  public void setTimeCreated(Timestamp timeCreated) {
+    this.timeCreated = timeCreated;
+  }
 
   public GroupAttribute getGroupAttribute() {
     return groupAttribute;

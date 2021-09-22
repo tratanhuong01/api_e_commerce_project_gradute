@@ -149,11 +149,11 @@ public class BillService {
 
   public DashboardHeader getDashboardHeader() {
     DashboardHeader dashboardHeader = new DashboardHeader();
-    dashboardHeader.setTotalBill(billRepository.getBillToday());
-    dashboardHeader.setTotalProfit(billRepository.getTotalProfitToday());
+    dashboardHeader.setTotalBill(billRepository.getBillToday() == null ? 0 : Integer.parseInt(billRepository.getBillToday()));
+    dashboardHeader.setTotalProfit(billRepository.getTotalProfitToday() == null ? 0 : Integer.parseInt(billRepository.getTotalProfitToday()));
     dashboardHeader.setTotalRegister(userRepository.getUserRegisterToDay());
-    dashboardHeader.setTotalRevenue(billRepository.getTotalMoneyBillToday());
-    dashboardHeader.setTotalSold(billRepository.getProductSellToday());
+    dashboardHeader.setTotalRevenue(billRepository.getTotalMoneyBillToday() == null ? 0 : Integer.parseInt(billRepository.getTotalMoneyBillToday()));
+    dashboardHeader.setTotalSold(billRepository.getProductSellToday() == null ? 0 : Integer.parseInt(billRepository.getProductSellToday()));
     return dashboardHeader;
   }
 

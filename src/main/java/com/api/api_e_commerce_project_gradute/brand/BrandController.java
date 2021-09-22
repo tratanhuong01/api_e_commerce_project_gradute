@@ -60,7 +60,7 @@ public class BrandController {
 
   @PutMapping("brands")
   public Brand updateBrand(@RequestBody Brand brand) {
-    return brandService.addBrand(brand);
+    return brandService.updateBrand(brand);
   }
 
   @GetMapping("brands/slugGroupProduct/{slugGroupProduct}")

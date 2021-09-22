@@ -3,6 +3,7 @@ package com.api.api_e_commerce_project_gradute.category_news;
 import com.api.api_e_commerce_project_gradute.news.News;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,6 +21,17 @@ public class CategoryNews {
 
   @Column
   private int typeCategoryNews;
+
+  @Column
+  private Timestamp timeCreated;
+
+  public Timestamp getTimeCreated() {
+    return timeCreated;
+  }
+
+  public void setTimeCreated(Timestamp timeCreated) {
+    this.timeCreated = timeCreated;
+  }
 
   public String getId() {
     return id;

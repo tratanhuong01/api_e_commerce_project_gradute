@@ -3,6 +3,8 @@ package com.api.api_e_commerce_project_gradute.memory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +23,11 @@ public class MemoryService {
   }
 
   public Memory addMemory(Memory memory) {
+    memory.setTimeCreated(new Timestamp(new Date().getTime()));
+    return memoryRepository.save(memory);
+  }
+
+  public Memory updateMemory(Memory memory) {
     return memoryRepository.save(memory);
   }
 
@@ -36,7 +43,7 @@ public class MemoryService {
     return memoryRepository.searchMemoryLimit(keyword,offset,limit);
   }
 
-  public void deleteBrand(Memory memory) {
+  public void deleteMemory(Memory memory) {
     memoryRepository.delete(memory);
   }
 

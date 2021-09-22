@@ -3,6 +3,8 @@ package com.api.api_e_commerce_project_gradute.color;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +27,11 @@ public class ColorService {
   }
 
   public Color addColor(Color color) {
+    color.setTimeCreated(new Timestamp(new Date().getTime()));
+    return colorRepository.save(color);
+  }
+
+  public Color updateColor(Color color) {
     return colorRepository.save(color);
   }
 

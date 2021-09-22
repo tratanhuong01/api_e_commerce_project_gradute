@@ -54,7 +54,7 @@ public class GroupAttributesController {
 
   @PutMapping("groupAttributes")
   public List<GroupAttribute> updateGroupAttribute(@RequestBody GroupAttribute groupAttribute) {
-    return groupAttributesService.addGroupAttribute(groupAttribute);
+    return groupAttributesService.updateGroupAttribute(groupAttribute);
   }
 
 }

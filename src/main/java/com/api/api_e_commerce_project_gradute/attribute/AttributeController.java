@@ -59,7 +59,7 @@ public class AttributeController {
 
   @PutMapping("attributes")
   public List<Attribute> updateAttribute(@RequestBody Attribute attribute) {
-    return attributeService.addAttribute(attribute);
+    return attributeService.updateAttribute(attribute);
   }
 
 }

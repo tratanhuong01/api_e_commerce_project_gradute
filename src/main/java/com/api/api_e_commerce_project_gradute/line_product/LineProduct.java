@@ -4,6 +4,7 @@ import com.api.api_e_commerce_project_gradute.group_product.GroupProduct;
 import com.api.api_e_commerce_project_gradute.product.Product;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,6 +24,17 @@ public class LineProduct {
 
   @Column
   private String nameLineProduct;
+
+  @Column
+  private Timestamp timeCreated;
+
+  public Timestamp getTimeCreated() {
+    return timeCreated;
+  }
+
+  public void setTimeCreated(Timestamp timeCreated) {
+    this.timeCreated = timeCreated;
+  }
 
   public String getId() {
     return id;

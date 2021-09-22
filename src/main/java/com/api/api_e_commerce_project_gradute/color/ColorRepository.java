@@ -13,7 +13,7 @@ public interface ColorRepository extends JpaRepository<Color,String> {
   @Query(value = "SELECT * FROM color WHERE id = ?1 ",nativeQuery = true)
   Color getColorByIdColor(Long idColor);
 
-  @Query(value = "SELECT * FROM color LIMIT ?1 , ?2 ",nativeQuery = true)
+  @Query(value = "SELECT * FROM color ORDER BY time_created DESC LIMIT ?1 , ?2 ",nativeQuery = true)
   List<Color> getColorsLimit(int offset,int limit);
 
   @Query(value = "SELECT * FROM color WHERE id = :keyword OR code LIKE CONCAT('%',:keyword,'%') OR description " +

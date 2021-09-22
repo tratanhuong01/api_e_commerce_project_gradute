@@ -3,6 +3,7 @@ package com.api.api_e_commerce_project_gradute.group_product;
 import com.api.api_e_commerce_project_gradute.category_product.CategoryProduct;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "group_product")
@@ -24,6 +25,17 @@ public class GroupProduct {
 
   public void setCategoryGroupProduct(CategoryProduct categoryGroupProduct) {
     this.categoryGroupProduct = categoryGroupProduct;
+  }
+
+  @Column
+  private Timestamp timeCreated;
+
+  public Timestamp getTimeCreated() {
+    return timeCreated;
+  }
+
+  public void setTimeCreated(Timestamp timeCreated) {
+    this.timeCreated = timeCreated;
   }
 
   @Column

@@ -4,6 +4,8 @@ import com.api.api_e_commerce_project_gradute.category_product.CategoryProduct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -21,6 +23,12 @@ public class GroupAttributesService {
   }
 
   public List<GroupAttribute> addGroupAttribute(GroupAttribute groupAttribute) {
+    groupAttribute.setTimeCreated(new Timestamp(new Date().getTime()));
+    groupAttributesRepository.save(groupAttribute);
+    return groupAttributesRepository.findAll();
+  }
+
+  public List<GroupAttribute> updateGroupAttribute(GroupAttribute groupAttribute) {
     groupAttributesRepository.save(groupAttribute);
     return groupAttributesRepository.findAll();
   }

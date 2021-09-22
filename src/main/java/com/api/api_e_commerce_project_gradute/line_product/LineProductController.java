@@ -65,7 +65,7 @@ public class LineProductController {
 
   @PutMapping("lineProducts")
   public LineProduct updateLineProduct(@RequestBody LineProduct lineProduct) {
-    return lineProductService.addLineProduct(lineProduct);
+    return lineProductService.updateLineProduct(lineProduct);
   }
 
 }

@@ -3,6 +3,7 @@ package com.api.api_e_commerce_project_gradute.function_product;
 import com.api.api_e_commerce_project_gradute.group_filter_product.GroupFilterProduct;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "function_product")
@@ -21,6 +22,17 @@ public class FunctionProduct {
 
   @Column
   private int typeFunctionProduct;
+
+  @Column
+  private Timestamp timeCreated;
+
+  public Timestamp getTimeCreated() {
+    return timeCreated;
+  }
+
+  public void setTimeCreated(Timestamp timeCreated) {
+    this.timeCreated = timeCreated;
+  }
 
   public Long getId() {
     return id;

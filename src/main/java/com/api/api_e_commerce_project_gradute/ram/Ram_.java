@@ -6,6 +6,7 @@ import com.api.api_e_commerce_project_gradute.product.Product;
 import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
+import java.sql.Timestamp;
 
 @StaticMetamodel(Ram.class)
 public class Ram_ {
@@ -13,6 +14,7 @@ public class Ram_ {
   public static volatile SetAttribute<Ram,Product> ramProduct;
   public static volatile SingularAttribute<Ram, Long> id;
   public static volatile SingularAttribute<Ram, String> nameRam;
+  public static volatile SingularAttribute<Ram, String> imageBrand;
   public static volatile SingularAttribute<Ram, Integer> isShow;
-
+  public static volatile SingularAttribute<Ram, Timestamp> timeCreated;
 }

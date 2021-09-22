@@ -13,7 +13,7 @@ public interface MemoryRepository extends JpaRepository<Memory,String> {
   @Query(value = "SELECT * FROM memory WHERE id = ?1 ",nativeQuery = true)
   Memory getMemoryByIdMemory(Long idMemory);
 
-  @Query(value = "SELECT * FROM memory LIMIT ?1 , ?2 ",nativeQuery = true)
+  @Query(value = "SELECT * FROM memory ORDER BY time_created DESC LIMIT ?1 , ?2 ",nativeQuery = true)
   List<Memory> getMemoriesLimit(int offset,int limit);
 
   @Query(value = "SELECT * FROM memory WHERE id = :keyword OR name_memory LIKE CONCAT('%',:keyword,'%') LIMIT :offset , :limit "

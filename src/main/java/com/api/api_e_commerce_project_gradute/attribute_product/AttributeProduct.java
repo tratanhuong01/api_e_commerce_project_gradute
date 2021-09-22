@@ -5,6 +5,7 @@ import com.api.api_e_commerce_project_gradute.function_product.FunctionProduct;
 import com.api.api_e_commerce_project_gradute.line_product.LineProduct;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "attribute_product")
@@ -24,6 +25,17 @@ public class AttributeProduct {
 
   @Column
   private String valueAttributeProduct;
+
+  @Column
+  private Timestamp timeCreated;
+
+  public Timestamp getTimeCreated() {
+    return timeCreated;
+  }
+
+  public void setTimeCreated(Timestamp timeCreated) {
+    this.timeCreated = timeCreated;
+  }
 
   public String getValueAttributeProduct() {
     return valueAttributeProduct;

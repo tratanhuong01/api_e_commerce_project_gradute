@@ -3,6 +3,8 @@ package com.api.api_e_commerce_project_gradute.group_product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +23,11 @@ public class GroupProductService {
   }
 
   public GroupProduct addGroupProduct(GroupProduct groupProduct) {
+    groupProduct.setTimeCreated(new Timestamp(new Date().getTime()));
+    return groupProductRepository.save(groupProduct);
+  }
+
+  public GroupProduct updateGroupProduct(GroupProduct groupProduct) {
     return groupProductRepository.save(groupProduct);
   }
 
