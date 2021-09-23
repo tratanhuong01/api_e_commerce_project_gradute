@@ -3,19 +3,20 @@ package com.api.api_e_commerce_project_gradute.user;
 import com.api.api_e_commerce_project_gradute.DTO.AccountLogin;
 import com.api.api_e_commerce_project_gradute.DTO.DataSendMail;
 import com.api.api_e_commerce_project_gradute.DTO.specification.user.UserCriteria;
+import com.api.api_e_commerce_project_gradute.DTO.specification.user.UserFull;
 import com.api.api_e_commerce_project_gradute.DTO.specification.user.UserSpecifications;
 import com.api.api_e_commerce_project_gradute.config.Config;
 import com.api.api_e_commerce_project_gradute.mail.MailService;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 
 @Service
 public class UserService {
@@ -102,9 +103,39 @@ public class UserService {
     return userRepository.getUserByTypeLimit(type,offset,limit);
   }
 
-  public List<User> filterUser(UserCriteria userCriteria) {
+  public Integer filterUserAll(UserCriteria userCriteria) {
     Specification<User> userSpecification = UserSpecifications.createUserSpecification(userCriteria);
-    return userRepository.findAll(userSpecification);
+    List<User> userList = userRepository.findAll(userSpecification);
+    return userList.size();
+  }
+
+  public List<UserFull> filterUserLimit(UserCriteria userCriteria) {
+    Specification<User> userSpecification = UserSpecifications.createUserSpecification(userCriteria);
+    Pageable pageable = PageRequest.of(userCriteria.getOffset(),userCriteria.getLimit());
+    Page<User> userList = userRepository.findAll(userSpecification,pageable);
+    List<UserFull> userFullList = new ArrayList<>();
+    for (User user : userList) {
+      UserFull userFull = new UserFull();
+      userFull.setId(user.getId());
+      userFull.setFirstName(user.getFirstName());
+      userFull.setLastName(user.getLastName());
+      userFull.setAvatar(user.getAvatar());
+      userFull.setBirthday(user.getBirthday());
+      userFull.setCodeEmail(user.getCodeEmail());
+      userFull.setCodePhone(user.getCodePhone());
+      userFull.setIsVerifyEmail(user.getIsVerifyEmail());
+      userFull.setIsVerifyPhone(user.getIsVerifyPhone());
+      userFull.setType(user.getType());
+      userFull.setTimeCreated(user.getTimeCreated());
+      userFull.setSex(user.getSex());
+      userFull.setPassword(user.getPassword());
+      userFull.setPhone(user.getPhone());
+      userFull.setEmail(user.getEmail());
+      userFull.setAmountProduct(userRepository.countProductBuyByUser(user.getId()));
+      userFull.setAmountOrder(userRepository.countBillByUser(user.getId()));
+      userFullList.add(userFull);
+    }
+    return userFullList;
   }
 
 }

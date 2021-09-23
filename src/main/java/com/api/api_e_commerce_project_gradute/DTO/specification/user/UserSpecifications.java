@@ -19,6 +19,8 @@ public final class UserSpecifications {
     status(userCriteria.getStatus());
     age(userCriteria.getAgeFrom(), userCriteria.getAgeTo());
     verify(userCriteria.getVerifyPhone(), userCriteria.getVerifyEmail());
+    sorter(userCriteria.getTimeRegisterSorter(),userCriteria.getAgeSorter());
+    search(userCriteria.getKeyword());
     return userSpecification;
   }
 
@@ -116,5 +118,80 @@ public final class UserSpecifications {
         });
     return userSpecification;
   }
+
+  public static Specification<User> sorter(String timeRegisterSorter,String ageSorter) {
+    if (ageSorter != null)
+      if (userSpecification == null) {
+        userSpecification = (root,query,builder) -> {
+          if (ageSorter != null)
+            if (ageSorter.equals("ASC"))
+                query.orderBy(builder.desc(root.get("birthday")));
+            else
+                query.orderBy(builder.asc(root.get("birthday")));
+          return root.get("id").isNotNull();
+        };
+      }
+
+      else
+        userSpecification = userSpecification.and((root,query,builder) -> {
+          if (ageSorter != null)
+            if (ageSorter.equals("ASC"))
+              query.orderBy(builder.desc(root.get("birthday")));
+            else
+              query.orderBy(builder.asc(root.get("birthday")));
+          return root.get("id").isNotNull();
+        });
+    if (userSpecification == null) {
+      userSpecification = (root,query,builder) -> {
+        if (timeRegisterSorter != null)
+          if (timeRegisterSorter.equals("ASC"))
+            query.orderBy(builder.asc(root.get("timeCreated")));
+          else
+            query.orderBy(builder.desc(root.get("timeCreated")));
+        return root.get("id").isNotNull();
+      };
+    }
+
+    else
+      userSpecification = userSpecification.and((root,query,builder) -> {
+        if (timeRegisterSorter != null)
+          if (timeRegisterSorter.equals("ASC"))
+            query.orderBy(builder.asc(root.get("timeCreated")));
+          else
+            query.orderBy(builder.desc(root.get("timeCreated")));
+        return root.get("id").isNotNull();
+      });
+    return userSpecification;
+  }
+
+  public static Specification<User> search(String keyword) {
+    if (keyword !=  null)
+      if (userSpecification == null)  {
+        userSpecification = (root,query,builder)-> {
+          Subquery<User> queryData = query.subquery(User.class);
+          Root<User> userSubQuery = queryData.from(User.class);
+          return root.get("id").in(queryData.select(userSubQuery.get("id")).where(
+              builder.or(builder.like(userSubQuery.get("id"),"%" +keyword+ "%"),builder.like(userSubQuery.get("email")
+                  ,"%" +keyword+ "%"),
+                  builder.like(userSubQuery.get("phone"),"%" +keyword+ "%"),builder.like(userSubQuery.get("firstName"),"%" +keyword+ "%"),
+                  builder.like(userSubQuery.get("lastName"),"%" +keyword+ "%"))
+          ));
+        };
+      }
+      else {
+        userSpecification = userSpecification.and((root,query,builder)-> {
+          Subquery<User> queryData = query.subquery(User.class);
+          Root<User> userSubQuery = queryData.from(User.class);
+          return root.get("id").in(queryData.select(userSubQuery.get("id")).where(
+              builder.or(builder.like(userSubQuery.get("id"),"%" +keyword+ "%"),builder.like(userSubQuery.get("email")
+                  ,"%" +keyword+ "%"),
+                  builder.like(userSubQuery.get("phone"),"%" +keyword+ "%"),builder.like(userSubQuery.get("firstName"),"%" +keyword+ "%"),
+                  builder.like(userSubQuery.get("lastName"),"%" +keyword+ "%"))
+          ));
+        });
+      }
+    return userSpecification;
+  }
+
 
 }

@@ -18,5 +18,8 @@ public class UserCriteria {
   private Integer userType;
   private Integer offset;
   private Integer limit;
+  private String timeRegisterSorter;
+  private String ageSorter;
+  private String keyword;
 
 }

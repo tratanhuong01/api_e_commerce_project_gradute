@@ -4,6 +4,7 @@ import com.api.api_e_commerce_project_gradute.DTO.AccountLogin;
 import com.api.api_e_commerce_project_gradute.DTO.DataSendMail;
 import com.api.api_e_commerce_project_gradute.DTO.product.ProductCriteria;
 import com.api.api_e_commerce_project_gradute.DTO.specification.user.UserCriteria;
+import com.api.api_e_commerce_project_gradute.DTO.specification.user.UserFull;
 import com.api.api_e_commerce_project_gradute.mail.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,8 +22,9 @@ public class UserController {
   MailService mailService;
 
   @GetMapping("userFilters")
-  public List<User> getAllUsers(Integer userType,String sex, Integer verifyPhone,Integer ageFrom,
-                                Integer ageTo,Integer status,Integer verifyEmail) {
+  public List<UserFull> getAllUsersLimit(Integer userType, String sex, Integer verifyPhone, Integer ageFrom,
+                                    Integer ageTo, Integer status, Integer verifyEmail,String ageSorter,
+                                    String timeRegisterSorter,String keyword,Integer offset, Integer limit) {
     UserCriteria userCriteria = UserCriteria.builder().
         userType(userType).
         sex(sex).
@@ -31,8 +33,32 @@ public class UserController {
         ageFrom(ageFrom == null ? null : ageFrom * 365).
         ageTo(ageTo == null ? null : ageTo * 365).
         status(status).
+        ageSorter(ageSorter).
+        timeRegisterSorter(timeRegisterSorter).
+        keyword(keyword).
+        offset(offset).
+        limit(limit).
         build();
-    return userService.filterUser(userCriteria);
+    return userService.filterUserLimit(userCriteria);
+  }
+
+  @GetMapping("userFiltersAll")
+  public Integer getAllUsersAll(Integer userType, String sex, Integer verifyPhone, Integer ageFrom,
+                                    Integer ageTo, Integer status, Integer verifyEmail,String ageSorter,
+                                    String timeRegisterSorter,String keyword) {
+    UserCriteria userCriteria = UserCriteria.builder().
+        userType(userType).
+        sex(sex).
+        verifyPhone(verifyPhone).
+        verifyEmail(verifyEmail).
+        ageFrom(ageFrom == null ? null : ageFrom * 365).
+        ageTo(ageTo == null ? null : ageTo * 365).
+        status(status).
+        ageSorter(ageSorter).
+        timeRegisterSorter(timeRegisterSorter).
+        keyword(keyword).
+        build();
+    return userService.filterUserAll(userCriteria);
   }
 
   @GetMapping("usersAll")

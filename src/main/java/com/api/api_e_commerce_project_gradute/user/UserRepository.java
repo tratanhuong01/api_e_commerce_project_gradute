@@ -1,5 +1,7 @@
 package com.api.api_e_commerce_project_gradute.user;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -12,6 +14,8 @@ import java.util.List;
 
 @Repository
 public interface UserRepository extends JpaRepository<User,String> {
+
+  Page<User> findAll(@Nullable Specification<User> userSpecification, Pageable pageable);
 
   List<User> findAll(@Nullable Specification<User> userSpecification);
 
@@ -55,5 +59,12 @@ public interface UserRepository extends JpaRepository<User,String> {
 
   @Query(value = "SELECT COUNT(*) FROM user WHERE user.time_created > CONCAT(DATE(NOW()),' 00:00:00' ) ",nativeQuery = true)
   int getUserRegisterToDay();
+
+  @Query(value = "SELECT COUNT(*) FROM user INNER JOIN bill ON bill.id_user = user.id WHERE bill.id_user = ?1 ",nativeQuery = true)
+  Integer countBillByUser(String idUser);
+
+  @Query(value = "SELECT SUM(bill_detail.amount) FROM user INNER JOIN bill ON bill.id_user = user.id \n" +
+      "INNER JOIN bill_detail ON bill.id = bill_detail.id_bill WHERE bill.id_user = ?1 ",nativeQuery = true)
+  Integer countProductBuyByUser(String idUser);
 
 }
