@@ -2,6 +2,8 @@ package com.api.api_e_commerce_project_gradute.user;
 
 import com.api.api_e_commerce_project_gradute.DTO.AccountLogin;
 import com.api.api_e_commerce_project_gradute.DTO.DataSendMail;
+import com.api.api_e_commerce_project_gradute.DTO.product.ProductCriteria;
+import com.api.api_e_commerce_project_gradute.DTO.specification.user.UserCriteria;
 import com.api.api_e_commerce_project_gradute.mail.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,10 +20,20 @@ public class UserController {
   @Autowired
   MailService mailService;
 
-//  @GetMapping("usersAll")
-//  public List<User> getAllUsers() {
-//    return userService.getAllUsers();
-//  }
+  @GetMapping("userFilters")
+  public List<User> getAllUsers(Integer userType,String sex, Integer verifyPhone,Integer ageFrom,
+                                Integer ageTo,Integer status,Integer verifyEmail) {
+    UserCriteria userCriteria = UserCriteria.builder().
+        userType(userType).
+        sex(sex).
+        verifyPhone(verifyPhone).
+        verifyEmail(verifyEmail).
+        ageFrom(ageFrom == null ? null : ageFrom * 365).
+        ageTo(ageTo == null ? null : ageTo * 365).
+        status(status).
+        build();
+    return userService.filterUser(userCriteria);
+  }
 
   @GetMapping("usersAll")
   public List<User> getAllUsersLimit(@RequestParam(required = false) int type) {

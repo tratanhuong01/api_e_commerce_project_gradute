@@ -81,6 +81,17 @@ public class User {
   @Column
   private Timestamp timeCreated;
 
+  @Column
+  private int status;
+
+  public int getStatus() {
+    return status;
+  }
+
+  public void setStatus(int status) {
+    this.status = status;
+  }
+
   public void setBirthday(Date birthday) {
     this.birthday = birthday;
   }

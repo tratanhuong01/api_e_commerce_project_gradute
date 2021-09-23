@@ -2,10 +2,13 @@ package com.api.api_e_commerce_project_gradute.user;
 
 import com.api.api_e_commerce_project_gradute.DTO.AccountLogin;
 import com.api.api_e_commerce_project_gradute.DTO.DataSendMail;
+import com.api.api_e_commerce_project_gradute.DTO.specification.user.UserCriteria;
+import com.api.api_e_commerce_project_gradute.DTO.specification.user.UserSpecifications;
 import com.api.api_e_commerce_project_gradute.config.Config;
 import com.api.api_e_commerce_project_gradute.mail.MailService;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -97,6 +100,11 @@ public class UserService {
 
   public List<User> getUserByTypeLimit(int type,int offset,int limit) {
     return userRepository.getUserByTypeLimit(type,offset,limit);
+  }
+
+  public List<User> filterUser(UserCriteria userCriteria) {
+    Specification<User> userSpecification = UserSpecifications.createUserSpecification(userCriteria);
+    return userRepository.findAll(userSpecification);
   }
 
 }

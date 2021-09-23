@@ -1,15 +1,19 @@
 package com.api.api_e_commerce_project_gradute.user;
 
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import javax.annotation.Nullable;
 import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
 public interface UserRepository extends JpaRepository<User,String> {
+
+  List<User> findAll(@Nullable Specification<User> userSpecification);
 
   @Query(value = "SELECT * FROM user ORDER BY id DESC LIMIT 1",nativeQuery = true)
   User getIdBestNew();
