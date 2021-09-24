@@ -4,9 +4,11 @@ import com.api.api_e_commerce_project_gradute.DTO.CategoryByGroupProduct;
 import com.api.api_e_commerce_project_gradute.DTO.product.ProductCriteria;
 import com.api.api_e_commerce_project_gradute.DTO.product.ProductFull;
 import com.api.api_e_commerce_project_gradute.DTO.product.ProductIndex;
+import com.api.api_e_commerce_project_gradute.DTO.specification.product.ProductAdminCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -17,17 +19,69 @@ public class ProductController {
   @Autowired
   ProductService productService;
 
+  @GetMapping("productFiltersAll")
+  public Integer filterProductAll(String group,Long color,Long ram,Long rom,String brand,Integer priceFrom,
+                                  Integer priceTo,Integer typeProduct, String category,Integer status,
+                                  String priceOutputSorter,String priceInputSorter,String productSoldSorter,
+                                  String saleSorter,String keyword) {
+    ProductAdminCriteria productAdminCriteria = ProductAdminCriteria.builder()
+        .group(group)
+        .category(category)
+        .color(color)
+        .brand(brand)
+        .ram(ram)
+        .rom(rom)
+        .priceFrom(priceFrom)
+        .priceTo(priceTo)
+        .typeProduct(typeProduct)
+        .saleSorter(saleSorter)
+        .productSoldSorter(productSoldSorter)
+        .priceOutputSorter(priceOutputSorter)
+        .priceInputSorter(priceInputSorter)
+        .status(status)
+        .keyword(keyword)
+        .build();
+    return productService.filterProductAdminAll(productAdminCriteria);
+  }
+
+  @GetMapping("productFilters")
+  public List<ProductFull> filterProductLimit(String group,Long color,Long ram,Long rom,String brand,Integer priceFrom,
+                                              Integer priceTo,Integer typeProduct, String category,Integer status,
+                                              String priceOutputSorter,String priceInputSorter,String productSoldSorter,
+                                              String saleSorter,Integer offset,Integer limit,String keyword) {
+    ProductAdminCriteria productAdminCriteria = ProductAdminCriteria.builder()
+        .category(category)
+        .group(group)
+        .color(color)
+        .brand(brand)
+        .ram(ram)
+        .rom(rom)
+        .priceFrom(priceFrom)
+        .priceTo(priceTo)
+        .typeProduct(typeProduct)
+        .saleSorter(saleSorter)
+        .productSoldSorter(productSoldSorter)
+        .priceOutputSorter(priceOutputSorter)
+        .priceInputSorter(priceInputSorter)
+        .status(status)
+        .offset(offset)
+        .limit(limit)
+        .keyword(keyword)
+        .build();
+    return productService.filterProductAdminLimit(productAdminCriteria);
+  }
+
   @GetMapping("productsFilter")
   public List<ProductFull> filterProduct(@RequestParam(name="feature", required = false) Set<Long> feature,
-                                     @RequestParam(name="slugGroupProduct", required = false) String slugGroupProduct,
-                                     @RequestParam(name="color", required = false) Set<Long> color,
-                                     @RequestParam(name="ram", required = false) Set<Long> ram,
-                                     @RequestParam(name="rom", required = false) Set<Long> rom,
-                                     @RequestParam(name="brand", required = false) Set<String> brand,
-                                     @RequestParam(name="priceFrom", required = false) Integer priceFrom,
-                                     @RequestParam(name="priceTo", required = false) Integer priceTo,
-                                     @RequestParam(name = "sorter",required = false) String sorter,
-                                     @RequestParam(name = "typeProduct",required = false) Set<Integer> typeProduct) {
+                                         @RequestParam(name="slugGroupProduct", required = false) String slugGroupProduct,
+                                         @RequestParam(name="color", required = false) Set<Long> color,
+                                         @RequestParam(name="ram", required = false) Set<Long> ram,
+                                         @RequestParam(name="rom", required = false) Set<Long> rom,
+                                         @RequestParam(name="brand", required = false) Set<String> brand,
+                                         @RequestParam(name="priceFrom", required = false) Integer priceFrom,
+                                         @RequestParam(name="priceTo", required = false) Integer priceTo,
+                                         @RequestParam(name = "sorter",required = false) String sorter,
+                                         @RequestParam(name = "typeProduct",required = false) Set<Integer> typeProduct) {
     ProductCriteria productCriteria = ProductCriteria.builder().
         slugGroupProduct(slugGroupProduct).
         feature(feature).

@@ -1,6 +1,9 @@
 package com.api.api_e_commerce_project_gradute.bill;
 
 import com.api.api_e_commerce_project_gradute.DTO.bill.BillFull;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -8,12 +11,18 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 @Repository
 public interface BillRepository extends JpaRepository<Bill,String> {
 
   //admin
+
+  Page<Bill> findAll(@Nullable Specification<Bill> billSpecification, Pageable pageable);
+
+  List<Bill> findAll(@Nullable Specification<Bill> billSpecification);
+
 
   @Query(value = "SELECT * FROM bill WHERE status = ?1 ORDER BY time_created DESC ",nativeQuery = true)
   List<Bill> getBillAllByStatus(int status);

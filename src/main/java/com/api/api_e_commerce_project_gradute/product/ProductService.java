@@ -2,6 +2,8 @@ package com.api.api_e_commerce_project_gradute.product;
 
 import com.api.api_e_commerce_project_gradute.DTO.CategoryByGroupProduct;
 import com.api.api_e_commerce_project_gradute.DTO.product.*;
+import com.api.api_e_commerce_project_gradute.DTO.specification.product.ProductAdminCriteria;
+import com.api.api_e_commerce_project_gradute.DTO.specification.product.ProductAdminSpecification;
 import com.api.api_e_commerce_project_gradute.brand.BrandRepository;
 import com.api.api_e_commerce_project_gradute.category_product.CategoryProduct;
 import com.api.api_e_commerce_project_gradute.category_product.CategoryProductRepository;
@@ -21,6 +23,9 @@ import com.api.api_e_commerce_project_gradute.memory.MemoryRepository;
 import com.api.api_e_commerce_project_gradute.news.NewsRepository;
 import com.api.api_e_commerce_project_gradute.ram.RamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -386,6 +391,27 @@ public class ProductService{
       List<Memory> memoryList = checkListMemory(productMainList);
       productFullList.add(returnProductFull(productMainList.get(0),colorList,memoryList,imageList,productMainList));
     }
+    return productFullList;
+  }
+
+  //admin
+
+  public Integer filterProductAdminAll(ProductAdminCriteria productAdminCriteria) {
+    Specification<Product> productSpecification = ProductAdminSpecification.createProductSpecification(
+        productAdminCriteria
+    );
+    return productRepository.findAll(productSpecification).size();
+  }
+
+  public List<ProductFull>  filterProductAdminLimit(ProductAdminCriteria productAdminCriteria) {
+    Specification<Product> productSpecification = ProductAdminSpecification.createProductSpecification(
+        productAdminCriteria
+    );
+    Pageable pageable = PageRequest.of(productAdminCriteria.getOffset(),productAdminCriteria.getLimit());
+    Page<Product> productPage = productRepository.findAll(productSpecification,pageable);
+    List<ProductFull> productFullList = new ArrayList<>();
+    for (Product product:productPage)
+      productFullList.add(getProductBySlug(product.getId(),-1));
     return productFullList;
   }
 

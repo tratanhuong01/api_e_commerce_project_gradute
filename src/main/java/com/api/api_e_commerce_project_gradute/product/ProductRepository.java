@@ -2,6 +2,7 @@ package com.api.api_e_commerce_project_gradute.product;
 
 import com.api.api_e_commerce_project_gradute.DTO.product.ProductMain;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,7 +11,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Nullable;
-import java.awt.print.Pageable;
 import java.util.List;
 
 @Repository
@@ -35,8 +35,10 @@ public interface ProductRepository extends JpaRepository<Product,String> , JpaSp
       " INNER JOIN image i ON p.id_image = i.id " +
       " LEFT JOIN ram r ON p.id_ram = r.id ";
 
-  List<Product> findAll(@Nullable Specification<Product> spec);
 
+  List<Product> findAll(@Nullable Specification<Product> productSpecification);
+
+  Page<Product> findAll(@Nullable Specification<Product> productSpecification, Pageable pageable);
 
   //get id new of product table
   @Query(value = "SELECT * FROM product ORDER BY id DESC LIMIT 1",nativeQuery = true)

@@ -2,7 +2,9 @@ package com.api.api_e_commerce_project_gradute.bill;
 
 import com.api.api_e_commerce_project_gradute.DTO.DashboardHeader;
 import com.api.api_e_commerce_project_gradute.DTO.bill.BillFull;
+import com.api.api_e_commerce_project_gradute.DTO.specification.bill.BillCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,6 +15,37 @@ public class BillController {
 
   @Autowired
   BillService billService;
+
+  @GetMapping("billFiltersAll")
+  public Integer getBillFiltersAll(Integer status,String timeCompletedSorter,String timeCreatedSorter,
+                                   String moneyOrderSorter,String feeDeliverySorter,String keyword) {
+    BillCriteria billCriteria = BillCriteria.builder()
+        .status(status)
+        .timeCompletedSorter(timeCompletedSorter)
+        .timeCreatedSorter(timeCreatedSorter)
+        .moneyOrderSorter(moneyOrderSorter)
+        .feeDeliverySorter(feeDeliverySorter)
+        .keyword(keyword)
+        .build();
+    return billService.getBillFiltersAll(billCriteria);
+  }
+
+  @GetMapping("billFilters")
+  public List<Bill> getBillFiltersLimit(Integer status, String timeCompletedSorter, String timeCreatedSorter,
+                                        String moneyOrderSorter, String feeDeliverySorter,Integer offset,
+                                        Integer limit,String keyword) {
+    BillCriteria billCriteria = BillCriteria.builder()
+        .status(status)
+        .timeCompletedSorter(timeCompletedSorter)
+        .timeCreatedSorter(timeCreatedSorter)
+        .moneyOrderSorter(moneyOrderSorter)
+        .feeDeliverySorter(feeDeliverySorter)
+        .offset(offset)
+        .limit(limit)
+        .keyword(keyword)
+        .build();
+    return billService.getBillFiltersLimit(billCriteria);
+  }
 
   @GetMapping("billsAll")
   public List<Bill> getBillByIdAll(@RequestParam(required = false) int type,@RequestParam(required = false) String idUser) {

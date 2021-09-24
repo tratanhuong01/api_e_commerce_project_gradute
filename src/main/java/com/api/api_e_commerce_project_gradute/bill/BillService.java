@@ -3,12 +3,18 @@ package com.api.api_e_commerce_project_gradute.bill;
 import com.api.api_e_commerce_project_gradute.DTO.DashboardHeader;
 import com.api.api_e_commerce_project_gradute.DTO.bill.BillDetailFull;
 import com.api.api_e_commerce_project_gradute.DTO.bill.BillFull;
+import com.api.api_e_commerce_project_gradute.DTO.specification.bill.BillCriteria;
+import com.api.api_e_commerce_project_gradute.DTO.specification.bill.BillSpecifications;
 import com.api.api_e_commerce_project_gradute.bill_detail.BillDetail;
 import com.api.api_e_commerce_project_gradute.bill_detail.BillDetailRepository;
 import com.api.api_e_commerce_project_gradute.bill_review.BillReviewRepository;
 import com.api.api_e_commerce_project_gradute.product.ProductService;
 import com.api.api_e_commerce_project_gradute.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -155,6 +161,18 @@ public class BillService {
     dashboardHeader.setTotalRevenue(billRepository.getTotalMoneyBillToday() == null ? 0 : Integer.parseInt(billRepository.getTotalMoneyBillToday()));
     dashboardHeader.setTotalSold(billRepository.getProductSellToday() == null ? 0 : Integer.parseInt(billRepository.getProductSellToday()));
     return dashboardHeader;
+  }
+
+  public Integer getBillFiltersAll(BillCriteria billCriteria) {
+    Specification<Bill> billSpecification = BillSpecifications.createBillSpecification(billCriteria);
+    return billRepository.findAll(billSpecification).size();
+  }
+
+  public List<Bill> getBillFiltersLimit(BillCriteria billCriteria) {
+    Specification<Bill> billSpecification = BillSpecifications.createBillSpecification(billCriteria);
+    Pageable pageable = PageRequest.of(billCriteria.getOffset(),billCriteria.getLimit());
+    Page<Bill> billPage = billRepository.findAll(billSpecification,pageable);
+    return billPage.getContent();
   }
 
 }
