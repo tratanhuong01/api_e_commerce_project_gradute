@@ -23,7 +23,7 @@ public interface ProductRepository extends JpaRepository<Product,String> , JpaSp
       "  'idMemory' , r.id as 'idRam' , p.is_show as 'isShow', i.id as 'idImage' ,p.slug as 'slug' , " +
       "  i.src as `image` , c.code as 'color' , m.name_memory as 'memory' , b.name_brand as 'idBrand' , " +
       "  p.describe_product as 'describeProduct' , ip.item_current as 'itemCurrent' , ip.type_info_product as " +
-      " 'typeProduct' , ip.review as 'review' FROM product p ";
+      " 'typeProduct' , ip.review as 'review' , ip.item_sold as 'itemSold' FROM product p ";
 
   public static String JOIN_TABLE = " INNER JOIN line_product lp ON p.id_line_product = lp.id " +
       " INNER JOIN group_product gp ON lp.id_group_product = gp.id" +

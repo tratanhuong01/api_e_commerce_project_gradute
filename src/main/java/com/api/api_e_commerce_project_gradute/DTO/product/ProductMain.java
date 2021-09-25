@@ -26,7 +26,8 @@ import javax.persistence.*;
             @ColumnResult(name = "describeProduct",type = String.class),
             @ColumnResult(name = "typeProduct",type = Integer.class),
             @ColumnResult(name = "review",type = Integer.class),
-            @ColumnResult(name = "itemCurrent",type = Integer.class)
+            @ColumnResult(name = "itemCurrent",type = Integer.class),
+            @ColumnResult(name = "itemSold",type = Integer.class)
         }
     )
 )
@@ -56,4 +57,5 @@ public interface ProductMain {
   int getTypeProduct();
   int getReview();
   int getItemCurrent();
+  int getItemSold();
 }

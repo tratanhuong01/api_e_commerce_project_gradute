@@ -2,6 +2,7 @@ package com.api.api_e_commerce_project_gradute.user;
 
 import com.api.api_e_commerce_project_gradute.DTO.AccountLogin;
 import com.api.api_e_commerce_project_gradute.DTO.DataSendMail;
+import com.api.api_e_commerce_project_gradute.DTO.UpdateStatus;
 import com.api.api_e_commerce_project_gradute.DTO.product.ProductCriteria;
 import com.api.api_e_commerce_project_gradute.DTO.specification.user.UserCriteria;
 import com.api.api_e_commerce_project_gradute.DTO.specification.user.UserFull;
@@ -128,6 +129,11 @@ public class UserController {
   public List<User> getUserByTypeLimit(@RequestParam(required = false) int type , @RequestParam(required = false) int offset,
                                        @RequestParam(required = false) int limit) {
     return userService.getUserByTypeLimit(type, offset, limit);
+  }
+
+  @PutMapping("users/update/status/")
+  public int updateStatusUser(@RequestBody UpdateStatus updateStatus) {
+    return userService.updateStatusUser(updateStatus.getValue(),updateStatus.getId());
   }
 
 }

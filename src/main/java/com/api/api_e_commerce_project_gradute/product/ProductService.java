@@ -243,7 +243,7 @@ public class ProductService{
         ramRepository.getRamByIdRam(productMainList.get(0).getIdRam()),
         brandRepository.getBrandByIdBrand(productMains.getIdBrand()),
         productMains.getDescribeProduct(),productMains.getTypeProduct(),productMains.getReview(),
-        productMains.getItemCurrent());
+        productMains.getItemCurrent(),productMains.getItemSold());
   }
 
   public ProductFull getProductBySlug(String slug, int type) {

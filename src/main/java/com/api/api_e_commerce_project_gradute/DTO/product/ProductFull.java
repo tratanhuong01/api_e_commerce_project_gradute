@@ -5,8 +5,13 @@ import com.api.api_e_commerce_project_gradute.color.Color;
 import com.api.api_e_commerce_project_gradute.image.Image;
 import com.api.api_e_commerce_project_gradute.memory.Memory;
 import com.api.api_e_commerce_project_gradute.ram.Ram;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
+
+@Getter
+@Setter
 
 public class ProductFull {
 
@@ -33,12 +38,13 @@ public class ProductFull {
   private int typeProduct;
   private int review;
   private int itemCurrent;
+  private int itemSold;
 
   public ProductFull(String idProduct, String idCategoryProduct, String nameCategoryProduct, String idGroupProduct,
    String nameGroupProduct, String idLineProduct, String nameLineProduct, List<Color> colorList,
    List<Memory> memoryList, List<Image> imageList, String slug, int priceInput, int priceOutput, int sale,
    Image image,Color color,Memory memory,Ram ram,Brand brand,String describeProduct,int typeProduct,
-   int review,int itemCurrent){
+   int review,int itemCurrent,int itemSold){
     this.idProduct = idProduct;
     this.idCategoryProduct = idCategoryProduct;
     this.nameCategoryProduct = nameCategoryProduct;
@@ -62,189 +68,7 @@ public class ProductFull {
     this.typeProduct = typeProduct;
     this.review = review;
     this.itemCurrent = itemCurrent;
+    this.itemSold = itemSold;
   }
 
-  public int getTypeProduct() {
-    return typeProduct;
-  }
-
-  public void setTypeProduct(int typeProduct) {
-    this.typeProduct = typeProduct;
-  }
-
-  public int getReview() {
-    return review;
-  }
-
-  public void setReview(int review) {
-    this.review = review;
-  }
-
-  public int getItemCurrent() {
-    return itemCurrent;
-  }
-
-  public void setItemCurrent(int itemCurrent) {
-    this.itemCurrent = itemCurrent;
-  }
-
-  public Ram getRam() {
-    return ram;
-  }
-
-  public void setRam(Ram ram) {
-    this.ram = ram;
-  }
-
-  public String getDescribeProduct() {
-    return describeProduct;
-  }
-
-  public void setDescribeProduct(String describeProduct) {
-    this.describeProduct = describeProduct;
-  }
-
-  public Image getImage() {
-    return image;
-  }
-
-  public void setImage(Image image) {
-    this.image = image;
-  }
-
-  public Color getColor() {
-    return color;
-  }
-
-  public void setColor(Color color) {
-    this.color = color;
-  }
-
-  public Memory getMemory() {
-    return memory;
-  }
-
-  public void setMemory(Memory memory) {
-    this.memory = memory;
-  }
-
-  public Brand getBrand() {
-    return brand;
-  }
-
-  public void setBrand(Brand brand) {
-    this.brand = brand;
-  }
-
-  public String getIdProduct() {
-    return idProduct;
-  }
-
-  public void setIdProduct(String idProduct) {
-    this.idProduct = idProduct;
-  }
-
-  public String getIdCategoryProduct() {
-    return idCategoryProduct;
-  }
-
-  public void setIdCategoryProduct(String idCategoryProduct) {
-    this.idCategoryProduct = idCategoryProduct;
-  }
-
-  public String getNameCategoryProduct() {
-    return nameCategoryProduct;
-  }
-
-  public void setNameCategoryProduct(String nameCategoryProduct) {
-    this.nameCategoryProduct = nameCategoryProduct;
-  }
-
-  public String getIdGroupProduct() {
-    return idGroupProduct;
-  }
-
-  public void setIdGroupProduct(String idGroupProduct) {
-    this.idGroupProduct = idGroupProduct;
-  }
-
-  public String getNameGroupProduct() {
-    return nameGroupProduct;
-  }
-
-  public void setNameGroupProduct(String nameGroupProduct) {
-    this.nameGroupProduct = nameGroupProduct;
-  }
-
-  public String getIdLineProduct() {
-    return idLineProduct;
-  }
-
-  public void setIdLineProduct(String idLineProduct) {
-    this.idLineProduct = idLineProduct;
-  }
-
-  public String getNameLineProduct() {
-    return nameLineProduct;
-  }
-
-  public void setNameLineProduct(String nameLineProduct) {
-    this.nameLineProduct = nameLineProduct;
-  }
-
-  public List<Color> getColorList() {
-    return colorList;
-  }
-
-  public void setColorList(List<Color> colorList) {
-    this.colorList = colorList;
-  }
-
-  public List<Memory> getMemoryList() {
-    return memoryList;
-  }
-
-  public void setMemoryList(List<Memory> memoryList) {
-    this.memoryList = memoryList;
-  }
-
-  public List<Image> getImageList() {
-    return imageList;
-  }
-
-  public void setImageList(List<Image> imageList) {
-    this.imageList = imageList;
-  }
-
-  public String getSlug() {
-    return slug;
-  }
-
-  public void setSlug(String slug) {
-    this.slug = slug;
-  }
-
-  public int getPriceInput() {
-    return priceInput;
-  }
-
-  public void setPriceInput(int priceInput) {
-    this.priceInput = priceInput;
-  }
-
-  public int getPriceOutput() {
-    return priceOutput;
-  }
-
-  public void setPriceOutput(int priceOutput) {
-    this.priceOutput = priceOutput;
-  }
-
-  public int getSale() {
-    return sale;
-  }
-
-  public void setSale(int sale) {
-    this.sale = sale;
-  }
 }

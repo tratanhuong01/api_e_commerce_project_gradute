@@ -131,11 +131,18 @@ public class UserService {
       userFull.setPassword(user.getPassword());
       userFull.setPhone(user.getPhone());
       userFull.setEmail(user.getEmail());
+      userFull.setStatus(user.getStatus());
       userFull.setAmountProduct(userRepository.countProductBuyByUser(user.getId()));
       userFull.setAmountOrder(userRepository.countBillByUser(user.getId()));
       userFullList.add(userFull);
     }
     return userFullList;
+  }
+
+  //
+
+  public int updateStatusUser(Integer status,String id) {
+    return userRepository.updateStatusUser(status,id);
   }
 
 }

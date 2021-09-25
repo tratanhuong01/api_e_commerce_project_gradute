@@ -67,4 +67,11 @@ public interface UserRepository extends JpaRepository<User,String> {
       "INNER JOIN bill_detail ON bill.id = bill_detail.id_bill WHERE bill.id_user = ?1 ",nativeQuery = true)
   Integer countProductBuyByUser(String idUser);
 
+  //update
+
+  @Modifying
+  @Transactional
+  @Query(value = "UPDATE user SET status = ?1 WHERE id = ?2 ",nativeQuery = true)
+  int updateStatusUser(Integer status,String id);
+
 }
