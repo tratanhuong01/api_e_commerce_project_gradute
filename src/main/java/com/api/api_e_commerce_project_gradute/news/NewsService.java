@@ -4,11 +4,17 @@ import com.api.api_e_commerce_project_gradute.DTO.comment.CommentLevel;
 import com.api.api_e_commerce_project_gradute.DTO.news.NewsByCategory;
 import com.api.api_e_commerce_project_gradute.DTO.news.NewsDetailPage;
 import com.api.api_e_commerce_project_gradute.DTO.news.NewsPage;
+import com.api.api_e_commerce_project_gradute.DTO.specification.news.NewsCriteria;
+import com.api.api_e_commerce_project_gradute.DTO.specification.news.NewsSpecification;
 import com.api.api_e_commerce_project_gradute.category_news.CategoryNews;
 import com.api.api_e_commerce_project_gradute.category_news.CategoryNewsRepository;
 import com.api.api_e_commerce_project_gradute.comment.Comment;
 import com.api.api_e_commerce_project_gradute.comment.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -95,4 +101,19 @@ public class NewsService {
     return newsPage;
   }
 
+  public Integer getNewsAllAdmin(NewsCriteria newsCriteria) {
+    Specification<News> newsSpecification = NewsSpecification.createNewsSpecification(newsCriteria);
+    return newsRepository.findAll(newsSpecification).size();
+  }
+
+  public List<News> getNewsLimitAdmin(NewsCriteria newsCriteria) {
+    Specification<News> newsSpecification = NewsSpecification.createNewsSpecification(newsCriteria);
+    Pageable pageable = PageRequest.of(newsCriteria.getOffset(),newsCriteria.getLimit());
+    Page<News> newsPage = newsRepository.findAll(newsSpecification,pageable);
+    return newsPage.getContent();
+  }
+
+  public void deleteNews(News news) {
+    newsRepository.delete(news);
+  }
 }

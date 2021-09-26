@@ -2,6 +2,7 @@ package com.api.api_e_commerce_project_gradute.news;
 
 import com.api.api_e_commerce_project_gradute.DTO.news.NewsDetailPage;
 import com.api.api_e_commerce_project_gradute.DTO.news.NewsPage;
+import com.api.api_e_commerce_project_gradute.DTO.specification.news.NewsCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +15,34 @@ public class  NewsController {
 
   @Autowired
   NewsService newsService;
+
+  @GetMapping("newFiltersAll")
+  public Integer getAllNewsAdmin(String category,String poster,String viewSorter,String commentSorter,
+                                 String keyword) {
+    NewsCriteria newsCriteria = NewsCriteria.builder()
+        .category(category)
+        .poster(poster)
+        .viewSorter(viewSorter)
+        .commentSorter(commentSorter)
+        .keyword(keyword)
+        .build();
+    return newsService.getNewsAllAdmin(newsCriteria);
+  }
+
+  @GetMapping("newFilters")
+  public List<News> getLimitNewsAdmin(String category,String poster,String viewSorter,String commentSorter,
+                                      Integer offset,Integer limit,String keyword) {
+    NewsCriteria newsCriteria = NewsCriteria.builder()
+        .category(category)
+        .poster(poster)
+        .viewSorter(viewSorter)
+        .commentSorter(commentSorter)
+        .offset(offset)
+        .limit(limit)
+        .keyword(keyword)
+        .build();
+    return newsService.getNewsLimitAdmin(newsCriteria);
+  }
 
   @GetMapping("news")
   public List<News> getNewsLimit() {
@@ -73,6 +102,11 @@ public class  NewsController {
   @GetMapping("getNewsPage")
   public NewsPage getNewsPage(){
     return newsService.getNewsPage();
+  }
+
+  @DeleteMapping("news")
+  public void deleteNews(@RequestBody News news) {
+    newsService.deleteNews(news);
   }
 
 }

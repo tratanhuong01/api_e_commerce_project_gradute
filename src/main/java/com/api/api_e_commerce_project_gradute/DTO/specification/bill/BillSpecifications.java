@@ -66,22 +66,20 @@ public final class BillSpecifications {
     if (typeSorter != null)
       if (billSpecification == null) {
         billSpecification = (root,query,builder) -> {
-          if (typeSorter != null)
-            if (typeSorter.equals("ASC"))
-              query.orderBy(builder.asc(root.get(dataSorter)));
-            else
-              query.orderBy(builder.desc(root.get(dataSorter)));
+          if (typeSorter.equals("ASC"))
+            query.orderBy(builder.asc(root.get(dataSorter)));
+          else
+            query.orderBy(builder.desc(root.get(dataSorter)));
           return root.get("id").isNotNull();
         };
       }
 
       else
         billSpecification = billSpecification.and((root,query,builder) -> {
-          if (typeSorter != null)
-            if (typeSorter.equals("ASC"))
-              query.orderBy(builder.asc(root.get(dataSorter)));
-            else
-              query.orderBy(builder.desc(root.get(dataSorter)));
+          if (typeSorter.equals("ASC"))
+            query.orderBy(builder.asc(root.get(dataSorter)));
+          else
+            query.orderBy(builder.desc(root.get(dataSorter)));
           return root.get("id").isNotNull();
         });
 

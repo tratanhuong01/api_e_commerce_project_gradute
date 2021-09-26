@@ -48,6 +48,17 @@ public class News {
   @Column
   private String slug;
 
+  @Column
+  private int commentCount;
+
+  public int getCommentCount() {
+    return commentCount;
+  }
+
+  public void setCommentCount(int commentCount) {
+    this.commentCount = commentCount;
+  }
+
   public String getSlug() {
     return slug;
   }

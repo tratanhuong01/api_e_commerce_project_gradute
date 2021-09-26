@@ -1,15 +1,23 @@
 package com.api.api_e_commerce_project_gradute.news;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import javax.annotation.Nullable;
 import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
 public interface NewsRepository extends JpaRepository<News,Long> {
+
+  List<News> findAll(@Nullable Specification<News> newsSpecification);
+
+  Page<News> findAll(@Nullable Specification<News> newsSpecification, Pageable pageable);
 
   @Query(value = "SELECT * FROM news ORDER BY time_created DESC LIMIT 0,4 ",nativeQuery = true)
   List<News> getBestNewsIndex();
