@@ -1,8 +1,6 @@
 package com.api.api_e_commerce_project_gradute.DTO.bill;
 
-import com.api.api_e_commerce_project_gradute.DTO.product.ProductFull;
 import com.api.api_e_commerce_project_gradute.bill.Bill;
-import com.api.api_e_commerce_project_gradute.bill_detail.BillDetail;
 import com.api.api_e_commerce_project_gradute.bill_review.BillReview;
 
 import java.util.List;

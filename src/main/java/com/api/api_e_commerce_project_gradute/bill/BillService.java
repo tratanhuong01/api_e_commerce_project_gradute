@@ -123,7 +123,7 @@ public class BillService {
   }
 
   public BillFull getBillById(Long id) {
-    BillFull billFull = null;
+    BillFull billFull = new BillFull();
     Bill bill = billRepository.getBillById(id);
     billFull.setBill(bill);
     List<BillDetail> billDetailList = billDetailRepository.getBillDetailByIdBill(bill.getId());

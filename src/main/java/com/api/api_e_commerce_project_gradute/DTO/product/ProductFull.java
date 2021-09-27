@@ -14,7 +14,7 @@ import java.util.List;
 @Setter
 
 public class ProductFull {
-
+  private String id;
   private String idProduct;
   private String idCategoryProduct;
   private String nameCategoryProduct;
@@ -40,11 +40,12 @@ public class ProductFull {
   private int itemCurrent;
   private int itemSold;
 
-  public ProductFull(String idProduct, String idCategoryProduct, String nameCategoryProduct, String idGroupProduct,
+  public ProductFull(String id,String idProduct, String idCategoryProduct, String nameCategoryProduct, String idGroupProduct,
    String nameGroupProduct, String idLineProduct, String nameLineProduct, List<Color> colorList,
    List<Memory> memoryList, List<Image> imageList, String slug, int priceInput, int priceOutput, int sale,
    Image image,Color color,Memory memory,Ram ram,Brand brand,String describeProduct,int typeProduct,
    int review,int itemCurrent,int itemSold){
+    this.id = id;
     this.idProduct = idProduct;
     this.idCategoryProduct = idCategoryProduct;
     this.nameCategoryProduct = nameCategoryProduct;

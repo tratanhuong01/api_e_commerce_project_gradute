@@ -233,7 +233,7 @@ public class ProductService{
 
   public ProductFull returnProductFull(ProductMain productMains,List<Color> colorList,List<Memory> memoryList,
                                        List<Image> imageList,List<ProductMain> productMainList) {
-    return new ProductFull(productMains.getIdProduct(),productMains.getIdCategoryProduct(),
+    return new ProductFull(productMains.getIdProduct(),productMains.getIdProduct(),productMains.getIdCategoryProduct(),
         productMains.getNameCategoryProduct(),productMains.getIdGroupProduct(),productMains.getNameGroupProduct(),
         productMains.getIdLineProduct(),productMains.getNameLineProduct(),colorList,memoryList,imageList,
         productMains.getSlug(),productMains.getPriceInput(),productMains.getPriceOutput(),
