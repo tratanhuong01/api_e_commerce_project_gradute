@@ -36,7 +36,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Transactional(readOnly = true)
 @Service
 
 public class ProductService{

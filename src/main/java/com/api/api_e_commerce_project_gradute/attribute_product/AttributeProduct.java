@@ -26,17 +26,6 @@ public class AttributeProduct {
   @Column
   private String valueAttributeProduct;
 
-  @Column
-  private Timestamp timeCreated;
-
-  public Timestamp getTimeCreated() {
-    return timeCreated;
-  }
-
-  public void setTimeCreated(Timestamp timeCreated) {
-    this.timeCreated = timeCreated;
-  }
-
   public String getValueAttributeProduct() {
     return valueAttributeProduct;
   }

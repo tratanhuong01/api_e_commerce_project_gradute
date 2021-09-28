@@ -17,6 +17,11 @@ public class DetailFunctionProductController {
     return detailFunctionProductService.getAllDetailFunctionProducts();
   }
 
+  @GetMapping("detailFunctionProducts/{id}")
+  public List<DetailFunctionProduct> getDetailFunctionProducts(@PathVariable String id) {
+    return detailFunctionProductService.getDetailFunctionProduct(id);
+  }
+
   @PostMapping("detailFunctionProducts")
   public DetailFunctionProduct addDetailFunctionProduct(@RequestBody DetailFunctionProduct detailFunctionProduct) {
     return detailFunctionProductService.addDetailFunctionProduct(detailFunctionProduct);

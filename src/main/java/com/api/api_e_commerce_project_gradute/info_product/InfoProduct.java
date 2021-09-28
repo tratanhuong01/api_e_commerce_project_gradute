@@ -41,6 +41,8 @@ public class InfoProduct {
   @Column
   private Timestamp timeInput;
 
+
+
   public Timestamp getTimeInput() {
     return timeInput;
   }

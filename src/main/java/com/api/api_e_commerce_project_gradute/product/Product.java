@@ -45,10 +45,6 @@ public class Product implements Serializable {
   private Ram ramProduct;
 
   @ManyToOne
-  @JoinColumn(name = "id_brand")
-  private Brand brandProduct;
-
-  @ManyToOne
   @JoinColumn(name = "id_image")
   private Image imageProduct;
 
@@ -107,14 +103,6 @@ public class Product implements Serializable {
 
   public void setRamProduct(Ram ramProduct) {
     this.ramProduct = ramProduct;
-  }
-
-  public Brand getBrandProduct() {
-    return brandProduct;
-  }
-
-  public void setBrandProduct(Brand brandProduct) {
-    this.brandProduct = brandProduct;
   }
 
   public Image getImageProduct() {

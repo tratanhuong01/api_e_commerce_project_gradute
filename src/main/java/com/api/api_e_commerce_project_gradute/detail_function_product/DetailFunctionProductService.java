@@ -19,4 +19,8 @@ public class DetailFunctionProductService {
     return detailFunctionProductRepository.save(detailFunctionProduct);
   }
 
+  public List<DetailFunctionProduct> getDetailFunctionProduct(String id) {
+    return detailFunctionProductRepository.getDetailFunctionProductByLineProduct(id);
+  }
+
 }

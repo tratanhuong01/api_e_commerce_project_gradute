@@ -1,5 +1,6 @@
 package com.api.api_e_commerce_project_gradute.line_product;
 
+import com.api.api_e_commerce_project_gradute.brand.Brand;
 import com.api.api_e_commerce_project_gradute.group_product.GroupProduct;
 import com.api.api_e_commerce_project_gradute.product.Product;
 
@@ -25,8 +26,53 @@ public class LineProduct {
   @Column
   private String nameLineProduct;
 
+  @ManyToOne
+  @JoinColumn(name = "id_brand")
+  private Brand brandProduct;
+
+  @Column
+  private int height;
+
+  @Column
+  private int width;
+
+  @Column
+  private int weight;
+
   @Column
   private Timestamp timeCreated;
+
+  public Brand getBrandProduct() {
+    return brandProduct;
+  }
+
+  public void setBrandProduct(Brand brandProduct) {
+    this.brandProduct = brandProduct;
+  }
+
+  public int getHeight() {
+    return height;
+  }
+
+  public void setHeight(int height) {
+    this.height = height;
+  }
+
+  public int getWidth() {
+    return width;
+  }
+
+  public void setWidth(int width) {
+    this.width = width;
+  }
+
+  public int getWeight() {
+    return weight;
+  }
+
+  public void setWeight(int weight) {
+    this.weight = weight;
+  }
 
   public Timestamp getTimeCreated() {
     return timeCreated;
