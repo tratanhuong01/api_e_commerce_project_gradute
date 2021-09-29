@@ -47,4 +47,8 @@ public class ColorService {
     colorRepository.delete(color);
   }
 
+  public List<Color> getListColorByLineProduct(String idLineProduct) {
+    return colorRepository.getListColorByLineProduct(idLineProduct);
+  }
+
 }

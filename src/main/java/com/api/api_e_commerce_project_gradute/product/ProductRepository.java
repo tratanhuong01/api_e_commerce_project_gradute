@@ -22,17 +22,17 @@ public interface ProductRepository extends JpaRepository<Product,String> , JpaSp
       "  ip.price_output as 'priceOutput' , ip.sale as 'sale' ,c.id as 'idColor', m.id as " +
       "  'idMemory' , r.id as 'idRam' , p.is_show as 'isShow', i.id as 'idImage' ,p.slug as 'slug' , " +
       "  i.src as `image` , c.code as 'color' , m.name_memory as 'memory' , b.name_brand as 'idBrand' , " +
-      "  p.describe_product as 'describeProduct' , ip.item_current as 'itemCurrent' , ip.type_info_product as " +
+      "  lp.describe_product as 'describeProduct' , ip.item_current as 'itemCurrent' , ip.type_info_product as " +
       " 'typeProduct' , ip.review as 'review' , ip.item_sold as 'itemSold' FROM product p ";
 
   public static String JOIN_TABLE = " INNER JOIN line_product lp ON p.id_line_product = lp.id " +
       " INNER JOIN group_product gp ON lp.id_group_product = gp.id" +
       " INNER JOIN category_product cp ON gp.id_category_product = cp.id" +
-      " LEFT JOIN color c ON p.id_color = c.id " +
       " LEFT JOIN memory m ON p.id_memory = m.id" +
       " INNER JOIN info_product ip ON ip.id_product = p.id" +
       " INNER JOIN brand b ON lp.id_brand = b.id " +
       " INNER JOIN image i ON p.id_image = i.id " +
+      " LEFT JOIN color c ON i.id_color = c.id " +
       " LEFT JOIN ram r ON p.id_ram = r.id ";
 
 
@@ -52,15 +52,21 @@ public interface ProductRepository extends JpaRepository<Product,String> , JpaSp
   Product getProductById(String id);
 
   //get slug when product not have memory and have color
-  @Query(value = "SELECT slug FROM product WHERE id_color = ?1 AND id_memory IS NULL AND id_line_product = ?2 ",nativeQuery = true)
+  @Query(value = "SELECT slug FROM product INNER JOIN image ON image.id = product.id_image " +
+      "INNER JOIN color ON color.id = image.id_color WHERE image.id_color = ?1 AND id_memory " +
+      "IS NULL AND id_line_product = ?2 ",nativeQuery = true)
   String getSlugByColorAndNotMemory(String idColor,String idLineProduct);
 
   //get slug when product have memory and have color
-  @Query(value = "SELECT slug FROM product WHERE id_color = ?1 AND id_memory = ?2 AND id_line_product = ?3 ",nativeQuery = true)
+  @Query(value = "SELECT slug FROM product INNER JOIN image ON image.id = product.id_image " +
+      "INNER JOIN color ON color.id = image.id_color WHERE image.id_color = ?1 AND product.id_memory = ?2 " +
+      "AND product.id_line_product = ?3 ",nativeQuery = true)
   String getSlugByColorAndMemory(String idColor,String idMemory,String idLineProduct);
 
   //get slug when product have memory and not have color
-  @Query(value = "SELECT slug FROM product WHERE id_color IS NULL AND id_memory = ?1 AND id_line_product = ?2 ",nativeQuery = true)
+  @Query(value = "SELECT slug FROM product INNER JOIN image ON image.id = product.id_image " +
+      "INNER JOIN color ON color.id = image.id_color WHERE image.id_color IS NULL AND product.id_memory = ?1 " +
+      "AND product.id_line_product = ?2 ",nativeQuery = true)
   String getSlugByNotColorAndMemory(String idMemory,String idLineProduct);
 
   //get product by id line product

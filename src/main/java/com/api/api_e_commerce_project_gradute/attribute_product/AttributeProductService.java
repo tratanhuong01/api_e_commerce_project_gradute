@@ -45,4 +45,12 @@ public class AttributeProductService {
     return attributeByGroupAttributeList;
   }
 
+  public List<AttributeProduct> getAttributeProductByIdGroupAttribute(String idGroupAttribute) {
+    return attributeProductRepository.getAttributeProductByIdGroupAttribute(idGroupAttribute);
+  }
+
+  public List<AttributeProduct> getAttributeProductByIdLineProductAndGroupAttribute(String idLineProduct,String idGroupAttribute) {
+    return attributeProductRepository.getAttributeProductByIdLineProductAndGroupAttribute(idLineProduct, idGroupAttribute);
+  }
+
 }

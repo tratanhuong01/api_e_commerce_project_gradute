@@ -28,6 +28,12 @@ public class AttributeProductController {
     return attributeProductService.getAttributeProductByIdLineProduct(idLineProduct);
   }
 
+  @GetMapping("attributeProducts/")
+  public List<AttributeProduct> getAttributeProductByIdGroupAttribute(String idLineProduct,
+                                                                      String idGroupAttribute) {
+    return attributeProductService.getAttributeProductByIdLineProductAndGroupAttribute(idLineProduct,idGroupAttribute);
+  }
+
   @GetMapping("attributeProducts/{offset}/{limit}")
   public List<AttributeProduct> getAllAttributeProductLimit(@PathVariable int offset,@PathVariable int limit) {
     return attributeProductService.getAllAttributeProductLimit(offset, limit);

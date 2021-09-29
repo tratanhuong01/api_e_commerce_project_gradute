@@ -63,4 +63,9 @@ public class ColorController {
     return colorService.updateColor(color);
   }
 
+  @GetMapping("colors/lineProduct/")
+  public List<Color> getListColorByLineProduct(String idLineProduct) {
+    return colorService.getListColorByLineProduct(idLineProduct);
+  }
+
 }

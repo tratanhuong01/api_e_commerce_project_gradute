@@ -23,4 +23,12 @@ public class ImageService {
     return imageRepository.save(image);
   }
 
+  public List<Image> getImageByIdLineProduct(String idLineProduct){
+    return imageRepository.getImageByIdLineProduct(idLineProduct);
+  }
+
+  public Image getImageByLineProductAndColor(String idLineProduct,Long idColor) {
+    return imageRepository.getImageByIdLineProductAndColor(idLineProduct,idColor);
+  }
+
 }

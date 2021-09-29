@@ -37,10 +37,6 @@ public class Product implements Serializable {
   private LineProduct lineProduct;
 
   @ManyToOne
-  @JoinColumn(name = "id_color")
-  private Color colorProduct;
-
-  @ManyToOne
   @JoinColumn(name = "id_ram")
   private Ram ramProduct;
 
@@ -53,9 +49,6 @@ public class Product implements Serializable {
 
   @Column
   private String slug;
-
-  @Column
-  private String describeProduct;
 
   public String getId() {
     return id;
@@ -89,14 +82,6 @@ public class Product implements Serializable {
     this.lineProduct = lineProduct;
   }
 
-  public Color getColorProduct() {
-    return colorProduct;
-  }
-
-  public void setColorProduct(Color colorProduct) {
-    this.colorProduct = colorProduct;
-  }
-
   public Ram getRamProduct() {
     return ramProduct;
   }
@@ -128,12 +113,5 @@ public class Product implements Serializable {
   public void setSlug(String slug) {
     this.slug = slug;
   }
-
-  public String getDescribeProduct() {
-    return describeProduct;
-  }
-
-  public void setDescribeProduct(String describeProduct) {
-    this.describeProduct = describeProduct;
-  }
+  
 }

@@ -1,5 +1,6 @@
 package com.api.api_e_commerce_project_gradute.color;
 
+import com.api.api_e_commerce_project_gradute.image.Image;
 import com.api.api_e_commerce_project_gradute.product.Product;
 
 import javax.persistence.*;
@@ -16,7 +17,7 @@ public class Color {
   private Long id;
 
   @OneToMany(mappedBy = "colorProduct")
-  private Set<Product> colorProduct = new HashSet<>();
+  private Set<Image> colorProduct = new HashSet<>();
 
   @Column
   private String code;

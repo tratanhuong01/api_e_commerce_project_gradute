@@ -32,4 +32,14 @@ public class ImageController {
     return imageService.addImage(image);
   }
 
+  @GetMapping("images/lineProduct/")
+  public List<Image> getImageByLineProduct(String idLineProduct) {
+    return imageService.getImageByIdLineProduct(idLineProduct);
+  }
+
+  @GetMapping("images/lineProduct/color/")
+  public Image getImageByLineProductAndColor(String idLineProduct,Long idColor) {
+    return imageService.getImageByLineProductAndColor(idLineProduct,idColor);
+  }
+
 }

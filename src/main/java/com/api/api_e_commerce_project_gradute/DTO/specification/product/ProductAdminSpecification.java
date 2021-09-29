@@ -173,11 +173,11 @@ public final class ProductAdminSpecification {
     if (color != null)
       if (productSpecification == null)
         productSpecification = (root,query,builder) -> {
-          return builder.equal(root.join("colorProduct").get("id"),color);
+          return builder.equal(root.join("imageProduct").join("colorProduct").get("id"),color);
         };
       else
         productSpecification = productSpecification.and((root,query,builder) -> {
-          return builder.equal(root.join("colorProduct").get("id"),color);
+          return builder.equal(root.join("imageProduct").join("colorProduct").get("id"),color);
         });
     return productSpecification;
   }
@@ -216,11 +216,11 @@ public final class ProductAdminSpecification {
     if (brand != null)
       if (productSpecification == null)
         productSpecification = (root,query,builder) -> {
-          return builder.equal(root.join("brandProduct").get("id"),brand);
+          return builder.equal(root.join("lineProduct").get("brandProduct").get("id"),brand);
         };
       else
         productSpecification = productSpecification.and((root,query,builder) -> {
-          return builder.equal(root.join("brandProduct").get("id"),brand);
+          return builder.equal(root.join("lineProduct").get("brandProduct").get("id"),brand);
         });
     return productSpecification;
   }

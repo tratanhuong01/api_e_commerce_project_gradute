@@ -197,11 +197,11 @@ public final class ProductSpecifications {
     if (colors != null)
       if (productSpecification == null)
          productSpecification = (root, query, builder) -> {
-           return root.join("colorProduct",JoinType.LEFT).get("id").in(colors);
+           return root.join("imageProduct",JoinType.LEFT).join("colorProduct").get("id").in(colors);
          };
       else
         productSpecification = productSpecification.and((root, query, builder) -> {
-          return root.join("colorProduct",JoinType.LEFT).get("id").in(colors);
+          return root.join("imageProduct",JoinType.LEFT).join("colorProduct").get("id").in(colors);
         });
     return productSpecification;
   }
@@ -251,11 +251,11 @@ public final class ProductSpecifications {
     if (brands != null)
         if (productSpecification == null)
           productSpecification = (root, query, builder) -> {
-            return root.join("brandProduct",JoinType.LEFT).get("id").in(brands);
+            return root.join("lineProduct").join("brandProduct").get("id").in(brands);
           };
         else
           productSpecification = productSpecification.and((root, query, builder) -> {
-            return root.join("brandProduct",JoinType.LEFT).get("id").in(brands);
+            return root.join("lineProduct").join("brandProduct").get("id").in(brands);
           });
     return productSpecification;
   }

@@ -23,4 +23,10 @@ public interface AttributeProductRepository extends JpaRepository<AttributeProdu
       "ORDER BY a.name_attribute ASC ",nativeQuery = true)
   List<AttributeProduct> getAttributeProductByIdLineProductAndGroupAttribute(String idLineProduct,String idGroupAttribute);
 
+  @Query(value = "SELECT ap.* FROM attribute_product ap INNER JOIN attribute a " +
+      "ON ap.id_attribute = a.id INNER JOIN group_attribute ga ON a.id_group_attribute = ga.id " +
+      "INNER JOIN line_product lp ON ap.id_line_product = lp.id WHERE a.id_group_attribute = ?1 " +
+      "ORDER BY a.name_attribute ASC ",nativeQuery = true)
+  List<AttributeProduct> getAttributeProductByIdGroupAttribute(String idGroupAttribute);
+
 }

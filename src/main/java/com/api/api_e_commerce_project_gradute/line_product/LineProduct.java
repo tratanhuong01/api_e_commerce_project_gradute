@@ -40,7 +40,18 @@ public class LineProduct {
   private int weight;
 
   @Column
+  private String describeProduct;
+
+  @Column
   private Timestamp timeCreated;
+
+  public String getDescribeProduct() {
+    return describeProduct;
+  }
+
+  public void setDescribeProduct(String describeProduct) {
+    this.describeProduct = describeProduct;
+  }
 
   public Brand getBrandProduct() {
     return brandProduct;

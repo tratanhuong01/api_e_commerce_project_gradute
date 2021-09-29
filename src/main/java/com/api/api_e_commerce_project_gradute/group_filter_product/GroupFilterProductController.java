@@ -48,14 +48,14 @@ public class GroupFilterProductController {
     return groupFilterProductService.getAllGroupFilterProductLimit(offset, limit);
   }
 
-  @PostMapping("groupFilterProducts")
-  public List<GroupFilterProduct> addGroupFilterProduct(@RequestBody GroupFilterProduct groupFilterProduct) {
-    return groupFilterProductService.addGroupFilterProduct(groupFilterProduct);
-  }
-
   @PutMapping("groupFilterProducts")
   public List<GroupFilterProduct> updateGroupFilterProduct(@RequestBody GroupFilterProduct groupFilterProduct) {
     return groupFilterProductService.updateGroupFilterProduct(groupFilterProduct);
+  }
+
+  @PostMapping("groupFilterProducts")
+  public List<GroupFilterProduct> addGroupFilterProduct(@RequestBody GroupFilterProduct groupFilterProduct) {
+    return groupFilterProductService.addGroupFilterProduct(groupFilterProduct);
   }
 
 }

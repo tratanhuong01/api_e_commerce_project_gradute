@@ -25,11 +25,11 @@ public interface WishListRepository extends JpaRepository<WishList,Long> {
       " INNER JOIN line_product lp ON p.id_line_product = lp.id " +
       " INNER JOIN group_product gp ON lp.id_group_product = gp.id" +
       " INNER JOIN category_product cp ON gp.id_category_product = cp.id" +
-      " LEFT JOIN color c ON p.id_color = c.id " +
       " LEFT JOIN memory m ON p.id_memory = m.id" +
       " INNER JOIN info_product ip ON ip.id_product = p.id" +
-      " INNER JOIN brand b ON p.id_brand = b.id " +
+      " INNER JOIN brand b ON lp.id_brand = b.id " +
       " INNER JOIN image i ON p.id_image = i.id " +
+      " LEFT JOIN color c ON i.id_color = c.id " +
       " WHERE wl.id_user = ?1 ",nativeQuery = true)
   List<CartMain> getAllWishListByIdUser(String idUser);
 

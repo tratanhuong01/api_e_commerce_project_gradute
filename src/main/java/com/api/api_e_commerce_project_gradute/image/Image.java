@@ -1,5 +1,6 @@
 package com.api.api_e_commerce_project_gradute.image;
 
+import com.api.api_e_commerce_project_gradute.color.Color;
 import com.api.api_e_commerce_project_gradute.product.Product;
 
 import javax.persistence.*;
@@ -17,6 +18,10 @@ public class Image {
   @OneToMany(mappedBy = "imageProduct",cascade = CascadeType.ALL)
   private Set<Product> imageProduct = new HashSet<>();
 
+  @OneToOne
+  @JoinColumn(name = "id_color")
+  private Color colorProduct;
+
   @Column
   private String src;
 
@@ -25,6 +30,14 @@ public class Image {
 
   @Column
   private int type;
+
+  public Color getColorProduct() {
+    return colorProduct;
+  }
+
+  public void setColorProduct(Color colorProduct) {
+    this.colorProduct = colorProduct;
+  }
 
   public Long getId() {
     return id;

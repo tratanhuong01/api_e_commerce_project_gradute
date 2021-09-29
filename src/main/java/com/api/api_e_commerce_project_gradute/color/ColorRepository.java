@@ -26,4 +26,8 @@ public interface ColorRepository extends JpaRepository<Color,String> {
       nativeQuery = true)
   List<Color> searchColorAll(@Param("keyword") String keyword);
 
+  @Query(value = "SELECT color.* FROM color INNER JOIN image ON color.id = image.id_color INNER JOIN product " +
+      "ON product.id_image = image.id WHERE product.id_line_product = ?1 ",nativeQuery = true)
+  List<Color> getListColorByLineProduct(String idLineProduct);
+
 }
