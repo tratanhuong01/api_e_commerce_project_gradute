@@ -41,7 +41,16 @@ public class InfoProduct {
   @Column
   private Timestamp timeInput;
 
+  @Column
+  private int amountInput;
 
+  public int getAmountInput() {
+    return amountInput;
+  }
+
+  public void setAmountInput(int amountInput) {
+    this.amountInput = amountInput;
+  }
 
   public Timestamp getTimeInput() {
     return timeInput;

@@ -30,4 +30,7 @@ public interface InfoProductRepository extends JpaRepository<InfoProduct,Long> {
   @Query(value = "UPDATE info_product SET review = ?1 WHERE id_product = ?2 ",nativeQuery = true)
   int updateReviewProduct(int review,String idProduct);
 
+  @Query(value = "SELECT * FROM info_product WHERE id_product = ?1 ",nativeQuery = true)
+  InfoProduct getInfoProductByIdProduct(String idProduct);
+
 }

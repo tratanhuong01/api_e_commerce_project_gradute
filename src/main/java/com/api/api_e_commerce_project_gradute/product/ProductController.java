@@ -1,6 +1,7 @@
 package com.api.api_e_commerce_project_gradute.product;
 
 import com.api.api_e_commerce_project_gradute.DTO.CategoryByGroupProduct;
+import com.api.api_e_commerce_project_gradute.DTO.product.CombineProductInfoProduct;
 import com.api.api_e_commerce_project_gradute.DTO.product.ProductCriteria;
 import com.api.api_e_commerce_project_gradute.DTO.product.ProductFull;
 import com.api.api_e_commerce_project_gradute.DTO.product.ProductIndex;
@@ -192,6 +193,11 @@ public class ProductController {
   public List<ProductFull> getProductAllMain(@RequestParam(required = false) int offset,@RequestParam(required = false) int limit,
                                              @RequestParam(required = false) int type) {
     return productService.getProductAllMain(offset, limit, type);
+  }
+
+  @GetMapping("products/combine/")
+  public CombineProductInfoProduct getCombineProductInfoProduct(String idProduct) {
+    return productService.getCombineProductInfoProduct(idProduct);
   }
 
 }

@@ -16,6 +16,7 @@ import com.api.api_e_commerce_project_gradute.function_product.FunctionProductRe
 import com.api.api_e_commerce_project_gradute.group_product.GroupProductRepository;
 import com.api.api_e_commerce_project_gradute.image.Image;
 import com.api.api_e_commerce_project_gradute.image.ImageRepository;
+import com.api.api_e_commerce_project_gradute.info_product.InfoProductRepository;
 import com.api.api_e_commerce_project_gradute.line_product.LineProduct;
 import com.api.api_e_commerce_project_gradute.line_product.LineProductRepository;
 import com.api.api_e_commerce_project_gradute.memory.Memory;
@@ -64,6 +65,8 @@ public class ProductService{
   LineProductRepository lineProductRepository;
   @Autowired
   FunctionProductRepository functionProductRepository;
+  @Autowired
+  InfoProductRepository infoProductRepository;
 
   public Product getProductByIdMain(String id) {
     return productRepository.getProductById(id);
@@ -412,6 +415,13 @@ public class ProductService{
     for (Product product:productPage)
       productFullList.add(getProductBySlug(product.getId(),-1));
     return productFullList;
+  }
+
+  public CombineProductInfoProduct getCombineProductInfoProduct(String idProduct) {
+    CombineProductInfoProduct combineProductInfoProduct = new CombineProductInfoProduct();
+    combineProductInfoProduct.setProduct(productRepository.getProductById(idProduct));
+    combineProductInfoProduct.setInfoProduct(infoProductRepository.getInfoProductByIdProduct(idProduct));
+    return combineProductInfoProduct;
   }
 
 }
