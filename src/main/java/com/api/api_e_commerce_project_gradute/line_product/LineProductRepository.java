@@ -1,14 +1,22 @@
 package com.api.api_e_commerce_project_gradute.line_product;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 @Repository
 public interface LineProductRepository extends JpaRepository<LineProduct,String> {
+
+  List<LineProduct> findAll(@Nullable Specification<LineProduct> lineProductSpecification);
+
+  Page<LineProduct> findAll(@Nullable Specification<LineProduct> lineProductSpecification, Pageable pageable);
 
   @Query(value = "SELECT * FROM line_product ORDER BY id DESC LIMIT 1 ",nativeQuery = true)
   LineProduct getIdBestNew();

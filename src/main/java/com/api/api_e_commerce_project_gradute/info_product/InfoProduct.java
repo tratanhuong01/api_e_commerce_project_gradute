@@ -44,6 +44,39 @@ public class InfoProduct {
   @Column
   private int amountInput;
 
+  @Column
+  private int saleDefault;
+
+  @Column
+  private Timestamp timeStartSale;
+
+  @Column
+  private Timestamp timeEndSale;
+
+  public int getSaleDefault() {
+    return saleDefault;
+  }
+
+  public void setSaleDefault(int saleDefault) {
+    this.saleDefault = saleDefault;
+  }
+
+  public Timestamp getTimeStartSale() {
+    return timeStartSale;
+  }
+
+  public void setTimeStartSale(Timestamp timeStartSale) {
+    this.timeStartSale = timeStartSale;
+  }
+
+  public Timestamp getTimeEndSale() {
+    return timeEndSale;
+  }
+
+  public void setTimeEndSale(Timestamp timeEndSale) {
+    this.timeEndSale = timeEndSale;
+  }
+
   public int getAmountInput() {
     return amountInput;
   }

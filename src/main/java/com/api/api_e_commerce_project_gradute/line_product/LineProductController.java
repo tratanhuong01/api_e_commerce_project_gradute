@@ -1,5 +1,6 @@
 package com.api.api_e_commerce_project_gradute.line_product;
 
+import com.api.api_e_commerce_project_gradute.DTO.specification.line_product.LineProductCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +15,29 @@ public class LineProductController {
   LineProductService lineProductService;
 
   // admin
+
+  @GetMapping("lineProductFiltersAll")
+  public List<LineProduct> filtersLineProductAll(String brand,String group,String keyword) {
+    LineProductCriteria lineProductCriteria = LineProductCriteria.builder()
+        .brand(brand)
+        .group(group)
+        .keyword(keyword)
+        .build();
+    return lineProductService.filterLineProductsAll(lineProductCriteria);
+  }
+
+  @GetMapping("lineProductFilters")
+  public List<LineProduct> filtersLineProductLimit(String brand,String group,String keyword,Integer offset,
+                                                   Integer limit) {
+    LineProductCriteria lineProductCriteria = LineProductCriteria.builder()
+        .brand(brand)
+        .group(group)
+        .keyword(keyword)
+        .offset(offset)
+        .limit(limit)
+        .build();
+    return lineProductService.filterLineProductsLimit(lineProductCriteria);
+  }
 
   @GetMapping("lineProductsAll/search/")
   public List<LineProduct> searchLineProductAll(@RequestParam(required = false) String keyword) {

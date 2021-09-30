@@ -20,8 +20,9 @@ public class CloudinaryController {
 
   @CrossOrigin
   @PostMapping("updateImageSingle")
-  public ResponseEntity<Map> updateImageSingle(@RequestParam String id, @RequestParam MultipartFile multipartFile,
-                                               @RequestParam String publicId) throws IOException {
+  public ResponseEntity<Map> updateImageSingle(@RequestParam(required = false) String id,
+                                               @RequestParam(required = false,value = "multipartFile") MultipartFile multipartFile,
+                                               @RequestParam(required = false) String publicId) throws IOException {
     ImageSingle imageSingle = new ImageSingle();
     imageSingle.setMultipartFile(multipartFile);
     imageSingle.setId(id);

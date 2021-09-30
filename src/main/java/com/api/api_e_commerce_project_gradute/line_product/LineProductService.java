@@ -1,6 +1,12 @@
 package com.api.api_e_commerce_project_gradute.line_product;
 
+import com.api.api_e_commerce_project_gradute.DTO.specification.line_product.LineProductCriteria;
+import com.api.api_e_commerce_project_gradute.DTO.specification.line_product.LineProductSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -57,6 +63,22 @@ public class LineProductService {
 
   public void deleteLineProduct(LineProduct LineProduct) {
     lineProductRepository.delete(LineProduct);
+  }
+
+  public List<LineProduct> filterLineProductsAll(LineProductCriteria lineProductCriteria) {
+    Specification<LineProduct> lineProductSpecification = LineProductSpecification.createLineProductSpecification(
+        lineProductCriteria
+    );
+    return lineProductRepository.findAll(lineProductSpecification);
+  }
+
+  public List<LineProduct> filterLineProductsLimit(LineProductCriteria lineProductCriteria) {
+    Specification<LineProduct> lineProductSpecification = LineProductSpecification.createLineProductSpecification(
+        lineProductCriteria
+    );
+    Pageable pageable = PageRequest.of(lineProductCriteria.getOffset(),lineProductCriteria.getLimit());
+    Page<LineProduct> lineProductPage = lineProductRepository.findAll(lineProductSpecification,pageable);
+    return lineProductPage.getContent();
   }
 
 }
