@@ -38,6 +38,17 @@ public class DiscountCode {
   @Column
   private int max;
 
+  @Column
+  private Timestamp timeCreated;
+
+  public Timestamp getTimeCreated() {
+    return timeCreated;
+  }
+
+  public void setTimeCreated(Timestamp timeCreated) {
+    this.timeCreated = timeCreated;
+  }
+
   public int getPercent() {
     return percent;
   }

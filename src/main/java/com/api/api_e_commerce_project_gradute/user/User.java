@@ -5,6 +5,7 @@ import com.api.api_e_commerce_project_gradute.bill_review.BillReview;
 import com.api.api_e_commerce_project_gradute.comment.Comment;
 import com.api.api_e_commerce_project_gradute.product.Product;
 import com.api.api_e_commerce_project_gradute.wish_list.WishList;
+import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -44,6 +45,9 @@ public class User {
 
   @Column
   private String lastName;
+//
+//  @Formula("concat(first_name,' ',last_name)")
+//  private String concat;
 
   @Column
   private Date birthday;
