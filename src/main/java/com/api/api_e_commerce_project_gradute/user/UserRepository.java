@@ -19,6 +19,9 @@ public interface UserRepository extends JpaRepository<User,String> {
 
   List<User> findAll(@Nullable Specification<User> userSpecification);
 
+  @Query(value = "SELECT * FROM user WHERE id = ?1 ",nativeQuery = true)
+  User getUserByIdUser(String idUser);
+
   @Query(value = "SELECT * FROM user ORDER BY id DESC LIMIT 1",nativeQuery = true)
   User getIdBestNew();
 
@@ -30,6 +33,9 @@ public interface UserRepository extends JpaRepository<User,String> {
 
   @Query(value = "SELECT * FROM user WHERE ( email = ?1 or phone = ?1 ) AND password = ?2 ",nativeQuery = true)
   User checkLogin(String emailOrPhone,String password);
+
+  @Query(value = "SELECT * FROM user WHERE ( email = ?1 or phone = ?1 ) AND password = ?2 AND type != 0 ",nativeQuery = true)
+  User adminCheckLogin(String emailOrPhone,String password);
 
   @Transactional
   @Modifying

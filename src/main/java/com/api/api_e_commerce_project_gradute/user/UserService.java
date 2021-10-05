@@ -2,10 +2,12 @@ package com.api.api_e_commerce_project_gradute.user;
 
 import com.api.api_e_commerce_project_gradute.DTO.AccountLogin;
 import com.api.api_e_commerce_project_gradute.DTO.DataSendMail;
+import com.api.api_e_commerce_project_gradute.DTO.UserDetail;
 import com.api.api_e_commerce_project_gradute.DTO.specification.user.UserCriteria;
 import com.api.api_e_commerce_project_gradute.DTO.specification.user.UserFull;
 import com.api.api_e_commerce_project_gradute.DTO.specification.user.UserSpecifications;
 import com.api.api_e_commerce_project_gradute.config.Config;
+import com.api.api_e_commerce_project_gradute.jwt.TokenJWTUtils;
 import com.api.api_e_commerce_project_gradute.mail.MailService;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +67,45 @@ public class UserService {
   public User checkLogin(AccountLogin accountLogin) {
     return userRepository.checkLogin(accountLogin.getEmailOrPhone(),
         DigestUtils.md5Hex(accountLogin.getPassword()).toUpperCase());
+  }
+
+  public UserDetail checkLoginJWT(AccountLogin accountLogin) {
+    User user = userRepository.checkLogin(accountLogin.getEmailOrPhone(),
+        DigestUtils.md5Hex(accountLogin.getPassword()).toUpperCase());
+    if (user != null) {
+      UserDetail userDetail = new UserDetail();
+      userDetail.setUser(user);
+      userDetail.setToken(TokenJWTUtils.generateJwt(user.getId()));
+      userDetail.setMessage("Success");
+      return userDetail;
+    }
+    return null;
+  }
+
+  public UserDetail adminCheckLoginJWT(AccountLogin accountLogin) {
+    User user = userRepository.adminCheckLogin(accountLogin.getEmailOrPhone(),
+        DigestUtils.md5Hex(accountLogin.getPassword()).toUpperCase());
+    if (user != null) {
+      UserDetail userDetail = new UserDetail();
+      userDetail.setUser(user);
+      userDetail.setToken(TokenJWTUtils.generateJwt(user.getId()));
+      userDetail.setMessage("Success");
+      return userDetail;
+    }
+    return null;
+  }
+
+  public UserDetail getUserFromJWT(String token) {
+    if (token != null) {
+      String idUser = TokenJWTUtils.parseTokenJWT(token);
+      User user = userRepository.getUserByIdUser(idUser);
+      UserDetail userDetail = new UserDetail();
+      userDetail.setUser(user);
+      userDetail.setToken(TokenJWTUtils.generateJwt(user.getId()));
+      userDetail.setMessage("Success");
+      return userDetail;
+    }
+    return null;
   }
 
   public String checkPasswordUser(String idUser,String password) {

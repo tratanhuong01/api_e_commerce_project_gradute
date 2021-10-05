@@ -3,6 +3,7 @@ package com.api.api_e_commerce_project_gradute.user;
 import com.api.api_e_commerce_project_gradute.DTO.AccountLogin;
 import com.api.api_e_commerce_project_gradute.DTO.DataSendMail;
 import com.api.api_e_commerce_project_gradute.DTO.UpdateStatus;
+import com.api.api_e_commerce_project_gradute.DTO.UserDetail;
 import com.api.api_e_commerce_project_gradute.DTO.product.ProductCriteria;
 import com.api.api_e_commerce_project_gradute.DTO.specification.user.UserCriteria;
 import com.api.api_e_commerce_project_gradute.DTO.specification.user.UserFull;
@@ -101,6 +102,21 @@ public class UserController {
   @PostMapping("checkLogin")
   public User checkLogin(@RequestBody AccountLogin accountLogin) {
     return userService.checkLogin(accountLogin);
+  }
+
+  @PostMapping("checkLoginJWT")
+  public UserDetail checkLoginJWT(@RequestBody AccountLogin accountLogin) {
+    return userService.checkLoginJWT(accountLogin);
+  }
+
+  @PostMapping("adminCheckLoginJWT")
+  public UserDetail adminCheckLoginJWT(@RequestBody AccountLogin accountLogin) {
+    return userService.adminCheckLoginJWT(accountLogin);
+  }
+
+  @PostMapping("getUserFromJWT")
+  public UserDetail getUserFromJWT(@RequestBody String token) {
+    return userService.getUserFromJWT(token);
   }
 
   @PostMapping("sendCodeEmail")

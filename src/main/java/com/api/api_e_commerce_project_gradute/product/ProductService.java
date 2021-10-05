@@ -388,10 +388,12 @@ public class ProductService{
     List<ProductFull> productFullList = new ArrayList<>();
     for (LineProduct lineProduct: lineProductList) {
       List<ProductMain> productMainList = productRepository.getProductByIdLineProduct(lineProduct.getId());
-      List<Color> colorList = checkListColor(productMainList);
-      List<Image> imageList = checkListImage(productMainList);
-      List<Memory> memoryList = checkListMemory(productMainList);
-      productFullList.add(returnProductFull(productMainList.get(0),colorList,memoryList,imageList,productMainList));
+      if (productMainList.size() > 0) {
+        List<Color> colorList = checkListColor(productMainList);
+        List<Image> imageList = checkListImage(productMainList);
+        List<Memory> memoryList = checkListMemory(productMainList);
+        productFullList.add(returnProductFull(productMainList.get(0),colorList,memoryList,imageList,productMainList));
+      }
     }
     return productFullList;
   }

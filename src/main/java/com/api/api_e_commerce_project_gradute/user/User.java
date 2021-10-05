@@ -4,6 +4,7 @@ import com.api.api_e_commerce_project_gradute.bill.Bill;
 import com.api.api_e_commerce_project_gradute.bill_review.BillReview;
 import com.api.api_e_commerce_project_gradute.comment.Comment;
 import com.api.api_e_commerce_project_gradute.product.Product;
+import com.api.api_e_commerce_project_gradute.role.Role;
 import com.api.api_e_commerce_project_gradute.wish_list.WishList;
 import org.hibernate.annotations.Formula;
 
@@ -39,6 +40,10 @@ public class User {
 
   @OneToMany(mappedBy = "commentUser")
   private Set<Comment> commentUser = new HashSet<>();;
+
+  @ManyToOne
+  @JoinColumn(name = "id_role")
+  private Role userRole;
 
   @Column
   private String firstName;
@@ -87,6 +92,14 @@ public class User {
 
   @Column
   private int status;
+
+  public Role getUserRole() {
+    return userRole;
+  }
+
+  public void setUserRole(Role userRole) {
+    this.userRole = userRole;
+  }
 
   public int getStatus() {
     return status;
