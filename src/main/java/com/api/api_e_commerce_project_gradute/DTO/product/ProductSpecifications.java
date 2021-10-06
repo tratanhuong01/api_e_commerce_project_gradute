@@ -225,11 +225,11 @@ public final class ProductSpecifications {
     if (roms != null)
         if (productSpecification == null)
           productSpecification = (root, query, builder) -> {
-            return root.join("romProduct",JoinType.LEFT).get("id").in(roms);
+            return root.join("memoryProduct",JoinType.LEFT).get("id").in(roms);
           };
         else
           productSpecification = productSpecification.and((root, query, builder) -> {
-            return root.join("romProduct",JoinType.LEFT).get("id").in(roms);
+            return root.join("memoryProduct",JoinType.LEFT).get("id").in(roms);
           });
     return productSpecification;
   }
