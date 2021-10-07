@@ -29,8 +29,7 @@ public class CloudinaryService {
   public Map uploadSingle(ImageSingle imageSingle) throws IOException {
     File file = convert(imageSingle.getMultipartFile());
     Map result = cloudinary.uploader().upload(file, ObjectUtils.asMap(
-        "public_id", imageSingle.getPublicId() + imageSingle.getId() + "_" +
-            new Timestamp(System.currentTimeMillis()).getTime(),
+        "public_id", imageSingle.getPublicId() + imageSingle.getId(),
         "overwrite", true,
         "resource_type", "image"
     ));

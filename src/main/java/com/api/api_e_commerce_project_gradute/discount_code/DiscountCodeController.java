@@ -78,4 +78,9 @@ public class DiscountCodeController {
     return discountCodeService.checkDiscountCodeStillExpired(code);
   }
 
+  @DeleteMapping("discountCodes")
+  public void deleteDiscountCode(@RequestBody DiscountCode discountCode) {
+    discountCodeService.deleteDiscountCode(discountCode);
+  }
+
 }

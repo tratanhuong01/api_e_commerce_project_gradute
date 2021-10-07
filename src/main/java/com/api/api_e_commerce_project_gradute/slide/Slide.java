@@ -1,5 +1,6 @@
 package com.api.api_e_commerce_project_gradute.slide;
 
+import com.api.api_e_commerce_project_gradute.line_product.LineProduct;
 import com.api.api_e_commerce_project_gradute.product.Product;
 
 import javax.persistence.*;
@@ -14,8 +15,8 @@ public class Slide {
   private Long id;
 
   @ManyToOne
-  @JoinColumn(name = "id_product")
-  private Product slideProduct;
+  @JoinColumn(name = "id_line_product")
+  private LineProduct slideProduct;
 
   @Column
   private String image;
@@ -37,11 +38,11 @@ public class Slide {
     this.id = id;
   }
 
-  public Product getSlideProduct() {
+  public LineProduct getSlideProduct() {
     return slideProduct;
   }
 
-  public void setSlideProduct(Product slideProduct) {
+  public void setSlideProduct(LineProduct slideProduct) {
     this.slideProduct = slideProduct;
   }
 

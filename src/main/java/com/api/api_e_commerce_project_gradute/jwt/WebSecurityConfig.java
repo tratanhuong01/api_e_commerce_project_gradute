@@ -38,7 +38,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
         .antMatchers(HttpMethod.GET, "/colorsAll","/brandsAll","/getProductIndex","/carts/**",
-            "/getCategoryByGroupProducts/","/carts","/slides","/getAllProductFull","/getProductByCategory/**",
+            "/getCategoryByGroupProducts/","/carts","/slides","/slides/**","/getAllProductFull","/getProductByCategory/**",
             "/products/**","/getProductBySlugCategory","getProductBySlugCategoryAndSlugGroup",
             "/getCategoryByGroupProducts","/getProductBySlugCategory","/productsAll/**","/reviewProductByStar/**",
             "/reviewProducts/**","/reviewProductsAll","/reviewProductsAll/**","/reviewProducts",
@@ -55,7 +55,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/groupProductsBySlugCategory/**","/productsFilter","/groupFilterProductsAll","/groupFilterProductsAll/**",
             "/groupFilterProducts","/groupFilterProducts/**","/functionProductsAll","/functionProductsAll/**",
             "/functionProducts","/functionProducts/**","/getFilterByGroupProduct/**","/functionProductsBySlug/**",
-            "/getTeleSupport","/infoProducts","/infoProductsAll/**","/infoProductsAll","/infoProducts/**").permitAll()
+            "/getTeleSupport","/infoProducts","/infoProductsAll/**","/infoProductsAll","/infoProducts/**",
+            "/getSlidesActive").permitAll()
 
 
         .anyRequest().authenticated()
