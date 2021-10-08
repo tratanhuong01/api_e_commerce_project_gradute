@@ -152,4 +152,9 @@ public class UserController {
     return userService.updateStatusUser(updateStatus.getValue(),updateStatus.getId());
   }
 
+  @PostMapping("getUserByIdRole")
+  public List<User> getUserByIdRole(@RequestParam String role)  {
+    return userService.getUserByIdRole(role);
+  }
+
 }

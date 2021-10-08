@@ -80,4 +80,7 @@ public interface UserRepository extends JpaRepository<User,String> {
   @Query(value = "UPDATE user SET status = ?1 WHERE id = ?2 ",nativeQuery = true)
   int updateStatusUser(Integer status,String id);
 
+  @Query(value = "SELECT * FROM user WHERE id_role = ?1 ",nativeQuery = true)
+  List<User> getUserByIdRole(String role);
+
 }

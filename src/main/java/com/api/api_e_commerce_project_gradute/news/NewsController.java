@@ -16,6 +16,7 @@ public class  NewsController {
   @Autowired
   NewsService newsService;
 
+  //filter admin
   @GetMapping("newFiltersAll")
   public Integer getAllNewsAdmin(String category,String poster,String viewSorter,String commentSorter,
                                  String keyword) {
@@ -71,7 +72,7 @@ public class  NewsController {
 
   @PutMapping("news")
   public News updateNews(@RequestBody News news) {
-    return newsService.addNews(news);
+    return newsService.updateNews(news);
   }
 
   @PostMapping("getNewsBySlug")
@@ -99,11 +100,27 @@ public class  NewsController {
     return newsService.getListNewsMostView();
   }
 
-  @GetMapping("getNewsPage")
-  public NewsPage getNewsPage(){
-    return newsService.getNewsPage();
+  @GetMapping("newsPaginationAll")
+  public Integer getNewsBestsAll() {
+    return newsService.getNewsBestsAll();
   }
 
+  @GetMapping("newsPagination")
+  public List<News> getNewsBestsLimit(Integer offset , Integer limit) {
+    return newsService.getNewsBestsLimit(offset,limit);
+  }
+
+  @GetMapping("news/categoryNewsAll")
+  public Integer getNewsByCategoryAll(String idCategoryNews) {
+    return newsService.getNewsByCategoryAll(idCategoryNews);
+  }
+
+  @GetMapping("news/categoryNews")
+  public List<News> getNewsByCategoryLimit(String idCategoryNews ,Integer offset , Integer limit) {
+    return newsService.getNewsByCategoryLimit(idCategoryNews,offset,limit);
+  }
+
+  //delete
   @DeleteMapping("news")
   public void deleteNews(@RequestBody News news) {
     newsService.deleteNews(news);

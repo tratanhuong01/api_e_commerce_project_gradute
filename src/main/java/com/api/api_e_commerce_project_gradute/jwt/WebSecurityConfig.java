@@ -34,13 +34,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.DELETE,"/addresses").permitAll()
 
 
-        .antMatchers(HttpMethod.PUT,"/setDefaultAddress","/updateViewNews").permitAll()
+        .antMatchers(HttpMethod.PUT,"/setDefaultAddress","/updateViewNews","/infoProducts/**").permitAll()
 
 
         .antMatchers(HttpMethod.GET, "/colorsAll","/brandsAll","/getProductIndex","/carts/**",
             "/getCategoryByGroupProducts/","/carts","/slides","/slides/**","/getAllProductFull","/getProductByCategory/**",
             "/products/**","/getProductBySlugCategory","getProductBySlugCategoryAndSlugGroup",
             "/getCategoryByGroupProducts","/getProductBySlugCategory","/productsAll/**","/reviewProductByStar/**",
+            "/reviewProductByStarAll","/reviewProductByStarAll/**","/newsPagination","/newsPaginationAll",
             "/reviewProducts/**","/reviewProductsAll","/reviewProductsAll/**","/reviewProducts",
             "/attributeProducts/**","/attributeProducts","/brands/**","/brandsAll","/brands","/colors","/colors/**",
             "/colorsAll/**","/colorsAll","/rams/**","/rams","/ramsAll","/ramsAll/**","/memories/**","/memories",
@@ -56,7 +57,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/groupFilterProducts","/groupFilterProducts/**","/functionProductsAll","/functionProductsAll/**",
             "/functionProducts","/functionProducts/**","/getFilterByGroupProduct/**","/functionProductsBySlug/**",
             "/getTeleSupport","/infoProducts","/infoProductsAll/**","/infoProductsAll","/infoProducts/**",
-            "/getSlidesActive").permitAll()
+            "/getSlidesActive","/getBannerIndexShow","/configWebsites/**","/categoryNews","/imageOthers",
+            "/imageOthers/**").permitAll()
 
 
         .anyRequest().authenticated()

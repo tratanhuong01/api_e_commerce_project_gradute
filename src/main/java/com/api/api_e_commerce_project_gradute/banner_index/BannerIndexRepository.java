@@ -13,4 +13,7 @@ public interface BannerIndexRepository extends JpaRepository<BannerIndex,Long> {
   @Query(value = "SELECT * FROM banner_index ORDER BY time_created DESC LIMIT ?1 , ?2 ",nativeQuery = true)
   List<BannerIndex> getBannerIndexLimit(int offset,int limit);
 
+  @Query(value = "SELECT * FROM banner_index WHERE is_show = 0 ORDER BY time_created DESC LIMIT 0,1 ",nativeQuery = true)
+  BannerIndex getBannerIndexShow();
+
 }

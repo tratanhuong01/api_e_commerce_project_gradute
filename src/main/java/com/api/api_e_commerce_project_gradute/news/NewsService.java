@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -52,6 +53,10 @@ public class NewsService {
     return newsRepository.save(news);
   }
 
+  public News updateNews(News news) {
+    return newsRepository.save(news);
+  }
+
   public NewsDetailPage getNewsBySlug(String slug) {
     News news =  newsRepository.getNewsBySlug(slug);
     NewsDetailPage newsDetailPage = new NewsDetailPage();
@@ -78,27 +83,26 @@ public class NewsService {
     return newsRepository.getListNewsMostView();
   }
 
-  public NewsPage getNewsPage() {
-    NewsPage newsPage = new NewsPage();
-    newsPage.setNumberNews(newsRepository.getNumberNews());
-    newsPage.setListAllNewsBestLimit(newsRepository.getListAllNewsBestLimit(0,9));
-    newsPage.setListNewsMostView(newsRepository.getListNewsMostView());
-    newsPage.setListSaleNewsMost(newsRepository.getListNewsLimit("TINKHUYENMAI",0,3));
+  public Integer getNewsBestsAll() {
+    return newsRepository.findAll().size();
+  }
 
-    List<NewsByCategory> newsByCategoryList = new ArrayList<>();
+  public List<News> getNewsBestsLimit(int offset,int limit) {
+    Pageable pageable = PageRequest.of(offset, limit, Sort.by("timeCreated").descending());
+    Page<News> newsPage = newsRepository.findAll(pageable);
+    return newsPage.getContent();
+  }
 
-    List<CategoryNews> categoryNewsList = categoryNewsRepository.findAll();
+  public List<News> getNewsMostView() {
+    return newsRepository.getListNewsMostView();
+  }
 
-    for (CategoryNews categoryNews : categoryNewsList) {
-      NewsByCategory newsByCategory = new NewsByCategory();
-      newsByCategory.setCategoryNews(categoryNews);
-      newsByCategory.setNewsList(newsRepository.getListNewsLimit(categoryNews.getId(),0,3));
-      newsByCategoryList.add(newsByCategory);
-    }
+  public Integer getNewsByCategoryAll(String idCategoryNews) {
+    return newsRepository.getListNewsByCategoryAll(idCategoryNews).size();
+  }
 
-    newsPage.setListNewsByCategory(newsByCategoryList);
-
-    return newsPage;
+  public List<News> getNewsByCategoryLimit(String idCategoryNews,int offset,int limit) {
+    return newsRepository.getListNewsByCategoryLimit(idCategoryNews,offset,limit);
   }
 
   public Integer getNewsAllAdmin(NewsCriteria newsCriteria) {

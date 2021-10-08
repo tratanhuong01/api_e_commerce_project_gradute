@@ -186,4 +186,9 @@ public class UserService {
     return userRepository.updateStatusUser(status,id);
   }
 
+  public List<User> getUserByIdRole(String role) {
+    System.out.println(role);
+    return userRepository.getUserByIdRole(role);
+  }
+
 }

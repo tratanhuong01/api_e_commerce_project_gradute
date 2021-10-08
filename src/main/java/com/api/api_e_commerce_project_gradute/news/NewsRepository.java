@@ -19,6 +19,8 @@ public interface NewsRepository extends JpaRepository<News,Long> {
 
   Page<News> findAll(@Nullable Specification<News> newsSpecification, Pageable pageable);
 
+  Page<News> findAll(@Nullable Pageable pageable);
+
   @Query(value = "SELECT * FROM news ORDER BY time_created DESC LIMIT 0,4 ",nativeQuery = true)
   List<News> getBestNewsIndex();
 
@@ -46,7 +48,10 @@ public interface NewsRepository extends JpaRepository<News,Long> {
   List<News> getListAllNewsBestLimit(int offset,int limit);
 
   @Query(value = "SELECT * FROM news WHERE id_category_news = ?1 ORDER BY time_created LIMIT ?2 , ?3 ",nativeQuery = true)
-  List<News> getListNewsLimit(String idCategoryNews,int offset,int limit);
+  List<News> getListNewsByCategoryLimit(String idCategoryNews,int offset,int limit);
+
+  @Query(value = "SELECT * FROM news WHERE id_category_news = ?1 ORDER BY time_created ",nativeQuery = true)
+  List<News> getListNewsByCategoryAll(String idCategoryNews);
 
   @Query(value = "SELECT * FROM news ORDER BY time_created LIMIT ?1 , ?2 ",nativeQuery = true)
   List<News> getNewsLimit(int offset,int limit);

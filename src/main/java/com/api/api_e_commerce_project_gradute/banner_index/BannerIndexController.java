@@ -43,4 +43,9 @@ public class BannerIndexController {
     bannerIndexService.deleteBannerIndex(bannerIndex);
   }
 
+  @GetMapping("getBannerIndexShow")
+  public BannerIndex getBannerIndexShow() {
+    return bannerIndexService.getBannerIndexShow();
+  }
+
 }

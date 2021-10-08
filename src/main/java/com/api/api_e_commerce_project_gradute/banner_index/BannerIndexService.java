@@ -35,4 +35,8 @@ public class BannerIndexService {
     bannerIndexRepository.delete(bannerIndex);
   }
 
+  public BannerIndex getBannerIndexShow() {
+    return bannerIndexRepository.getBannerIndexShow();
+  }
+
 }
