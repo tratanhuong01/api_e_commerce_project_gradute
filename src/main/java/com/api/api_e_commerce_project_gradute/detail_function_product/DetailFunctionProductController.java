@@ -32,5 +32,9 @@ public class DetailFunctionProductController {
     return detailFunctionProductService.addDetailFunctionProduct(detailFunctionProduct);
   }
 
+  @DeleteMapping("detailFunctionProducts")
+  public void deleteDetailFunctionProduct(@RequestBody DetailFunctionProduct detailFunctionProduct)  {
+     detailFunctionProductService.deleteDetailFunctionProduct(detailFunctionProduct);
+  }
 
 }

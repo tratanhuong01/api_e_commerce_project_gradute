@@ -28,13 +28,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/reviewProducts/**","/reviewProductsAll","/reviewProductsAll/**","/reviewProducts",
             "/messages","/messages/**","/groupChats/**","/groupChats","/groupChatsAll/**","/groupChatsAll",
             "/comments","/comments/**","/commentsAll/**","/commentsAll","/getNewsBySlug","/getUserFromJWT",
-            "/adminCheckLoginJWT").permitAll()
+            "/adminCheckLoginJWT","/users/email","/users/phone","/users","/sendCodeEmail").permitAll()
 
 
         .antMatchers(HttpMethod.DELETE,"/addresses").permitAll()
 
 
-        .antMatchers(HttpMethod.PUT,"/setDefaultAddress","/updateViewNews","/infoProducts/**").permitAll()
+        .antMatchers(HttpMethod.PUT,"/setDefaultAddress","/updateViewNews","/infoProducts/**",
+            "/users","/users/**").permitAll()
 
 
         .antMatchers(HttpMethod.GET, "/colorsAll","/brandsAll","/getProductIndex","/carts/**",
@@ -58,7 +59,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/functionProducts","/functionProducts/**","/getFilterByGroupProduct/**","/functionProductsBySlug/**",
             "/getTeleSupport","/infoProducts","/infoProductsAll/**","/infoProductsAll","/infoProducts/**",
             "/getSlidesActive","/getBannerIndexShow","/configWebsites/**","/categoryNews","/imageOthers",
-            "/imageOthers/**").permitAll()
+            "/imageOthers/**","/users","/users/**").permitAll()
 
 
         .anyRequest().authenticated()

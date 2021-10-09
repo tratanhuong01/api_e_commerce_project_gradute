@@ -23,4 +23,8 @@ public class DetailFunctionProductService {
     return detailFunctionProductRepository.getDetailFunctionProductByLineProduct(id);
   }
 
+  public void deleteDetailFunctionProduct(DetailFunctionProduct detailFunctionProduct) {
+    detailFunctionProductRepository.delete(detailFunctionProduct);
+  }
+
 }
