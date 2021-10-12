@@ -21,5 +21,6 @@ public class ProductCriteria {
   private String slugGroupProduct;
   private String sorter;
   private Set<Integer> typeProduct;
-
+  private Integer offset;
+  private Integer limit;
 }

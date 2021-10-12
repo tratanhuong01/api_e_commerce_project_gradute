@@ -8,10 +8,12 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product,String> , JpaSpecificationExecutor<Product> {
@@ -73,6 +75,16 @@ public interface ProductRepository extends JpaRepository<Product,String> , JpaSp
   @Query(value = COLUMN_SELECT + JOIN_TABLE + " WHERE p.id_line_product = ?1 ",nativeQuery = true)
   List<ProductMain> getProductByIdLineProduct(String idLineProduct);
 
+  //
+  @Query(value = COLUMN_SELECT + JOIN_TABLE + " WHERE lp.name_line_product LIKE %:keyword% AND cp.slug_category_product " +
+      "LIKE %:slug%  ",nativeQuery = true)
+  List<ProductMain> searchProductPageAll(@Param("keyword") String keyword,@Param("slug") String slug);
+
+  @Query(value = COLUMN_SELECT + JOIN_TABLE + " WHERE lp.name_line_product LIKE %:keyword% AND cp.slug_category_product " +
+      "LIKE %:slug% LIMIT :offset , :limit ",nativeQuery = true)
+  List<ProductMain> searchProductPageLimit(@Param("keyword") String keyword,@Param("slug") String slug,
+                                           @Param("offset") Integer offset,@Param("limit") Integer limit);
+
   //get product by slug
   @Query(value = COLUMN_SELECT + JOIN_TABLE + " WHERE p.slug = ?1 ",nativeQuery = true)
   ProductMain getProductBySlug(String slug);
@@ -120,15 +132,30 @@ public interface ProductRepository extends JpaRepository<Product,String> , JpaSp
       " ORDER BY info_product.sale DESC LIMIT 0,4",nativeQuery = true)
   List<Product> getProductSaleToday();
 
+  @Query(value = "SELECT * FROM product INNER JOIN info_product ON product.id = info_product.id_product " +
+      "ORDER BY MAX(info_product.item_sold) DESC",nativeQuery = true)
+  List<Product> getProductTopSale();
+
+  //filter customer
+
   @Query(value = "SELECT * FROM product INNER JOIN info_product ON product.id = info_product.id_product  " +
       "WHERE product.id_line_product = ?1 ORDER BY info_product.sale DESC LIMIT 0 , 1",nativeQuery = true)
   List<Product> getFirstProductByIdLineProduct(String idLineProduct);
 
   @Query(value = "SELECT * FROM product INNER JOIN info_product ON product.id = info_product.id_product  " +
-      "WHERE product.id_line_product = ?1 GROUP BY info_product.id_product ORDER BY MAX(info_product.review) DESC LIMIT 0 , 1",nativeQuery = true)
-  List<Product> getFirstProductByIdLineProductReview(String idLineProduct);
+      "WHERE product.id_line_product =:idLineProduct GROUP BY info_product.id_product ORDER BY MAX(info_product.review) DESC LIMIT 0 , 1",nativeQuery = true)
+  List<Product> getFirstProductByIdLineProductReview(@Param("idLineProduct") String idLineProduct);
 
-  @Query(value = "SELECT * FROM product INNER JOIN info_product ON product.id = info_product.id_product " +
-      "ORDER BY MAX(info_product.item_sold) DESC",nativeQuery = true)
-  List<Product> getProductTopSale();
+  @Query(value = "SELECT product.* FROM product INNER JOIN info_product ON product.id = info_product.id_product  " +
+      "INNER JOIN image ON image.id = product.id_image INNER JOIN color ON color.id = image.id_color " +
+      "WHERE product.id_line_product = :idLineProduct AND color.id IN (:idColor) AND GROUP BY info_product.id_product ORDER BY MAX(info_product.review) " +
+      "DESC LIMIT 0 , 1",nativeQuery = true)
+  List<Product> getFirstProductByIdLineProductReviewAndColor(@Param("idLineProduct") String idLineProduct, @Param("idColor") Set<Long> idColor);
+
+  @Query(value = "SELECT product.* FROM product INNER JOIN info_product ON product.id = info_product.id_product  " +
+      "INNER JOIN image ON image.id = product.id_image INNER JOIN color ON color.id = image.id_color " +
+      "WHERE product.id_line_product = :idLineProduct AND color.id IN (:idColor) ",nativeQuery = true)
+  List<Product> getFirstProductByIdLineProductColor(@Param("idLineProduct") String idLineProduct, @Param("idColor") Set<Long> idColor);
+
+
 }

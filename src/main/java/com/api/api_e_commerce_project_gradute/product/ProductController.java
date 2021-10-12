@@ -72,8 +72,8 @@ public class ProductController {
     return productService.filterProductAdminLimit(productAdminCriteria);
   }
 
-  @GetMapping("productsFilter")
-  public List<ProductFull> filterProduct(@RequestParam(name="feature", required = false) Set<Long> feature,
+  @GetMapping("productsFilterAll")
+  public Integer filterProductAll(@RequestParam(name="feature", required = false) Set<Long> feature,
                                          @RequestParam(name="slugGroupProduct", required = false) String slugGroupProduct,
                                          @RequestParam(name="color", required = false) Set<Long> color,
                                          @RequestParam(name="ram", required = false) Set<Long> ram,
@@ -95,9 +95,37 @@ public class ProductController {
         sorter(sorter).
         typeProduct(typeProduct).
         build();
-    return productService.filterProduct(productCriteria);
+    return productService.filterProductMainCustomerAll(productCriteria);
   }
-
+  @GetMapping("productsFilter")
+  public List<ProductFull> filterProductLimit(@RequestParam(name="feature", required = false) Set<Long> feature,
+                                         @RequestParam(name="slugGroupProduct", required = false) String slugGroupProduct,
+                                         @RequestParam(name="color", required = false) Set<Long> color,
+                                         @RequestParam(name="ram", required = false) Set<Long> ram,
+                                         @RequestParam(name="rom", required = false) Set<Long> rom,
+                                         @RequestParam(name="brand", required = false) Set<String> brand,
+                                         @RequestParam(name="priceFrom", required = false) Integer priceFrom,
+                                         @RequestParam(name="priceTo", required = false) Integer priceTo,
+                                         @RequestParam(name = "sorter",required = false) String sorter,
+                                         @RequestParam(name = "typeProduct",required = false) Set<Integer> typeProduct,
+                                         @RequestParam(name = "offset",required = false) Integer offset,
+                                         @RequestParam(name = "limit",required = false) Integer limit) {
+    ProductCriteria productCriteria = ProductCriteria.builder().
+        slugGroupProduct(slugGroupProduct).
+        feature(feature).
+        rom(rom).
+        ram(ram).
+        brand(brand).
+        color(color).
+        priceFrom(priceFrom).
+        priceTo(priceTo).
+        sorter(sorter).
+        typeProduct(typeProduct).
+        offset(offset).
+        limit(limit).
+        build();
+    return productService.filterProductMainCustomer(productCriteria);
+  }
   @GetMapping("products/{offset}/{limit}")
   public List<ProductFull> getProductLimit(@PathVariable int offset,@PathVariable int limit) {
     return productService.getAllProductLimit(offset, limit);
@@ -116,10 +144,23 @@ public class ProductController {
   @GetMapping("products/search/")
   public List<ProductFull> searchProduct(@RequestParam(required = false) String keyword,
                                          @RequestParam(required = false) String slug,
-                                         @RequestParam(required = false) int offset,
-                                         @RequestParam(required = false) int limit,
-                                         @RequestParam(required = false) int type) {
+                                         @RequestParam(required = false) Integer offset,
+                                         @RequestParam(required = false) Integer limit,
+                                         @RequestParam(required = false) Integer type) {
     return productService.searchProduct(keyword,slug,offset,limit,type);
+  }
+  @GetMapping("products/search/page/all/")
+  public Integer searchProductPageAll(@RequestParam(required = false) String keyword,
+                                      @RequestParam(required = false) String slug) {
+    return productService.searchProductPageAll(keyword,slug);
+  }
+
+  @GetMapping("products/search/page/limit/")
+  public List<ProductFull> searchProductPageLimit(@RequestParam(required = false) String keyword,
+                                                @RequestParam(required = false) String slug,
+                                                @RequestParam(required = false) Integer offset,
+                                                @RequestParam(required = false) Integer limit) {
+    return productService.searchProductPageLimit(keyword,slug,offset,limit);
   }
 
   @GetMapping("products/{idProduct}")
@@ -149,6 +190,17 @@ public class ProductController {
 
   @GetMapping("getProductByCategory/{category}")
   public List<ProductFull> getAllProductFull(@PathVariable String category) {
+    return productService.getProductByCategory(category);
+  }
+
+  @GetMapping("getProductByCategoryAll/{category}")
+  public Integer getAllProductFullAll(@PathVariable String category) {
+    return productService.getProductByCategory(category).size();
+  }
+
+  @GetMapping("getProductByCategoryLimit/{category}/")
+  public List<ProductFull> getAllProductFullLimit(@PathVariable String category,@RequestParam(required = false) Integer offset,
+                                                  @RequestParam(required = false) Integer limit) {
     return productService.getProductByCategory(category);
   }
 
@@ -189,10 +241,15 @@ public class ProductController {
     return productService.getCategoryByGroupProducts();
   }
 
-  @GetMapping("productsAll/main/")
-  public List<ProductFull> getProductAllMain(@RequestParam(required = false) int offset,@RequestParam(required = false) int limit,
-                                             @RequestParam(required = false) int type) {
-    return productService.getProductAllMain(offset, limit, type);
+  @GetMapping("productsAll/main/limit/")
+  public List<ProductFull> getProductAllMain(@RequestParam(required = false) int offset,
+                                             @RequestParam(required = false) int limit) {
+    return productService.getProductAllMain(offset, limit);
+  }
+
+  @GetMapping("productsAll/main/all/")
+  public Integer getProductAllMain() {
+    return productService.getProductAllMain();
   }
 
   @GetMapping("products/combine/")

@@ -58,12 +58,18 @@ public class NewsService {
   }
 
   public NewsDetailPage getNewsBySlug(String slug) {
-    News news =  newsRepository.getNewsBySlug(slug);
+    News news = newsRepository.getNewsBySlug(slug);
+
     NewsDetailPage newsDetailPage = new NewsDetailPage();
-    newsDetailPage.setNews(news);
+
+    if (news != null) {
+      newsDetailPage.setNews(news);
+      newsDetailPage.setNewsSameList(newsRepository.getListNewsSame(news.getCategoryNews().getId(),news.getId()));
+    }
+
     newsDetailPage.setNewsBestList(newsRepository.getBestNewsIndex());
     newsDetailPage.setNewsBestLoveList(newsRepository.getBestLoveNews());
-    newsDetailPage.setNewsSameList(newsRepository.getListNewsSame(news.getCategoryNews().getId(),news.getId()));
+
     return newsDetailPage;
   }
 

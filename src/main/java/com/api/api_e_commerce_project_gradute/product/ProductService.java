@@ -106,6 +106,11 @@ public class ProductService{
     return returnListProductFull(stringList);
   }
 
+  public List<ProductFull> getProductByCategoryLimit(String idCategory,Integer offset,Integer limit) {
+    List<String> stringList = productRepository.getDistinctIdLineProductByIdCategory(idCategory);
+    return returnListProductFull(stringList);
+  }
+
   public List<ProductFull> returnListProductFull(List<String> stringList) {
     List<ProductFull> productFullList = new ArrayList<>();
     for (String string: stringList) {
@@ -300,7 +305,7 @@ public class ProductService{
   public boolean checkFeatureHaveNotFunc(Set<Long> featureClient, List<DetailFunctionProduct> detailFunctionProductList) {
     int count = 0;
     for (Long longData: featureClient) {
-      FunctionProduct functionProduct = functionProductRepository.getFunctionProductByIdFunctionProduct(longData);
+//      FunctionProduct functionProduct = functionProductRepository.getFunctionProductByIdFunctionProduct(longData);
       for (DetailFunctionProduct detailFunctionProduct: detailFunctionProductList)
         if (detailFunctionProduct.getFunctionProductDetail().getId().equals(longData))
           count++;
@@ -310,11 +315,10 @@ public class ProductService{
 
   public boolean checkFeatureLineProduct(Set<Long> featureClient, List<DetailFunctionProduct> detailFunctionProductList) {
     List<DetailFunctionProduct> detailFunctionProducts = new ArrayList<>();
-    for (Long longData : featureClient) {
+    for (Long longData : featureClient)
       for (DetailFunctionProduct detailFunctionProduct : detailFunctionProductList)
         if (detailFunctionProduct.getFunctionProductDetail().getId().equals(longData))
           detailFunctionProducts.add(detailFunctionProduct);
-    }
     if(checkFeatureHaveNotFunc(featureClient,detailFunctionProducts))
      return true;
     return false;
@@ -331,7 +335,6 @@ public class ProductService{
         if (string.equals(product.getLineProduct().getId())) count++;
       if (count == 0) lineProductId.add(product.getLineProduct().getId());
     }
-
     for (String string:lineProductId) {
       if (productCriteria.getFeature() != null) {
         if (checkFeatureLineProduct(productCriteria.getFeature(), detailFunctionProductRepository.
@@ -339,12 +342,18 @@ public class ProductService{
           List<Product> list = new ArrayList<>();
           if (productCriteria.getSorter() != null) {
             if (productCriteria.getSorter().equals("5"))
-              list = (productRepository.getFirstProductByIdLineProductReview(string));
+              if (productCriteria.getColor() != null)
+                list = (productRepository.getFirstProductByIdLineProductReviewAndColor(string,productCriteria.getColor()));
+              else
+                list = (productRepository.getFirstProductByIdLineProductReview(string));
             else
-              list = (productRepository.getFirstProductByIdLineProduct(string));
+                list = (productRepository.getFirstProductByIdLineProductReview(string));
           }
           else {
-            list = (productRepository.getFirstProductByIdLineProduct(string));
+            if (productCriteria.getColor() != null)
+              list = (productRepository.getFirstProductByIdLineProductColor(string,productCriteria.getColor()));
+            else
+              list = (productRepository.getFirstProductByIdLineProduct(string));
           }
 //          if (countTypeProduct > 0)
             if (list.size() > 0)
@@ -355,12 +364,22 @@ public class ProductService{
         List<Product> list = new ArrayList<>();
         if (productCriteria.getSorter() != null) {
           if (productCriteria.getSorter().equals("5"))
-            list = (productRepository.getFirstProductByIdLineProductReview(string));
+            if (productCriteria.getColor() != null)
+              list = (productRepository.getFirstProductByIdLineProductReviewAndColor(string,productCriteria.getColor()));
+            else
+              list = (productRepository.getFirstProductByIdLineProductReview(string));
+          else
+            if (productCriteria.getColor() != null)
+              list = (productRepository.getFirstProductByIdLineProductColor(string,productCriteria.getColor()));
+            else
+              list = (productRepository.getFirstProductByIdLineProduct(string));
+        }
+        else {
+          if (productCriteria.getColor() != null)
+            list = (productRepository.getFirstProductByIdLineProductColor(string,productCriteria.getColor()));
           else
             list = (productRepository.getFirstProductByIdLineProduct(string));
         }
-        else
-          list = (productRepository.getFirstProductByIdLineProduct(string));
         if (list.size() > 0)
           productFullList.add(getProductBySlug(list.get(0).getId(),-1));
       }
@@ -369,7 +388,22 @@ public class ProductService{
     return productFullList;
   }
 
-  public List<ProductFull> searchProduct(String keyword,String slug,int offset,int limit,int type) {
+  public Integer filterProductMainCustomerAll(ProductCriteria productCriteria) {
+    Specification<Product> productSpecification = ProductSpecifications.createProductSpecifications(productCriteria);
+    return productRepository.findAll(productSpecification).size();
+  }
+
+  public List<ProductFull> filterProductMainCustomer(ProductCriteria productCriteria) {
+    Specification<Product> productSpecification = ProductSpecifications.createProductSpecifications(productCriteria);
+    Pageable pageable = PageRequest.of(productCriteria.getOffset(),productCriteria.getLimit());
+    List<ProductFull> productFullList = new ArrayList<>();
+    Page<Product> productPage = productRepository.findAll(productSpecification,pageable);
+    for (Product product:productPage.getContent())
+      productFullList.add(getProductBySlug(product.getId(),-1));
+    return productFullList;
+  }
+
+  public List<ProductFull> searchProduct(String keyword,String slug,Integer offset,Integer limit,Integer type) {
     List<String> stringList = new ArrayList<>();
     if (type == 0)
       stringList = lineProductRepository.searchProduct(keyword,slug);
@@ -378,25 +412,34 @@ public class ProductService{
     return returnListProductFull(stringList);
   }
 
-  public List<ProductFull> getProductAllMain(int offset,int limit,int type) {
-    List<LineProduct> lineProductList = new ArrayList<>();
-    if (type == 0)
-      lineProductList = lineProductRepository.getAllLineProduct();
-    else
-      lineProductList = lineProductRepository.getAllLineProductLimit(offset, limit);
+  public Integer searchProductPageAll(String keyword,String slug) {
+    return productRepository.searchProductPageAll(keyword,slug).size();
+  }
 
+  public List<ProductFull> searchProductPageLimit(String keyword,String slug,Integer offset,Integer limit) {
     List<ProductFull> productFullList = new ArrayList<>();
-    for (LineProduct lineProduct: lineProductList) {
-      List<ProductMain> productMainList = productRepository.getProductByIdLineProduct(lineProduct.getId());
-      if (productMainList.size() > 0) {
-        List<Color> colorList = checkListColor(productMainList);
-        List<Image> imageList = checkListImage(productMainList);
-        List<Memory> memoryList = checkListMemory(productMainList);
-        productFullList.add(returnProductFull(productMainList.get(0),colorList,memoryList,imageList,productMainList));
-      }
+    List<ProductMain> productList = productRepository.searchProductPageLimit(keyword,slug,offset,limit);
+    for (ProductMain product:productList) {
+      productFullList.add(getProductBySlug(product.getIdProduct(),-1));
     }
     return productFullList;
   }
+
+  public List<ProductFull> getProductAllMain(int offset,int limit) {
+    Pageable pageable = PageRequest.of(offset,limit);
+    Page<Product> productPage = productRepository.findAll(pageable);
+    List<ProductFull> productFullList = new ArrayList<>();
+    for (Product product: productPage.getContent()) {
+      productFullList.add(getProductBySlug(product.getId(),-1));
+    }
+    return productFullList;
+  }
+
+  public Integer getProductAllMain() {
+    List<Product> productList = productRepository.findAll();
+    return productList.size();
+  }
+
 
   //admin
 
