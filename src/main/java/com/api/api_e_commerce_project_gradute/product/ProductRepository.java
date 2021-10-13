@@ -89,6 +89,9 @@ public interface ProductRepository extends JpaRepository<Product,String> , JpaSp
   @Query(value = COLUMN_SELECT + JOIN_TABLE + " WHERE p.slug = ?1 ",nativeQuery = true)
   ProductMain getProductBySlug(String slug);
 
+  @Query(value = COLUMN_SELECT + JOIN_TABLE + "ORDER BY ip.item_sold DESC LIMIT 0 , 1 ",nativeQuery = true)
+  ProductMain getProductTopSell();
+
   //get product by id product
   @Query(value = COLUMN_SELECT + JOIN_TABLE + " WHERE p.id = ?1 ",nativeQuery = true)
   ProductMain getProductByIdProduct(String id);

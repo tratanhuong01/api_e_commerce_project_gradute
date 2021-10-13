@@ -7,7 +7,7 @@ import com.api.api_e_commerce_project_gradute.news.News;
 import java.util.List;
 
 public class ProductIndex {
-    List<ProductFull> listProductTopSell;
+  ProductFull productTopSell;
   List<ProductFull> listProductSaleToday;
   List<ProductByCategory> listProductByCategory;
   List<CategoryByGroupProduct> listCategoryByGroupProduct;
@@ -21,12 +21,12 @@ public class ProductIndex {
     this.newsList = newsList;
   }
 
-  public List<ProductFull> getListProductTopSell() {
-    return listProductTopSell;
+  public ProductFull getProductTopSell() {
+    return productTopSell;
   }
 
-  public void setListProductTopSell(List<ProductFull> listProductTopSell) {
-    this.listProductTopSell = listProductTopSell;
+  public void setProductTopSell(ProductFull productTopSell) {
+    this.productTopSell = productTopSell;
   }
 
   public List<ProductFull> getListProductSaleToday() {

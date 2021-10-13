@@ -176,22 +176,8 @@ public class ProductService{
     for (Product product: productRepository.getProductSaleToday())
       listProductSaleToday.add(getProductBySlug(product.getId(),-1));
     productIndex.setListProductSaleToday(listProductSaleToday);
-    List<Product> productListTopSell = productRepository.getProductTopSale();
-    List<ProductFull> productTopSell = new ArrayList<>();
-    for (Product product: productListTopSell) {
-      List<ProductMain> productMainList = productRepository.getProductByIdLineProduct(product.getLineProduct().getId());
-      List<Color> colorList = checkListColor(productMainList);
-      List<Image> imageList = checkListImage(productMainList);
-      List<Memory> memoryList = checkListMemory(productMainList);
-      int index = -1;
-      for (int i = 0; i < productMainList.size(); i++)
-        if (productMainList.get(i).getIdProduct().equals(product.getId())) {
-          index = i;
-          break;
-        }
-      productTopSell.add(returnProductFull(productMainList.get(index),colorList,memoryList,imageList,productMainList));
-    }
-    productIndex.setListProductTopSell(productTopSell);
+
+    productIndex.setProductTopSell(getProductBySlug(productRepository.getProductTopSell().getIdProduct(),-1));
     return productIndex;
   }
 
@@ -384,8 +370,15 @@ public class ProductService{
           productFullList.add(getProductBySlug(list.get(0).getId(),-1));
       }
     }
-
     return productFullList;
+  }
+
+  public boolean checkProductIsAdd(ProductCriteria productCriteria,String string) {
+    if (productCriteria.getFeature() != null)
+      if (checkFeatureLineProduct(productCriteria.getFeature(), detailFunctionProductRepository.
+          getDetailFunctionProductByLineProduct(string)))
+        return true;
+    return false;
   }
 
   public Integer filterProductMainCustomerAll(ProductCriteria productCriteria) {
@@ -439,7 +432,6 @@ public class ProductService{
     List<Product> productList = productRepository.findAll();
     return productList.size();
   }
-
 
   //admin
 
