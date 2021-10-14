@@ -152,9 +152,19 @@ public class UserController {
     return userService.updateStatusUser(updateStatus.getValue(),updateStatus.getId());
   }
 
+  @PostMapping("searchUserByEmailOrPhone")
+  public User searchUserByEmailOrPhone(@RequestBody String emailOrPhone) {
+    return userService.searchUserByEmailOrPhone(emailOrPhone);
+  }
+
   @PostMapping("getUserByIdRole")
   public List<User> getUserByIdRole(@RequestParam String role)  {
     return userService.getUserByIdRole(role);
+  }
+
+  @DeleteMapping("users")
+  public void deleteUser(@RequestBody User user) {
+    userService.deleteUser(user);
   }
 
 }

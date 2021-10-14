@@ -69,17 +69,56 @@ public class UserService {
         DigestUtils.md5Hex(accountLogin.getPassword()).toUpperCase());
   }
 
+  public void deleteUser(User user) {
+    userRepository.delete(user);
+  }
+
   public UserDetail checkLoginJWT(AccountLogin accountLogin) {
     User user = userRepository.checkLogin(accountLogin.getEmailOrPhone(),
-        DigestUtils.md5Hex(accountLogin.getPassword()).toUpperCase());
+          DigestUtils.md5Hex(accountLogin.getPassword()).toUpperCase());
+    UserDetail userDetail = new UserDetail();
     if (user != null) {
-      UserDetail userDetail = new UserDetail();
-      userDetail.setUser(user);
-      userDetail.setToken(TokenJWTUtils.generateJwt(user.getId()));
-      userDetail.setMessage("Success");
+      switch (user.getStatus()) {
+        case 0 :
+          if (user.getIsVerifyEmail() == 0 && user.getIsVerifyPhone() == 0) {
+            userDetail.setUser(null);
+            userDetail.setToken(null);
+            userDetail.setMessage("Vui lòng xác minh tài khoản");
+          }
+          else {
+            userDetail.setUser(user);
+            userDetail.setToken(TokenJWTUtils.generateJwt(user.getId()));
+            userDetail.setMessage("Success");
+          }
+          break;
+        case 1 :
+          userDetail.setUser(null);
+          userDetail.setToken(null);
+          userDetail.setMessage("Tài khoản của bạn đã bị tạm khóa.. Vui lòng thử lại sau..");
+          break;
+        case 2 :
+          userDetail.setUser(null);
+          userDetail.setToken(null);
+          userDetail.setMessage("Tài khoản của bạn đã bị  khóa vĩnh viễn .. ");
+          break;
+        default:
+          userDetail.setUser(null);
+          userDetail.setToken(null);
+          userDetail.setMessage("Thông tin đăng nhập không chinh xác !");
+          break;
+      }
       return userDetail;
     }
-    return null;
+    else {
+      userDetail.setUser(null);
+      userDetail.setToken(null);
+      userDetail.setMessage("Thông tin đăng nhập không chinh xác !");
+    }
+    return userDetail;
+  }
+
+  public User searchUserByEmailOrPhone(String emailOrPhone) {
+    return userRepository.searchUserByEmailOrPhone(emailOrPhone);
   }
 
   public UserDetail adminCheckLoginJWT(AccountLogin accountLogin) {

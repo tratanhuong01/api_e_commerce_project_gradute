@@ -7,10 +7,11 @@ import java.sql.Timestamp;
 
 @Entity
 @Table(name = "password_reset")
+
 public class PasswordReset {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @ManyToOne

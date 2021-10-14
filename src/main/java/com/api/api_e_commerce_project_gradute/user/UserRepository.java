@@ -6,6 +6,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Nullable;
@@ -82,5 +83,9 @@ public interface UserRepository extends JpaRepository<User,String> {
 
   @Query(value = "SELECT * FROM user WHERE id_role = ?1 ",nativeQuery = true)
   List<User> getUserByIdRole(String role);
+
+  @Query(value = "SELECT * FROM user WHERE id_role = 'CUSTOMER' AND (email = :emailOrPhone OR " +
+      "phone = :emailOrPhone) LIMIT 0,1 ",nativeQuery = true)
+  User searchUserByEmailOrPhone(@Param("emailOrPhone") String emailOrPhone);
 
 }

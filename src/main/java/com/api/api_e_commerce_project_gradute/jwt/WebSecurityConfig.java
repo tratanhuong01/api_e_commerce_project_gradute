@@ -29,7 +29,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/messages","/messages/**","/groupChats/**","/groupChats","/groupChatsAll/**","/groupChatsAll",
             "/comments","/comments/**","/commentsAll/**","/commentsAll","/getNewsBySlug","/getUserFromJWT",
             "/adminCheckLoginJWT","/users/email","/users/phone","/users","/sendCodeEmail","/bills","/billDetails",
-            "/billDetails/**").permitAll()
+            "/billDetails/**","/searchUserByEmailOrPhone","/getListPasswordReset","/passwordResets").permitAll()
 
 
         .antMatchers(HttpMethod.DELETE,"/addresses").permitAll()

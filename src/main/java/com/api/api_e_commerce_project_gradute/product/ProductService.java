@@ -245,11 +245,14 @@ public class ProductService{
       productMains = productRepository.getProductBySlug(slug);
     else
       productMains = productRepository.getProductByIdProduct(slug);
-    List<ProductMain> productMainList = productRepository.getProductByIdLineProduct(productMains.getIdLineProduct());
-    List<Color> colorList = checkListColor(productMainList);
-    List<Image> imageList = checkListImage(productMainList);
-    List<Memory> memoryList = checkListMemory(productMainList);
-    return returnProductFull(productMains,colorList,memoryList,imageList,productMainList);
+    if (productMains != null) {
+      List<ProductMain> productMainList = productRepository.getProductByIdLineProduct(productMains.getIdLineProduct());
+      List<Color> colorList = checkListColor(productMainList);
+      List<Image> imageList = checkListImage(productMainList);
+      List<Memory> memoryList = checkListMemory(productMainList);
+      return returnProductFull(productMains,colorList,memoryList,imageList,productMainList);
+    }
+    return null;
   }
 
   public String getSlugByColorAndMemory(String idColor,String idMemory,String idLineProduct) {
