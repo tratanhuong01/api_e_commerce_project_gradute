@@ -26,7 +26,8 @@ public class UserController {
   @GetMapping("userFilters")
   public List<UserFull> getAllUsersLimit(Integer userType, String sex, Integer verifyPhone, Integer ageFrom,
                                     Integer ageTo, Integer status, Integer verifyEmail,String ageSorter,
-                                    String timeRegisterSorter,String keyword,Integer offset, Integer limit) {
+                                    String timeRegisterSorter,String keyword,Integer offset, Integer limit,
+                                    Integer isRegister) {
     UserCriteria userCriteria = UserCriteria.builder().
         userType(userType).
         sex(sex).
@@ -38,6 +39,7 @@ public class UserController {
         ageSorter(ageSorter).
         timeRegisterSorter(timeRegisterSorter).
         keyword(keyword).
+        isRegister(isRegister).
         offset(offset).
         limit(limit).
         build();
@@ -47,7 +49,7 @@ public class UserController {
   @GetMapping("userFiltersAll")
   public Integer getAllUsersAll(Integer userType, String sex, Integer verifyPhone, Integer ageFrom,
                                     Integer ageTo, Integer status, Integer verifyEmail,String ageSorter,
-                                    String timeRegisterSorter,String keyword) {
+                                    String timeRegisterSorter,String keyword,Integer isRegister) {
     UserCriteria userCriteria = UserCriteria.builder().
         userType(userType).
         sex(sex).
@@ -59,6 +61,7 @@ public class UserController {
         ageSorter(ageSorter).
         timeRegisterSorter(timeRegisterSorter).
         keyword(keyword).
+        isRegister(isRegister).
         build();
     return userService.filterUserAll(userCriteria);
   }
@@ -107,6 +110,11 @@ public class UserController {
   @PostMapping("checkLoginJWT")
   public UserDetail checkLoginJWT(@RequestBody AccountLogin accountLogin) {
     return userService.checkLoginJWT(accountLogin);
+  }
+
+  @PostMapping("verifyAccountJWT")
+  public UserDetail verifyAccountJWT(@RequestBody AccountLogin accountLogin) {
+    return userService.verifyAccountJWT(accountLogin);
   }
 
   @PostMapping("adminCheckLoginJWT")

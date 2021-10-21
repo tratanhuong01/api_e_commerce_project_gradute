@@ -6,6 +6,7 @@ public class UserDetail {
   private User user;
   private String token;
   private String message;
+  private int status;
 
   public User getUser() {
     return user;
@@ -29,5 +30,13 @@ public class UserDetail {
 
   public void setMessage(String message) {
     this.message = message;
+  }
+
+  public int getStatus() {
+    return status;
+  }
+
+  public void setStatus(int status) {
+    this.status = status;
   }
 }

@@ -93,6 +93,17 @@ public class User {
   @Column
   private int status;
 
+  @Column
+  private int isRegister;
+
+  public int getIsRegister() {
+    return isRegister;
+  }
+
+  public void setIsRegister(int isRegister) {
+    this.isRegister = isRegister;
+  }
+
   public Role getUserRole() {
     return userRole;
   }

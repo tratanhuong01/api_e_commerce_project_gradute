@@ -76,30 +76,50 @@ public class UserService {
   public UserDetail checkLoginJWT(AccountLogin accountLogin) {
     User user = userRepository.checkLogin(accountLogin.getEmailOrPhone(),
           DigestUtils.md5Hex(accountLogin.getPassword()).toUpperCase());
+    return returnUserDetailByUser(user);
+  }
+
+  public UserDetail verifyAccountJWT(AccountLogin accountLogin) {
+    User user = userRepository.checkLogin(accountLogin.getEmailOrPhone(),
+        accountLogin.getPassword());
+    UserDetail userDetail = new UserDetail();
+    if (user != null) {
+      userDetail.setUser(user);
+      userDetail.setToken(TokenJWTUtils.generateJwt(user.getId()));
+      userDetail.setMessage("Success");
+    }
+    return userDetail;
+  }
+
+  public UserDetail returnUserDetailByUser(User user) {
     UserDetail userDetail = new UserDetail();
     if (user != null) {
       switch (user.getStatus()) {
         case 0 :
           if (user.getIsVerifyEmail() == 0 && user.getIsVerifyPhone() == 0) {
-            userDetail.setUser(null);
+            userDetail.setUser(user);
             userDetail.setToken(null);
             userDetail.setMessage("Vui lòng xác minh tài khoản");
+            userDetail.setStatus(201);
           }
           else {
             userDetail.setUser(user);
             userDetail.setToken(TokenJWTUtils.generateJwt(user.getId()));
             userDetail.setMessage("Success");
+            userDetail.setStatus(200);
           }
           break;
         case 1 :
           userDetail.setUser(null);
           userDetail.setToken(null);
           userDetail.setMessage("Tài khoản của bạn đã bị tạm khóa.. Vui lòng thử lại sau..");
+          userDetail.setStatus(202);
           break;
         case 2 :
           userDetail.setUser(null);
           userDetail.setToken(null);
           userDetail.setMessage("Tài khoản của bạn đã bị  khóa vĩnh viễn .. ");
+          userDetail.setStatus(201);
           break;
         default:
           userDetail.setUser(null);
@@ -214,6 +234,7 @@ public class UserService {
       userFull.setStatus(user.getStatus());
       userFull.setAmountProduct(userRepository.countProductBuyByUser(user.getId()));
       userFull.setAmountOrder(userRepository.countBillByUser(user.getId()));
+      userFull.setIsRegister(user.getIsRegister());
       userFullList.add(userFull);
     }
     return userFullList;

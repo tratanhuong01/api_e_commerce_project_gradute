@@ -21,6 +21,7 @@ public final class UserSpecifications {
     verify(userCriteria.getVerifyPhone(), userCriteria.getVerifyEmail());
     sorter(userCriteria.getTimeRegisterSorter(),userCriteria.getAgeSorter());
     search(userCriteria.getKeyword());
+    isRegister(userCriteria.getIsRegister());
     return userSpecification;
   }
 
@@ -33,6 +34,19 @@ public final class UserSpecifications {
       else
         userSpecification = userSpecification.and((root,query,builder) -> {
           return builder.equal(root.get("sex"), sex);
+        });
+    return userSpecification;
+  }
+
+  public static Specification<User> isRegister(Integer isRegister) {
+    if (isRegister != null)
+      if (userSpecification == null)
+        userSpecification = (root,query,builder) -> {
+          return builder.equal(root.get("isRegister"),isRegister);
+        };
+      else
+        userSpecification = userSpecification.and((root,query,builder) -> {
+          return builder.equal(root.get("isRegister"), isRegister);
         });
     return userSpecification;
   }

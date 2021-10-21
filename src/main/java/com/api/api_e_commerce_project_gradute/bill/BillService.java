@@ -154,12 +154,16 @@ public class BillService {
   }
 
   public DashboardHeader getDashboardHeader() {
+    Integer totalProfit = billRepository.getSumDetailBillTotalProfitToday() == null ? 0 :
+        billRepository.getSumDetailBillTotalProfitToday();
+    totalProfit = billRepository.getTotalMoneyBillToday() - totalProfit;
+
     DashboardHeader dashboardHeader = new DashboardHeader();
-    dashboardHeader.setTotalBill(billRepository.getBillToday() == null ? 0 : Integer.parseInt(billRepository.getBillToday()));
-    dashboardHeader.setTotalProfit(billRepository.getTotalProfitToday() == null ? 0 : Integer.parseInt(billRepository.getTotalProfitToday()));
+    dashboardHeader.setTotalBill(billRepository.getBillToday() == null ? 0 : billRepository.getBillToday());
+    dashboardHeader.setTotalProfit(totalProfit);
     dashboardHeader.setTotalRegister(userRepository.getUserRegisterToDay());
-    dashboardHeader.setTotalRevenue(billRepository.getTotalMoneyBillToday() == null ? 0 : Integer.parseInt(billRepository.getTotalMoneyBillToday()));
-    dashboardHeader.setTotalSold(billRepository.getProductSellToday() == null ? 0 : Integer.parseInt(billRepository.getProductSellToday()));
+    dashboardHeader.setTotalRevenue(billRepository.getTotalMoneyBillToday() == null ? 0 : billRepository.getTotalMoneyBillToday());
+    dashboardHeader.setTotalSold(billRepository.getProductSellToday() == null ? 0 : billRepository.getProductSellToday());
     return dashboardHeader;
   }
 

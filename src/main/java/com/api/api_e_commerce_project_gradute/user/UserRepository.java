@@ -32,10 +32,10 @@ public interface UserRepository extends JpaRepository<User,String> {
   @Query(value = "SELECT * FROM user WHERE phone = ?1  ",nativeQuery = true)
   List<User> getUserByPhone(String phone);
 
-  @Query(value = "SELECT * FROM user WHERE ( email = ?1 or phone = ?1 ) AND password = ?2 ",nativeQuery = true)
+  @Query(value = "SELECT * FROM user WHERE ( email = ?1 or phone = ?1 ) AND password = ?2 AND is_register = 1 ",nativeQuery = true)
   User checkLogin(String emailOrPhone,String password);
 
-  @Query(value = "SELECT * FROM user WHERE ( email = ?1 or phone = ?1 ) AND password = ?2 AND type != 0 ",nativeQuery = true)
+  @Query(value = "SELECT * FROM user WHERE ( email = ?1 or phone = ?1 ) AND password = ?2 AND type != 0 AND is_register = 1 ",nativeQuery = true)
   User adminCheckLogin(String emailOrPhone,String password);
 
   @Transactional
@@ -61,10 +61,11 @@ public interface UserRepository extends JpaRepository<User,String> {
   @Query(value = "SELECT * FROM user WHERE type = 2 ",nativeQuery = true)
   List<User> getTeleSupport();
 
-  @Query(value = "SELECT * FROM user WHERE type = ?1 ORDER BY time_created DESC LIMIT ?2 , ?3 ",nativeQuery = true)
+  @Query(value = "SELECT * FROM user WHERE type = ?1 AND is_register = 1 ORDER BY time_created DESC LIMIT ?2 , ?3 ",nativeQuery = true)
   List<User> getUserByTypeLimit(int type,int offset,int limit);
 
-  @Query(value = "SELECT COUNT(*) FROM user WHERE user.time_created > CONCAT(DATE(NOW()),' 00:00:00' ) ",nativeQuery = true)
+  @Query(value = "SELECT COUNT(*) FROM user WHERE user.time_created > CONCAT(DATE(NOW()),' 00:00:00' ) " +
+      "AND is_register = 1 ",nativeQuery = true)
   int getUserRegisterToDay();
 
   @Query(value = "SELECT COUNT(*) FROM user INNER JOIN bill ON bill.id_user = user.id WHERE bill.id_user = ?1 ",nativeQuery = true)

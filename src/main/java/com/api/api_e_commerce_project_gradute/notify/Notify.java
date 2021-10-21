@@ -22,7 +22,7 @@ public class Notify {
   private String nameNotify;
 
   @Column
-  private String url;
+  private String data;
 
   @Column
   private String image;
@@ -33,8 +33,23 @@ public class Notify {
   @Column
   private Timestamp timeCreated;
 
-  public String getUrl() {
-    return url;
+  @Column
+  private Integer isRead;
+
+  public String getData() {
+    return data;
+  }
+
+  public void setData(String data) {
+    this.data = data;
+  }
+
+  public Integer getIsRead() {
+    return isRead;
+  }
+
+  public void setIsRead(Integer isRead) {
+    this.isRead = isRead;
   }
 
   public String getImage() {
@@ -51,10 +66,6 @@ public class Notify {
 
   public void setDescription(String description) {
     this.description = description;
-  }
-
-  public void setUrl(String url) {
-    this.url = url;
   }
 
   public Long getId() {

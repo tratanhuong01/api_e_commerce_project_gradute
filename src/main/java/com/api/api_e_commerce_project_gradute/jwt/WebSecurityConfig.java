@@ -29,7 +29,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/messages","/messages/**","/groupChats/**","/groupChats","/groupChatsAll/**","/groupChatsAll",
             "/comments","/comments/**","/commentsAll/**","/commentsAll","/getNewsBySlug","/getUserFromJWT",
             "/adminCheckLoginJWT","/users/email","/users/phone","/users","/sendCodeEmail","/bills","/billDetails",
-            "/billDetails/**","/searchUserByEmailOrPhone","/getListPasswordReset","/passwordResets").permitAll()
+            "/billDetails/**","/searchUserByEmailOrPhone","/getListPasswordReset","/passwordResets",
+            "/verifyAccountJWT").permitAll()
 
 
         .antMatchers(HttpMethod.DELETE,"/addresses").permitAll()
@@ -61,7 +62,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/getTeleSupport","/infoProducts","/infoProductsAll/**","/infoProductsAll","/infoProducts/**",
             "/getSlidesActive","/getBannerIndexShow","/configWebsites/**","/categoryNews","/imageOthers",
             "/imageOthers/**","/users","/users/**","/getProductByCategoryAll","/getProductByCategoryAll/**",
-            "/getProductByCategoryLimit","/getProductByCategoryLimit/**","/productsFilterAll").permitAll()
+            "/getProductByCategoryLimit","/getProductByCategoryLimit/**","/productsFilterAll","/bills/**").permitAll()
 
 
         .anyRequest().authenticated()

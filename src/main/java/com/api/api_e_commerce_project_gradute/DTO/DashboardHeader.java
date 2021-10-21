@@ -1,49 +1,49 @@
 package com.api.api_e_commerce_project_gradute.DTO;
 
 public class DashboardHeader {
-  private int totalRegister;
-  private int totalBill;
-  private int totalRevenue;
-  private int totalProfit;
-  private int totalSold;
+  private Integer totalRegister;
+  private Integer totalBill;
+  private Integer totalRevenue;
+  private Integer totalProfit;
+  private Integer totalSold;
 
-  public int getTotalRegister() {
+  public Integer getTotalRegister() {
     return totalRegister;
   }
 
-  public void setTotalRegister(int totalRegister) {
+  public void setTotalRegister(Integer totalRegister) {
     this.totalRegister = totalRegister;
   }
 
-  public int getTotalBill() {
+  public Integer getTotalBill() {
     return totalBill;
   }
 
-  public void setTotalBill(int totalBill) {
+  public void setTotalBill(Integer totalBill) {
     this.totalBill = totalBill;
   }
 
-  public int getTotalRevenue() {
+  public Integer getTotalRevenue() {
     return totalRevenue;
   }
 
-  public void setTotalRevenue(int totalRevenue) {
+  public void setTotalRevenue(Integer totalRevenue) {
     this.totalRevenue = totalRevenue;
   }
 
-  public int getTotalProfit() {
+  public Integer getTotalProfit() {
     return totalProfit;
   }
 
-  public void setTotalProfit(int totalProfit) {
+  public void setTotalProfit(Integer totalProfit) {
     this.totalProfit = totalProfit;
   }
 
-  public int getTotalSold() {
+  public Integer getTotalSold() {
     return totalSold;
   }
 
-  public void setTotalSold(int totalSold) {
+  public void setTotalSold(Integer totalSold) {
     this.totalSold = totalSold;
   }
 }

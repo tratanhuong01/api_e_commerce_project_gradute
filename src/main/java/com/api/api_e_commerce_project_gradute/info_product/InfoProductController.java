@@ -38,6 +38,12 @@ public class InfoProductController {
     return infoProductService.updateItemCurrentAndItemSolid(amount, idProduct);
   }
 
+  @GetMapping("infoProducts/remove/")
+  public int removeItemCurrentAndItemSold(@RequestParam(required = false) int amount,
+                                          @RequestParam(required = false) String idProduct) {
+    return infoProductService.removeItemCurrentAndItemSolid(amount, idProduct);
+  }
+
   @PutMapping("infoProducts/review/update/")
   public int updateReviewProduct(@RequestParam(required = false) int review , @RequestParam(required = false) String idProduct) {
     return infoProductService.updateReviewProduct(review, idProduct);
