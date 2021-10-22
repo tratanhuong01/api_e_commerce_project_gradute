@@ -15,5 +15,7 @@ public class LineProductCriteria {
   private String brand;
   private String keyword;
   private String group;
+  private String timeCreatedFrom;
+  private String timeCreatedTo;
 
 }

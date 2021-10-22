@@ -17,5 +17,7 @@ public class NewsCriteria {
   private Integer offset;
   private Integer limit;
   private String keyword;
+  private String timeCreatedFrom;
+  private String timeCreatedTo;
 
 }

@@ -1,7 +1,9 @@
 package com.api.api_e_commerce_project_gradute.bill;
 
 import com.api.api_e_commerce_project_gradute.DTO.DashboardHeader;
+import com.api.api_e_commerce_project_gradute.DTO.NumberByMonth;
 import com.api.api_e_commerce_project_gradute.DTO.bill.BillFull;
+import com.api.api_e_commerce_project_gradute.DTO.bill.BillInfoCurrent;
 import com.api.api_e_commerce_project_gradute.DTO.specification.bill.BillCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -98,6 +100,16 @@ public class BillController {
   @GetMapping("getDashboardHeader")
   public DashboardHeader getDashboardHeader() {
     return billService.getDashboardHeader();
+  }
+
+  @GetMapping("getBillSixMonthCurrent")
+  public List<NumberByMonth> getBillSixMonthCurrent() {
+    return billService.getBillSixMonthCurrent();
+  }
+
+  @GetMapping("getProductSixMonthCurrent")
+  public List<NumberByMonth> getProductSixMonthCurrent() {
+    return billService.getProductSixMonthCurrent();
   }
 
 }

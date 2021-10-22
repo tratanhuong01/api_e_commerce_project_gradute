@@ -21,6 +21,7 @@ public final class DiscountCodeSpecification {
     sorter("percent", discountCodeCriteria.getPercentSorter());
     sorter("timeStart", discountCodeCriteria.getNewBestSorter());
     sorter("timeExpired", discountCodeCriteria.getNewBestSorter());
+    timeCreated(discountCodeCriteria.getTimeCreatedFrom(),discountCodeCriteria.getTimeCreatedTo());
     return discountCodeSpecification;
   }
 
@@ -78,6 +79,24 @@ public final class DiscountCodeSpecification {
                   builder.literal(Timestamp.valueOf(LocalDateTime.now())),
                   root.get("birthday")),String.valueOf(3))));
         };
+    return discountCodeSpecification;
+  }
+
+  public static Specification<DiscountCode> timeCreated(String timeCreatedFrom, String timeCreatedTo) {
+    if (timeCreatedFrom != null & timeCreatedTo != null) {
+      if (discountCodeSpecification == null) {
+        discountCodeSpecification = (root,query,builder) -> {
+          return builder.and(builder.greaterThanOrEqualTo(root.get("timeCreated"),timeCreatedFrom),
+              builder.lessThanOrEqualTo(root.get("timeCreated"),timeCreatedTo));
+        };
+      }
+      else {
+        discountCodeSpecification = discountCodeSpecification.and((root,query,builder) -> {
+          return builder.and(builder.greaterThanOrEqualTo(root.get("timeCreated"),timeCreatedFrom),
+              builder.lessThanOrEqualTo(root.get("timeCreated"),timeCreatedTo));
+        });
+      }
+    }
     return discountCodeSpecification;
   }
 

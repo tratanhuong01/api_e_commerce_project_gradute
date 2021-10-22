@@ -1,8 +1,10 @@
 package com.api.api_e_commerce_project_gradute.bill;
 
 import com.api.api_e_commerce_project_gradute.DTO.DashboardHeader;
+import com.api.api_e_commerce_project_gradute.DTO.NumberByMonth;
 import com.api.api_e_commerce_project_gradute.DTO.bill.BillDetailFull;
 import com.api.api_e_commerce_project_gradute.DTO.bill.BillFull;
+import com.api.api_e_commerce_project_gradute.DTO.bill.BillInfoCurrent;
 import com.api.api_e_commerce_project_gradute.DTO.specification.bill.BillCriteria;
 import com.api.api_e_commerce_project_gradute.DTO.specification.bill.BillSpecifications;
 import com.api.api_e_commerce_project_gradute.bill_detail.BillDetail;
@@ -18,10 +20,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class BillService {
@@ -57,6 +56,38 @@ public class BillService {
 
   public List<Bill> getAllBillAdminAllLimit(int offset, int limit) {
     return billRepository.getBillAllLimit(offset, limit);
+  }
+
+  public List<NumberByMonth> getBillSixMonthCurrent() {
+    List<NumberByMonth> numberByMonthList  = new ArrayList<>();
+    Date dateCurrent = new Date();
+    Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("Asia/Ho_Chi_Minh"));
+    cal.setTime(dateCurrent);
+    int year = cal.get(Calendar.YEAR);
+    int month = cal.get(Calendar.MONTH);
+    for (int i = 0; i < 6; i++) {
+      NumberByMonth numberByMonth = new NumberByMonth();
+      numberByMonth.setNumber(billRepository.getBillSixMonthCurrent(6 - i));
+      numberByMonth.setMonth("Tháng " + (month - 5 + i) + "/" + year);
+      numberByMonthList.add(numberByMonth);
+    }
+    return numberByMonthList;
+  }
+
+  public List<NumberByMonth> getProductSixMonthCurrent() {
+    List<NumberByMonth> numberByMonthList  = new ArrayList<>();
+    Date dateCurrent = new Date();
+    Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("Asia/Ho_Chi_Minh"));
+    cal.setTime(dateCurrent);
+    int year = cal.get(Calendar.YEAR);
+    int month = cal.get(Calendar.MONTH);
+    for (int i = 0; i < 6; i++) {
+      NumberByMonth numberByMonth = new NumberByMonth();
+      numberByMonth.setNumber(billRepository.getProductSixMonthCurrent(6 - i));
+      numberByMonth.setMonth("Tháng " + (month - 5 + i) + "/" + year);
+      numberByMonthList.add(numberByMonth);
+    }
+    return numberByMonthList;
   }
 
   //user
@@ -154,9 +185,9 @@ public class BillService {
   }
 
   public DashboardHeader getDashboardHeader() {
-    Integer totalProfit = billRepository.getSumDetailBillTotalProfitToday() == null ? 0 :
-        billRepository.getSumDetailBillTotalProfitToday();
-    totalProfit = billRepository.getTotalMoneyBillToday() - totalProfit;
+    Integer totalProfit = billRepository.getSumDetailBillTotalProfitToday();
+    Integer totalMoney = billRepository.getTotalMoneyBillToday();
+    totalProfit =  (totalMoney == null ? 0 : totalMoney) - (totalProfit == null ? 0 : totalProfit);
 
     DashboardHeader dashboardHeader = new DashboardHeader();
     dashboardHeader.setTotalBill(billRepository.getBillToday() == null ? 0 : billRepository.getBillToday());

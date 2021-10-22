@@ -28,8 +28,8 @@ public final class ProductAdminSpecification {
     rom(productAdminCriteria.getRom());
     color(productAdminCriteria.getColor());
     brand(productAdminCriteria.getBrand());
-
-//    sorter(productAdminCriteria.getProductSoldSorter(),"timeCreated");
+    timeCreated(productAdminCriteria.getTimeCreatedFrom(),productAdminCriteria.getTimeCreatedTo());
+    sorter(productAdminCriteria.getProductSoldSorter(),"timeCreated");
     return productSpecification;
   }
 
@@ -222,6 +222,24 @@ public final class ProductAdminSpecification {
         productSpecification = productSpecification.and((root,query,builder) -> {
           return builder.equal(root.join("lineProduct").get("brandProduct").get("id"),brand);
         });
+    return productSpecification;
+  }
+
+  public static Specification<Product> timeCreated(String timeCreatedFrom, String timeCreatedTo) {
+    if (timeCreatedFrom != null & timeCreatedTo != null) {
+      if (productSpecification == null) {
+        productSpecification = (root,query,builder) -> {
+          return builder.and(builder.greaterThanOrEqualTo(root.get("timeCreated"),timeCreatedFrom),
+              builder.lessThanOrEqualTo(root.get("timeCreated"),timeCreatedTo));
+        };
+      }
+      else {
+        productSpecification = productSpecification.and((root,query,builder) -> {
+          return builder.and(builder.greaterThanOrEqualTo(root.get("timeCreated"),timeCreatedFrom),
+              builder.lessThanOrEqualTo(root.get("timeCreated"),timeCreatedTo));
+        });
+      }
+    }
     return productSpecification;
   }
 

@@ -23,7 +23,6 @@ public interface BillRepository extends JpaRepository<Bill,String> {
 
   List<Bill> findAll(@Nullable Specification<Bill> billSpecification);
 
-
   @Query(value = "SELECT * FROM bill WHERE status = ?1 ORDER BY time_created DESC ",nativeQuery = true)
   List<Bill> getBillAllByStatus(int status);
 
@@ -40,11 +39,12 @@ public interface BillRepository extends JpaRepository<Bill,String> {
   Integer getBillToday();
 
   @Query(value = "SELECT SUM(bill_detail.amount) FROM bill INNER JOIN bill_detail ON bill.id = \n" +
-      "bill_detail.id_bill WHERE bill.time_created >= CONCAT(DATE(NOW()),' 00:00:00' ) AND bill.status != -1 ",nativeQuery = true)
+      "bill_detail.id_bill WHERE bill.time_created >= CONCAT(DATE(NOW()),' 00:00:00' ) AND (" +
+      " bill.status != -1 OR bill.status != -2 OR bill.status != 4 ) ",nativeQuery = true)
   Integer getProductSellToday();
 
   @Query(value = "SELECT SUM(bill.total) FROM bill WHERE bill.time_created >= CONCAT(DATE(NOW()),' 00:00:00' ) " +
-      "AND bill.status != -1  ",nativeQuery = true)
+      "AND (bill.status != -1 OR bill.status != -2 OR bill.status != 4 ) ",nativeQuery = true)
   Integer getTotalMoneyBillToday();
 
   @Query(value = "SELECT SUM(info_product.price_input*bill_detail.amount) FROM bill INNER JOIN bill_detail ON bill.id = " +
@@ -93,5 +93,19 @@ public interface BillRepository extends JpaRepository<Bill,String> {
       "b.id = :keyword ) AND b.id_user = :idUser ORDER BY b.time_created DESC  ",nativeQuery = true)
   List<Bill> searchBill(@Param("keyword") String keyword, @Param("idUser") String idUser);
 
+  @Query(value = "SELECT COUNT(*) " +
+      "FROM bill " +
+      "WHERE MONTH(time_created) = MONTH(CURRENT_DATE()) - ?1 " +
+      "AND YEAR(time_created) = YEAR(CURRENT_DATE()) " +
+      "AND time_created <= CONCAT(YEAR(CURRENT_DATE()),'-',MONTH(CURRENT_DATE()),'-','01',' ','00:00:00')",
+        nativeQuery = true)
+  Integer getBillSixMonthCurrent(Integer value);
+
+  @Query(value = "SELECT SUM(bill_detail.amount) FROM bill INNER JOIN bill_detail ON bill.id = bill_detail.id_bill " +
+      " WHERE MONTH(time_created) = MONTH(CURRENT_DATE()) - ?1 " +
+      " AND YEAR(time_created) = YEAR(CURRENT_DATE()) " +
+      " AND time_created <= CONCAT(YEAR(CURRENT_DATE()),'-',MONTH(CURRENT_DATE()),'-','01',' ','00:00:00')" +
+      " AND (bill.status != -1 OR bill.status != -2 OR bill.status != 4 ) ",nativeQuery = true)
+  Integer getProductSixMonthCurrent(Integer value);
 
 }

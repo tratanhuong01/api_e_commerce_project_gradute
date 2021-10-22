@@ -29,5 +29,7 @@ public class ProductAdminCriteria {
   private String saleSorter;
   private String reviewSorter;
   private String keyword;
+  private String timeCreatedFrom;
+  private String timeCreatedTo;
 
 }

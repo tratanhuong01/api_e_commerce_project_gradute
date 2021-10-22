@@ -6,7 +6,6 @@ import org.springframework.data.jpa.domain.Specification;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Subquery;
 
-
 public final class NewsSpecification {
 
   static Specification<News> newsSpecification = null;
@@ -18,6 +17,7 @@ public final class NewsSpecification {
     sorter("view",newsCriteria.getViewSorter());
     sorter("commentCount",newsCriteria.getCommentSorter());
     search(newsCriteria.getKeyword());
+    timeCreated(newsCriteria.getTimeCreatedFrom(),newsCriteria.getTimeCreatedTo());
     return newsSpecification;
   }
 
@@ -92,5 +92,21 @@ public final class NewsSpecification {
         });
     return newsSpecification;
   }
-
+  public static Specification<News> timeCreated(String timeCreatedFrom, String timeCreatedTo) {
+    if (timeCreatedFrom != null & timeCreatedTo != null) {
+      if (newsSpecification == null) {
+        newsSpecification = (root,query,builder) -> {
+          return builder.and(builder.greaterThanOrEqualTo(root.get("timeCreated"),timeCreatedFrom),
+              builder.lessThanOrEqualTo(root.get("timeCreated"),timeCreatedTo));
+        };
+      }
+      else {
+        newsSpecification = newsSpecification.and((root,query,builder) -> {
+          return builder.and(builder.greaterThanOrEqualTo(root.get("timeCreated"),timeCreatedFrom),
+              builder.lessThanOrEqualTo(root.get("timeCreated"),timeCreatedTo));
+        });
+      }
+    }
+    return newsSpecification;
+  }
 }

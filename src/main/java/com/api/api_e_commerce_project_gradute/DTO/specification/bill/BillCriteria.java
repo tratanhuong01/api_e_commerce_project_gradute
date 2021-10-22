@@ -17,5 +17,7 @@ public class BillCriteria {
   private Integer limit;
   private Integer offset;
   private String keyword;
+  private String timeCreatedFrom;
+  private String timeCreatedTo;
 
 }

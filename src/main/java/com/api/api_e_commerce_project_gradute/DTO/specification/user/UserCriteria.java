@@ -22,5 +22,7 @@ public class UserCriteria {
   private String ageSorter;
   private String keyword;
   private Integer isRegister;
+  private String timeCreatedFrom;
+  private String timeCreatedTo;
 
 }

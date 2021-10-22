@@ -22,6 +22,7 @@ public final class UserSpecifications {
     sorter(userCriteria.getTimeRegisterSorter(),userCriteria.getAgeSorter());
     search(userCriteria.getKeyword());
     isRegister(userCriteria.getIsRegister());
+    timeCreated(userCriteria.getTimeCreatedFrom(),userCriteria.getTimeCreatedTo());
     return userSpecification;
   }
 
@@ -206,6 +207,22 @@ public final class UserSpecifications {
       }
     return userSpecification;
   }
-
+  public static Specification<User> timeCreated(String timeCreatedFrom, String timeCreatedTo) {
+    if (timeCreatedFrom != null & timeCreatedTo != null) {
+      if (userSpecification == null) {
+        userSpecification = (root,query,builder) -> {
+          return builder.and(builder.greaterThanOrEqualTo(root.get("timeCreated"),timeCreatedFrom),
+              builder.lessThanOrEqualTo(root.get("timeCreated"),timeCreatedTo));
+        };
+      }
+      else {
+        userSpecification = userSpecification.and((root,query,builder) -> {
+          return builder.and(builder.greaterThanOrEqualTo(root.get("timeCreated"),timeCreatedFrom),
+              builder.lessThanOrEqualTo(root.get("timeCreated"),timeCreatedTo));
+        });
+      }
+    }
+    return userSpecification;
+  }
 
 }

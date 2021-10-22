@@ -17,6 +17,7 @@ public final class BillSpecifications {
     sorter(billCriteria.getTimeCreatedSorter(), "timeCreated");
     sorter(billCriteria.getFeeDeliverySorter(), "fee");
     sorter(billCriteria.getMoneyOrderSorter(), "total");
+    timeCreated(billCriteria.getTimeCreatedFrom(),billCriteria.getTimeCreatedTo());
     return billSpecification;
   }
 
@@ -83,6 +84,24 @@ public final class BillSpecifications {
           return root.get("id").isNotNull();
         });
 
+    return billSpecification;
+  }
+
+  public static Specification<Bill> timeCreated(String timeCreatedFrom,String timeCreatedTo) {
+    if (timeCreatedFrom != null & timeCreatedTo != null) {
+      if (billSpecification == null) {
+        billSpecification = (root,query,builder) -> {
+          return builder.and(builder.greaterThanOrEqualTo(root.get("timeCreated"),timeCreatedFrom),
+              builder.lessThanOrEqualTo(root.get("timeCreated"),timeCreatedTo));
+        };
+      }
+      else {
+        billSpecification = billSpecification.and((root,query,builder) -> {
+          return builder.and(builder.greaterThanOrEqualTo(root.get("timeCreated"),timeCreatedFrom),
+              builder.lessThanOrEqualTo(root.get("timeCreated"),timeCreatedTo));
+        });
+      }
+    }
     return billSpecification;
   }
 

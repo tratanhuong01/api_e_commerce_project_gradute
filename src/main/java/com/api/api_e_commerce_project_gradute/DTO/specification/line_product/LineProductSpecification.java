@@ -12,6 +12,7 @@ public final class LineProductSpecification {
     brand(lineProductCriteria.getBrand());
     group(lineProductCriteria.getGroup());
     keyword(lineProductCriteria.getKeyword());
+    timeCreated(lineProductCriteria.getTimeCreatedFrom(),lineProductCriteria.getTimeCreatedTo());
     return lineProductSpecification;
   }
 
@@ -53,5 +54,21 @@ public final class LineProductSpecification {
         });
     return lineProductSpecification;
   }
-
+  public static Specification<LineProduct> timeCreated(String timeCreatedFrom, String timeCreatedTo) {
+    if (timeCreatedFrom != null & timeCreatedTo != null) {
+      if (lineProductSpecification == null) {
+        lineProductSpecification = (root,query,builder) -> {
+          return builder.and(builder.greaterThanOrEqualTo(root.get("timeCreated"),timeCreatedFrom),
+              builder.lessThanOrEqualTo(root.get("timeCreated"),timeCreatedTo));
+        };
+      }
+      else {
+        lineProductSpecification = lineProductSpecification.and((root,query,builder) -> {
+          return builder.and(builder.greaterThanOrEqualTo(root.get("timeCreated"),timeCreatedFrom),
+              builder.lessThanOrEqualTo(root.get("timeCreated"),timeCreatedTo));
+        });
+      }
+    }
+    return lineProductSpecification;
+  }
 }

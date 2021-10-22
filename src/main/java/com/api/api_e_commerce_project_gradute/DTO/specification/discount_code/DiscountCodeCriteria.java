@@ -19,5 +19,7 @@ public class DiscountCodeCriteria {
   private String minSorter;
   private Integer offset;
   private Integer limit;
+  private String timeCreatedFrom;
+  private String timeCreatedTo;
 
 }
