@@ -29,6 +29,17 @@ public class GroupChat {
   @Column
   private Timestamp timeCreated;
 
+  @Column
+  private int isDelete;
+
+  public int getIsDelete() {
+    return isDelete;
+  }
+
+  public void setIsDelete(int isDelete) {
+    this.isDelete = isDelete;
+  }
+
   public String getFullName() {
     return fullName;
   }

@@ -21,11 +21,11 @@ public final class ProductSpecifications {
   public static Specification<Product> createProductSpecifications(ProductCriteria productCriteria) {
     productSpecification = null;
     groupProduct(productCriteria.getSlugGroupProduct(),productCriteria.getSorter());
+    price(productCriteria.getPriceFrom(),productCriteria.getPriceTo(),productCriteria.getSlugGroupProduct());
     brand(productCriteria.getBrand());
     color(productCriteria.getColor());
     ram(productCriteria.getRam());
     rom(productCriteria.getRom());
-    price(productCriteria.getPriceFrom(),productCriteria.getPriceTo(),productCriteria.getSlugGroupProduct());
     feature(productCriteria.getFeature());
     typeProduct(productCriteria.getTypeProduct());
     return productSpecification;
@@ -196,12 +196,12 @@ public final class ProductSpecifications {
   public static Specification<Product> color(Set<Long> colors) {
     if (colors != null)
       if (productSpecification == null)
-         productSpecification = (root, query, builder) -> {
-           return root.join("imageProduct",JoinType.LEFT).join("colorProduct").get("id").in(colors);
-         };
+        productSpecification = (root, query, builder) -> {
+          return root.join("imageProduct").join("colorProduct").get("id").in(colors);
+        };
       else
         productSpecification = productSpecification.and((root, query, builder) -> {
-          return root.join("imageProduct",JoinType.LEFT).join("colorProduct").get("id").in(colors);
+          return root.join("imageProduct").join("colorProduct").get("id").in(colors);
         });
     return productSpecification;
   }

@@ -27,4 +27,8 @@ public class GroupChatService {
     return;
   }
 
+  public GroupChat updateGroupChat(GroupChat groupChat) {
+    return groupChatRepository.save(groupChat);
+  }
+
 }

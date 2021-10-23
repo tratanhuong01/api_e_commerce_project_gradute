@@ -56,7 +56,7 @@ public interface ProductRepository extends JpaRepository<Product,String> , JpaSp
   //get slug when product not have memory and have color
   @Query(value = "SELECT slug FROM product INNER JOIN image ON image.id = product.id_image " +
       "INNER JOIN color ON color.id = image.id_color WHERE image.id_color = ?1 AND id_memory " +
-      "IS NULL AND id_line_product = ?2 ",nativeQuery = true)
+      "IS NULL AND product.id_line_product = ?2 ",nativeQuery = true)
   String getSlugByColorAndNotMemory(String idColor,String idLineProduct);
 
   //get slug when product have memory and have color

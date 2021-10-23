@@ -19,8 +19,9 @@ public interface MessagesRepository extends JpaRepository<Messages,Long> {
   @Query(value = "SELECT guest FROM messages WHERE id_user IS NULL AND messages.id_group_chat = ?1 LIMIT 0,1 ",nativeQuery = true)
   String getCustomer(Long idGroupChat);
 
-  @Query(value = " SELECT DISTINCT messages.id_group_chat FROM messages WHERE messages.id_user = ?1 " +
-      "  GROUP BY messages.id_group_chat ORDER BY MAX(messages.time_created) DESC ",nativeQuery = true)
+  @Query(value = " SELECT DISTINCT messages.id_group_chat FROM messages INNER JOIN group_chat ON " +
+      "messages.id_group_chat = group_chat.id WHERE messages.id_user = ?1 AND " +
+      "group_chat.is_delete = 0 GROUP BY messages.id_group_chat ORDER BY MAX(messages.time_created) DESC ",nativeQuery = true)
   List<Long> getDistinctIdGroupChatByIdUser(String idUser);
 
 }

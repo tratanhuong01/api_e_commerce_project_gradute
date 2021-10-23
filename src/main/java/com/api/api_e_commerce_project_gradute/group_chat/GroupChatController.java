@@ -24,7 +24,7 @@ public class GroupChatController {
 
   @PutMapping("groupChats")
   public GroupChat updateGroupChat(@RequestBody GroupChat groupChat) {
-    return groupChatService.addGroupChat(groupChat);
+    return groupChatService.updateGroupChat(groupChat);
   }
 
   @DeleteMapping("groupChats")

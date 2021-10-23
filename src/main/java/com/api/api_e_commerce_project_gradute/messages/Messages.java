@@ -37,6 +37,17 @@ public class Messages {
   @Column
   private int typeMessages;
 
+  @Column
+  private int isRead;
+
+  public int getIsRead() {
+    return isRead;
+  }
+
+  public void setIsRead(int isRead) {
+    this.isRead = isRead;
+  }
+
   public Long getId() {
     return id;
   }
