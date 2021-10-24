@@ -58,15 +58,15 @@ public interface UserRepository extends JpaRepository<User,String> {
       " m.id_group_chat = ?1 LIMIT 0,1 ",nativeQuery = true)
   User getAdmin(Long idGroupChat);
 
-  @Query(value = "SELECT * FROM user WHERE type = 2 ",nativeQuery = true)
+  @Query(value = "SELECT * FROM user WHERE id_role = 'SUPPORTER' ",nativeQuery = true)
   List<User> getTeleSupport();
 
-  @Query(value = "SELECT * FROM user WHERE type = ?1 AND is_register = 1 ORDER BY time_created DESC LIMIT ?2 , ?3 ",nativeQuery = true)
-  List<User> getUserByTypeLimit(int type,int offset,int limit);
+  @Query(value = "SELECT * FROM user WHERE id_role = ?1 AND is_register = 1 ORDER BY time_created DESC LIMIT ?2 , ?3 ",nativeQuery = true)
+  List<User> getUserByTypeLimit(String idRole,int offset,int limit);
 
   @Query(value = "SELECT COUNT(*) FROM user WHERE user.time_created > CONCAT(DATE(NOW()),' 00:00:00' ) " +
-      "AND is_register = 1 ",nativeQuery = true)
-  int getUserRegisterToDay();
+      "AND is_register = 1 AND id_role = 'CUSTOMER' ",nativeQuery = true)
+  Integer getUserRegisterToDay();
 
   @Query(value = "SELECT COUNT(*) FROM user INNER JOIN bill ON bill.id_user = user.id WHERE bill.id_user = ?1 ",nativeQuery = true)
   Integer countBillByUser(String idUser);
@@ -88,5 +88,21 @@ public interface UserRepository extends JpaRepository<User,String> {
   @Query(value = "SELECT * FROM user WHERE id_role = 'CUSTOMER' AND (email = :emailOrPhone OR " +
       "phone = :emailOrPhone) LIMIT 0,1 ",nativeQuery = true)
   User searchUserByEmailOrPhone(@Param("emailOrPhone") String emailOrPhone);
+
+  @Query(value = "SELECT * FROM user WHERE email = ?1 LIMIT 0, 1",nativeQuery = true)
+  User checkEmailHave(String email);
+
+  @Query(value = "SELECT * FROM user WHERE password = ?1 AND id = ?2 ",nativeQuery = true)
+  User checkPassword(String password,String idUser);
+
+  @Modifying
+  @Transactional
+  @Query(value = "UPDATE user SET phone = ?1 WHERE id = ?2 ",nativeQuery = true)
+  int updatePhone(String phone,String idUser);
+
+  @Modifying
+  @Transactional
+  @Query(value = "UPDATE user SET email = ?1 WHERE id = ?2 ",nativeQuery = true)
+  int updateEmail(String email,String idUser);
 
 }

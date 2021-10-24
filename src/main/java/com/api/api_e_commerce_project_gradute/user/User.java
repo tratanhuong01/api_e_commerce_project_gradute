@@ -55,7 +55,7 @@ public class User {
 //  private String concat;
 
   @Column
-  private Date birthday;
+  private String birthday;
 
   @Column
   private String avatar;
@@ -96,6 +96,47 @@ public class User {
   @Column
   private int isRegister;
 
+  @Column
+  private String token;
+
+  @Column
+  private String googleId;
+
+  @Column
+  private String facebookId;
+
+  public String getBirthday() {
+    return birthday;
+  }
+
+  public void setBirthday(String birthday) {
+    this.birthday = birthday;
+  }
+
+  public String getToken() {
+    return token;
+  }
+
+  public void setToken(String token) {
+    this.token = token;
+  }
+
+  public String getGoogleId() {
+    return googleId;
+  }
+
+  public void setGoogleId(String googleId) {
+    this.googleId = googleId;
+  }
+
+  public String getFacebookId() {
+    return facebookId;
+  }
+
+  public void setFacebookId(String facebookId) {
+    this.facebookId = facebookId;
+  }
+
   public int getIsRegister() {
     return isRegister;
   }
@@ -118,10 +159,6 @@ public class User {
 
   public void setStatus(int status) {
     this.status = status;
-  }
-
-  public void setBirthday(Date birthday) {
-    this.birthday = birthday;
   }
 
   public String getAvatar() {
@@ -188,15 +225,16 @@ public class User {
     this.lastName = lastName;
   }
 
-  public Date getBirthday() {
-    return birthday;
-  }
+//  public Date getBirthday() {
+//    return birthday;
+//  }
 
-  public void setBirthday(String birthday) throws ParseException {
-    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-    Date parsed = format.parse(birthday);
-    this.birthday = parsed;
-  }
+//  public void setBirthday(String birthday) throws ParseException {
+//    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+//    Date parsed = format.parse(birthday);
+//    this.birthday = parsed;
+//  }
+
 
   public String getSex() {
     return sex;

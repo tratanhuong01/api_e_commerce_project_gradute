@@ -15,7 +15,7 @@ public class UserCriteria {
   private Integer status;
   private Integer verifyPhone;
   private Integer verifyEmail;
-  private Integer userType;
+  private String userType;
   private Integer offset;
   private Integer limit;
   private String timeRegisterSorter;

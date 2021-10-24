@@ -52,15 +52,15 @@ public final class UserSpecifications {
     return userSpecification;
   }
 
-  public static Specification<User> typeUser(Integer typeUser) {
+  public static Specification<User> typeUser(String typeUser) {
     if (typeUser != null)
       if (userSpecification == null)
         userSpecification = (root,query,builder) -> {
-          return builder.equal(root.get("type"),typeUser);
+          return builder.equal(root.join("userRole").get("id"),typeUser);
         };
       else
         userSpecification = userSpecification.and((root,query,builder) -> {
-          return builder.equal(root.get("type"), typeUser);
+          return builder.equal(root.join("userRole").get("id"), typeUser);
         });
     return userSpecification;
   }

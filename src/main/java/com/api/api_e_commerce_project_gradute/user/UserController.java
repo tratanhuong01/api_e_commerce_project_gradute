@@ -24,7 +24,7 @@ public class UserController {
   MailService mailService;
 
   @GetMapping("userFilters")
-  public List<UserFull> getAllUsersLimit(Integer userType, String sex, Integer verifyPhone, Integer ageFrom,
+  public List<UserFull> getAllUsersLimit(String userType, String sex, Integer verifyPhone, Integer ageFrom,
                                     Integer ageTo, Integer status, Integer verifyEmail,String ageSorter,
                                     String timeRegisterSorter,String keyword,Integer offset, Integer limit,
                                     Integer isRegister) {
@@ -47,7 +47,7 @@ public class UserController {
   }
 
   @GetMapping("userFiltersAll")
-  public Integer getAllUsersAll(Integer userType, String sex, Integer verifyPhone, Integer ageFrom,
+  public Integer getAllUsersAll(String userType, String sex, Integer verifyPhone, Integer ageFrom,
                                     Integer ageTo, Integer status, Integer verifyEmail,String ageSorter,
                                     String timeRegisterSorter,String keyword,Integer isRegister) {
     UserCriteria userCriteria = UserCriteria.builder().
@@ -150,19 +150,14 @@ public class UserController {
   }
 
   @GetMapping("getUserByTypeLimit/")
-  public List<User> getUserByTypeLimit(@RequestParam(required = false) int type , @RequestParam(required = false) int offset,
+  public List<User> getUserByTypeLimit(@RequestParam(required = false) String idRole , @RequestParam(required = false) int offset,
                                        @RequestParam(required = false) int limit) {
-    return userService.getUserByTypeLimit(type, offset, limit);
+    return userService.getUserByTypeLimit(idRole, offset, limit);
   }
 
   @PutMapping("users/update/status/")
   public int updateStatusUser(@RequestBody UpdateStatus updateStatus) {
     return userService.updateStatusUser(updateStatus.getValue(),updateStatus.getId());
-  }
-
-  @PostMapping("searchUserByEmailOrPhone")
-  public User searchUserByEmailOrPhone(@RequestBody String emailOrPhone) {
-    return userService.searchUserByEmailOrPhone(emailOrPhone);
   }
 
   @PostMapping("getUserByIdRole")
@@ -173,6 +168,31 @@ public class UserController {
   @DeleteMapping("users")
   public void deleteUser(@RequestBody User user) {
     userService.deleteUser(user);
+  }
+
+  @PostMapping("checkEmailHave")
+  public UserDetail checkEmailHave(@RequestBody String email) {
+    return userService.checkEmailHave(email);
+  }
+
+  @PostMapping("checkPassword/")
+  public User checkPassword(@RequestParam String idUser,@RequestBody String password) {
+    return userService.checkPassword(password,idUser);
+  }
+
+  @PutMapping("updatePhone/")
+  public int updatePhone(@RequestParam String idUser,@RequestBody String phone) {
+    return userService.updatePhone(idUser, phone);
+  }
+
+  @PutMapping("updateEmail/")
+  public int updateEmail(@RequestParam String idUser,@RequestBody String email) {
+    return userService.updateEmail(idUser, email);
+  }
+
+  @PostMapping("searchUserByEmailOrPhone")
+  public User searchUserByEmailOrPhone(@RequestBody String emailOrPhone) {
+    return userService.searchUserByEmailOrPhone(emailOrPhone);
   }
 
 }

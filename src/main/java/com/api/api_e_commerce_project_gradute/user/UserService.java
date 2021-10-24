@@ -199,8 +199,8 @@ public class UserService {
       return userList.get(0 + (int)(Math.random() * (((userList.size() - 1) - 0) + 1)));
   }
 
-  public List<User> getUserByTypeLimit(int type,int offset,int limit) {
-    return userRepository.getUserByTypeLimit(type,offset,limit);
+  public List<User> getUserByTypeLimit(String idRole,int offset,int limit) {
+    return userRepository.getUserByTypeLimit(idRole,offset,limit);
   }
 
   public Integer filterUserAll(UserCriteria userCriteria) {
@@ -247,8 +247,31 @@ public class UserService {
   }
 
   public List<User> getUserByIdRole(String role) {
-    System.out.println(role);
     return userRepository.getUserByIdRole(role);
+  }
+
+  public UserDetail checkEmailHave(String email) {
+    UserDetail userDetail = null;
+    User user = userRepository.checkEmailHave(email);
+    if (user != null) {
+      userDetail = new UserDetail();
+      userDetail.setUser(user);
+      userDetail.setStatus(200);
+      userDetail.setToken(TokenJWTUtils.generateJwt(user.getId()));
+    }
+    return userDetail;
+  }
+
+  public User checkPassword(String password,String idUser) {
+    return userRepository.checkPassword(DigestUtils.md5Hex(password).toUpperCase(),idUser);
+  }
+
+  public int updatePhone(String phone,String idUser) {
+    return userRepository.updatePhone(phone, idUser);
+  }
+
+  public int updateEmail(String email,String idUser) {
+    return userRepository.updatePhone(email, idUser);
   }
 
 }
