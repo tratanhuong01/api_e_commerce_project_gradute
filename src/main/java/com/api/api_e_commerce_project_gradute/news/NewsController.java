@@ -126,4 +126,9 @@ public class  NewsController {
     newsService.deleteNews(news);
   }
 
+  @PostMapping("getNewsByIdCategory")
+  public List<News> getNewsByIdCategory(@RequestBody String idCategoryNews) {
+    return newsService.getNewsByIdCategory(idCategoryNews);
+  }
+
 }

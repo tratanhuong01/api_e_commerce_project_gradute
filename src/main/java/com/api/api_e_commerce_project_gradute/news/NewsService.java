@@ -126,4 +126,9 @@ public class NewsService {
   public void deleteNews(News news) {
     newsRepository.delete(news);
   }
+
+  public List<News> getNewsByIdCategory(String idCategoryNews) {
+    return newsRepository.getNewsByIdCategory(idCategoryNews);
+  }
+
 }
