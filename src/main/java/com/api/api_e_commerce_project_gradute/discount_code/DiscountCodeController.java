@@ -63,9 +63,8 @@ public class DiscountCodeController {
 
   @GetMapping("discountCodes/check/isUsed/")
   public DiscountCode checkUserIsUsed(@RequestParam(required = false) String code,
-                                      @RequestParam(required = false) String idUser,
-                                      @RequestParam(required = false) int isUsed) {
-    return discountCodeService.checkUserIsUsed(code,idUser,isUsed);
+                                      @RequestParam(required = false) String idUser) {
+    return discountCodeService.checkUserIsUsed(code,idUser);
   }
 
   @GetMapping("discountCodes/check/valid/")

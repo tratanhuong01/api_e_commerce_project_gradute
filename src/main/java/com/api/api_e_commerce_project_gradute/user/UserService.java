@@ -33,8 +33,8 @@ public class UserService {
     return userRepository.findAll();
   }
 
-  public Optional<User> getUserById(String idUser) {
-    return userRepository.findById(idUser);
+  public User getUserById(String idUser) {
+    return userRepository.getUserByIdUser(idUser);
   }
 
   public User addUser(User user) {
@@ -176,8 +176,9 @@ public class UserService {
     Random rnd = new Random();
     int number = rnd.nextInt(9999999);
     dataSendMail.setEmail(user.getEmail());
-    dataSendMail.setBody("Your code is " + number);
+    dataSendMail.setBody(String.valueOf(number));
     dataSendMail.setTopic("Verify Account Register In Website");
+    dataSendMail.setUser(user);
     mailService.sendMail(dataSendMail);
     userRepository.updateCodeEmail(String.valueOf(number),user.getId());
     return String.valueOf(number);

@@ -37,7 +37,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
         .antMatchers(HttpMethod.PUT,"/setDefaultAddress","/updateViewNews","/infoProducts/**",
-            "/users","/users/**").permitAll()
+            "/users","/users/**","/discountCodes").permitAll()
 
 
         .antMatchers(HttpMethod.GET, "/colorsAll","/brandsAll","/getProductIndex","/carts/**",
@@ -62,7 +62,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/getTeleSupport","/infoProducts","/infoProductsAll/**","/infoProductsAll","/infoProducts/**",
             "/getSlidesActive","/getBannerIndexShow","/configWebsites/**","/categoryNews","/imageOthers",
             "/imageOthers/**","/users","/users/**","/getProductByCategoryAll","/getProductByCategoryAll/**",
-            "/getProductByCategoryLimit","/getProductByCategoryLimit/**","/productsFilterAll","/bills/**").permitAll()
+            "/getProductByCategoryLimit","/getProductByCategoryLimit/**","/productsFilterAll","/bills/**",
+            "/sendMailOrders").permitAll()
 
 
         .anyRequest().authenticated()

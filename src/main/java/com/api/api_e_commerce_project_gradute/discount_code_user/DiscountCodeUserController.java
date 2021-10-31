@@ -29,6 +29,11 @@ public class DiscountCodeUserController {
     return discountCodeUserService.checkDiscountCodeUserHave(idDiscountCode, idUser);
   }
 
+  @GetMapping("discountCodeUsers/validAdd/{code}/{idUser}")
+  public DiscountCodeUser checkDiscountCodeUserValidAdd(@PathVariable String code,@PathVariable String idUser) {
+    return discountCodeUserService.checkDiscountCodeUserValidAdd(code, idUser);
+  }
+
   @GetMapping("discountCodeUsers/update/isUsed/")
   public int updateDiscountCodeUser(@RequestParam(required = false) int isUsed,@RequestParam(required = false) String idUser,
                                     @RequestParam(required = false) Long idDiscountCode) {

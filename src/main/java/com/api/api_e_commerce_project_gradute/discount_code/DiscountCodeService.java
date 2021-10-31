@@ -37,8 +37,8 @@ public class DiscountCodeService {
     return discountCodeRepository.checkDiscountCodeIsValid(code);
   }
 
-  public DiscountCode checkUserIsUsed(String code,String idUser,int isUsed) {
-    return discountCodeRepository.checkUserIsUsed(code, idUser,isUsed);
+  public DiscountCode checkUserIsUsed(String code,String idUser) {
+    return discountCodeRepository.checkUserIsUsed(code, idUser);
   }
 
   public DiscountCode checkDiscountCodeStillExpired(String code) {
