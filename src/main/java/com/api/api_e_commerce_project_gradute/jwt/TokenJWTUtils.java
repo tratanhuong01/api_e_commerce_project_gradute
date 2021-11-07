@@ -24,6 +24,16 @@ public class TokenJWTUtils {
         .signWith(SignatureAlgorithm.HS512, SECRET)
         .compact();
   }
+
+  public static String generateJwtByTime(String id,Long time) {
+    long expirationTime = time;
+    return Jwts.builder()
+            .setId(id)
+            .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
+            .signWith(SignatureAlgorithm.HS512, SECRET)
+            .compact();
+  }
+
   public static String parseTokenJWT(String token) {
     Claims claims = Jwts.parser()
         .setSigningKey(SECRET)

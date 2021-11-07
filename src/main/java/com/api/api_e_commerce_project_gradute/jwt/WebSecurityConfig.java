@@ -30,14 +30,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/comments","/comments/**","/commentsAll/**","/commentsAll","/getNewsBySlug","/getUserFromJWT",
             "/adminCheckLoginJWT","/users/email","/users/phone","/users","/sendCodeEmail","/bills","/billDetails",
             "/billDetails/**","/searchUserByEmailOrPhone","/getListPasswordReset","/passwordResets",
-            "/verifyAccountJWT", "/checkEmailHave","/getNewsByIdCategory","/contacts").permitAll()
+            "/verifyAccountJWT", "/checkEmailHave","/getNewsByIdCategory","/contacts","/updateImageSingle").permitAll()
 
 
         .antMatchers(HttpMethod.DELETE,"/addresses").permitAll()
 
 
         .antMatchers(HttpMethod.PUT,"/setDefaultAddress","/updateViewNews","/infoProducts/**",
-            "/users","/users/**","/discountCodes").permitAll()
+            "/users","/users/**","/discountCodes","/bills").permitAll()
 
 
         .antMatchers(HttpMethod.GET, "/colorsAll","/brandsAll","/getProductIndex","/carts/**",

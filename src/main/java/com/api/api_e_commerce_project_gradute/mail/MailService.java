@@ -36,7 +36,9 @@ public class MailService {
 
   public void mailOrderProduct(BillFull billFull,String email,String topic) {
     String content = "";
+    Integer total = 0;
     for (BillDetailFull billDetailFull: billFull.getBillDetailList()) {
+      total += billDetailFull.getBillDetail().getPrice();
       content += "<div class=\"item\">\n" +
               "        <div class=\"item_index\">1</div>\n" +
               "        <img\n" +
@@ -53,7 +55,7 @@ public class MailService {
               "        </div>\n" +
               "      </div>";
     }
-    String main = orderProduct(content,billFull.getBill());
+    String main = orderProduct(content,billFull.getBill(),total);
     MimeMessage mimeMessage = javaMailSender.createMimeMessage();
     try {
       MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, false, "UTF-8");
@@ -130,7 +132,8 @@ public class MailService {
 
   }
 
-  public String orderProduct(String contentAllItem, Bill bill) {
+  public String orderProduct(String contentAllItem, Bill bill,Integer total) {
+    long EXPIRATION_TIME = 3_600; // 1 day
     StringBuilder string = new StringBuilder();
     string.append("<!DOCTYPE html>")
     .append("<html lang=\"en\">")
@@ -212,22 +215,27 @@ public class MailService {
     .append("      <br /><br />")
     .append("      Ngày đặt hàng : " + bill.getTimeCreated())
     .append("      <br /><br />")
-    .append("      Thời gian giao hàng dự kiến : " + "")
-    .append("      <br />")
+    .append("      Thời gian giao hàng dự kiến : " + bill.getTimeIntend())
     .append("      <br />")
     .append("      <hr />")
     .append("      <br />")
     .append(contentAllItem)
     .append("      <div>")
-    .append("        <p>Tổng tiền : " + new DecimalFormat("###,###,###").format(bill.getTotal()) + "đ</p>")
+    .append("        <p>Tổng tiền : " + new DecimalFormat("###,###,###").format(total) + "đ</p>")
     .append("        <p>Phí vận chuyển : " + new DecimalFormat("###,###,###").format(bill.getFee()) + "đ</p>")
-    .append("        <p>Tổng thanh toán : " + new DecimalFormat("###,###,###").format(bill.getTotal() + bill.getFee()) + "</p>")
+    .append("        <p>Giảm giá : " + new DecimalFormat("###,###,###").format(bill.getSale()) + "đ</p>")
+    .append("        <p>Tổng thanh toán : " + new DecimalFormat("###,###,###").format(bill.getTotal()) + "</p>")
     .append("")
     .append("        <di style=\"display: flex; justify-content: center;\">")
-    .append("          <a href=\"\" style=\"padding: 12px 24px;border: 2px solid gray;color: white;background-color : gray; font-weight: bold; margin: 0px 10px;\">")
+    .append("          <a href='http://localhost:3000/verify/bill/customer?access_token=" + TokenJWTUtils.generateJwtByTime(
+            String.valueOf(bill.getId()),EXPIRATION_TIME) + "&type="+ TokenJWTUtils.generateJwtByTime(String.valueOf(-1),EXPIRATION_TIME)
+            + "' style=\"padding: 12px 24px;border: 2px solid gray;color: white;background-color : gray; font-weight: bold; margin: 0px 10px;\">")
     .append("            Hủy đơn hàng")
     .append("          </a>")
-    .append("          <a href=\"\" style=\"padding: 12px 24px;border: 2px solid #f36438;background-color: white; color:  #f36438;font-weight: bold; margin: 0px 10px;\">")
+    .append("          <a href='http://localhost:3000/verify/bill/customer?access_token=" + TokenJWTUtils.generateJwtByTime(
+                       String.valueOf(bill.getId()),EXPIRATION_TIME) + "&type=" +
+            TokenJWTUtils.generateJwtByTime(String.valueOf(0),EXPIRATION_TIME) +"'" +
+            " style=\"padding: 12px 24px;border: 2px solid #f36438;background-color: white; color:  #f36438;font-weight: bold; margin: 0px 10px;\">")
     .append("            Xác nhận đơn hàng")
     .append("          </a>")
     .append("        </div>")

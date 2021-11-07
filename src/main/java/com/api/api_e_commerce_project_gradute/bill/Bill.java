@@ -57,6 +57,39 @@ public class Bill {
   @Column
   private Timestamp timeCreated;
 
+  @Column
+  private Timestamp timeCompleted;
+
+  @Column
+  private Timestamp timeIntend;
+
+  @Column
+  private Timestamp timeApproval;
+
+  public Timestamp getTimeCompleted() {
+    return timeCompleted;
+  }
+
+  public void setTimeCompleted(Timestamp timeCompleted) {
+    this.timeCompleted = timeCompleted;
+  }
+
+  public Timestamp getTimeIntend() {
+    return timeIntend;
+  }
+
+  public void setTimeIntend(Timestamp timeIntend) {
+    this.timeIntend = timeIntend;
+  }
+
+  public Timestamp getTimeApproval() {
+    return timeApproval;
+  }
+
+  public void setTimeApproval(Timestamp timeApproval) {
+    this.timeApproval = timeApproval;
+  }
+
   public String getPhone() {
     return phone;
   }

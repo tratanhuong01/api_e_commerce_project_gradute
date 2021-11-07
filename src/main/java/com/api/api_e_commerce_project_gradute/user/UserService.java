@@ -50,7 +50,8 @@ public class UserService {
         id++;
       }
       user.setId(String.valueOf(id));
-      user.setPassword(DigestUtils.md5Hex(user.getPassword()).toUpperCase());
+      if (user.getPassword() != null)
+        user.setPassword(DigestUtils.md5Hex(user.getPassword()).toUpperCase());
       user.setTimeCreated((new Timestamp(new Date().getTime())));
     }
     return userRepository.save(user);

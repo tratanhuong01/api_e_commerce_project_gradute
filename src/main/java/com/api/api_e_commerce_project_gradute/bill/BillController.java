@@ -82,7 +82,7 @@ public class BillController {
 
   @PutMapping("bills")
   public Bill updateBill(@RequestBody Bill bill) {
-    return billService.addBill(bill);
+    return billService.updateBill(bill);
   }
 
   @GetMapping("bills/update/status/")
