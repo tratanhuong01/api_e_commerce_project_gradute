@@ -53,4 +53,8 @@ public class AttributeProductService {
     return attributeProductRepository.getAttributeProductByIdLineProductAndGroupAttribute(idLineProduct, idGroupAttribute);
   }
 
+  public void deleteAttributeProduct(AttributeProduct attributeProduct) {
+    attributeProductRepository.delete(attributeProduct);
+  }
+
 }

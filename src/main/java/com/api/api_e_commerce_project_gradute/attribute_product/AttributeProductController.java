@@ -49,4 +49,9 @@ public class AttributeProductController {
     return attributeProductService.addAttributeProduct(attributeProduct);
   }
 
+  @DeleteMapping("attributeProducts")
+  public void deleteAttributeProduct(@RequestBody AttributeProduct attributeProduct) {
+      attributeProductService.deleteAttributeProduct(attributeProduct);
+  }
+
 }
