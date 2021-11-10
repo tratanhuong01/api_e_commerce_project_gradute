@@ -18,10 +18,10 @@ public class DiscountCode {
   private String nameDiscountCode;
 
   @Column
-  private Timestamp timeStart;
+  private String timeStart;
 
   @Column
-  private Timestamp timeExpired;
+  private String timeExpired;
 
   @Column
   private int percent;
@@ -97,19 +97,19 @@ public class DiscountCode {
     this.code = code;
   }
 
-  public Timestamp getTimeStart() {
+  public String getTimeStart() {
     return timeStart;
   }
 
-  public void setTimeStart(Timestamp timeStart) {
+  public void setTimeStart(String timeStart) {
     this.timeStart = timeStart;
   }
 
-  public Timestamp getTimeExpired() {
+  public String getTimeExpired() {
     return timeExpired;
   }
 
-  public void setTimeExpired(Timestamp timeExpired) {
+  public void setTimeExpired(String timeExpired) {
     this.timeExpired = timeExpired;
   }
 

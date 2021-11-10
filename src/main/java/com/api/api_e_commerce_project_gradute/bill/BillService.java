@@ -82,8 +82,9 @@ public class BillService {
     int year = cal.get(Calendar.YEAR);
     int month = cal.get(Calendar.MONTH);
     for (int i = 0; i < 6; i++) {
+      Integer number = billRepository.getProductSixMonthCurrent(6 - i);
       NumberByMonth numberByMonth = new NumberByMonth();
-      numberByMonth.setNumber(billRepository.getProductSixMonthCurrent(6 - i));
+      numberByMonth.setNumber(number == null ? 0 : number);
       numberByMonth.setMonth("Tháng " + (month - 5 + i) + "/" + year);
       numberByMonthList.add(numberByMonth);
     }

@@ -12,6 +12,7 @@ public final class ContactSpecification {
     sorter("timeCreated",contactCriteria.getTimeCreated());
     timeCreated(contactCriteria.getTimeCreatedFrom(),contactCriteria.getTimeCreatedTo());
     search(contactCriteria.getKeyword());
+    status(contactCriteria.getStatus());
     return contactSpecification;
   }
 
@@ -56,6 +57,7 @@ public final class ContactSpecification {
         });
     return contactSpecification;
   }
+
   public static Specification<Contact> timeCreated(String timeCreatedFrom, String timeCreatedTo) {
     if (timeCreatedFrom != null & timeCreatedTo != null) {
       if (contactSpecification == null) {
@@ -70,6 +72,20 @@ public final class ContactSpecification {
               builder.lessThanOrEqualTo(root.get("timeCreated"),timeCreatedTo));
         });
       }
+    }
+    return contactSpecification;
+  }
+
+  public static Specification<Contact> status(Integer status) {
+    if (status != null) {
+      if (contactSpecification == null)
+          contactSpecification = (root,query,builder)  -> {
+            return builder.equal(root.get("status"),status);
+          };
+      else
+        contactSpecification = contactSpecification.and((root,query,builder)  -> {
+          return builder.equal(root.get("status"),status);
+        });
     }
     return contactSpecification;
   }

@@ -27,6 +27,17 @@ public class Contact {
   @Column
   private Timestamp timeCreated;
 
+  @Column
+  private Integer status;
+
+  public Integer getStatus() {
+    return status;
+  }
+
+  public void setStatus(Integer status) {
+    this.status = status;
+  }
+
   public Long getId() {
     return id;
   }

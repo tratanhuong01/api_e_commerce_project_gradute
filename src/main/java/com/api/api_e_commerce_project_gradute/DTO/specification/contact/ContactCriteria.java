@@ -16,5 +16,6 @@ public class ContactCriteria {
   private String timeCreatedFrom;
   private String timeCreatedTo;
   private String timeCreated;
+  private Integer status;
 
 }

@@ -17,7 +17,7 @@ public class ContactController {
   @GetMapping("contactFilters")
   public List<Contact> getListContactLimit(String timeCreated,String timeCreatedFrom,
                                            String timeCreatedTo,Integer offset,
-                                           Integer limit,String keyword) {
+                                           Integer limit,String keyword,Integer status) {
     ContactCriteria contactCriteria = ContactCriteria.builder()
         .timeCreated(timeCreated)
         .timeCreatedFrom(timeCreatedFrom)
@@ -25,18 +25,20 @@ public class ContactController {
         .keyword(keyword)
         .offset(offset)
         .limit(limit)
+        .status(status)
         .build();
     return contactService.getListContactLimit(contactCriteria);
   }
 
   @GetMapping("contactFiltersAll")
   public Integer getListContactAll(String timeCreated,String timeCreatedFrom,String keyword,
-                                   String timeCreatedTo) {
+                                   String timeCreatedTo,Integer status) {
     ContactCriteria contactCriteria = ContactCriteria.builder()
         .timeCreated(timeCreated)
         .timeCreatedFrom(timeCreatedFrom)
         .keyword(keyword)
         .timeCreatedTo(timeCreatedTo)
+        .status(status)
         .build();
     return contactService.getListContactAll(contactCriteria);
   }

@@ -249,4 +249,17 @@ public class MailService {
     return string.toString();
   }
 
+  public void sendMailContact(DataMail dataMail) {
+    MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+    try {
+      MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, false, "UTF-8");
+      messageHelper.setFrom("ServicesHsmart");
+      messageHelper.setTo(dataMail.getEmail());
+      messageHelper.setSubject(dataMail.getTopic());
+      messageHelper.setText(dataMail.getContent(),true);
+      javaMailSender.send(mimeMessage);
+    } catch (Exception ex) {
+    }
+  }
+
 }
