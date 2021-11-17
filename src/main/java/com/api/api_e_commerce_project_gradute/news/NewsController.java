@@ -19,23 +19,28 @@ public class  NewsController {
   //filter admin
   @GetMapping("newFiltersAll")
   public Integer getAllNewsAdmin(String category,String poster,String viewSorter,String commentSorter,
-                                 String keyword) {
+                                 String keyword,String timeCreatedFrom , String timeCreatedTo) {
     NewsCriteria newsCriteria = NewsCriteria.builder()
         .category(category)
         .poster(poster)
         .viewSorter(viewSorter)
         .commentSorter(commentSorter)
         .keyword(keyword)
+        .timeCreatedFrom(timeCreatedFrom)
+        .timeCreatedTo(timeCreatedTo)
         .build();
     return newsService.getNewsAllAdmin(newsCriteria);
   }
 
   @GetMapping("newFilters")
   public List<News> getLimitNewsAdmin(String category,String poster,String viewSorter,String commentSorter,
-                                      Integer offset,Integer limit,String keyword) {
+                                      Integer offset,Integer limit,String keyword,String timeCreatedTo,
+                                      String timeCreatedFrom) {
     NewsCriteria newsCriteria = NewsCriteria.builder()
         .category(category)
         .poster(poster)
+        .timeCreatedFrom(timeCreatedFrom)
+        .timeCreatedTo(timeCreatedTo)
         .viewSorter(viewSorter)
         .commentSorter(commentSorter)
         .offset(offset)

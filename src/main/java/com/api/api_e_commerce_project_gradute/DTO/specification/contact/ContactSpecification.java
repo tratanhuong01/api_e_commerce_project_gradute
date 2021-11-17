@@ -62,14 +62,18 @@ public final class ContactSpecification {
     if (timeCreatedFrom != null & timeCreatedTo != null) {
       if (contactSpecification == null) {
         contactSpecification = (root,query,builder) -> {
-          return builder.and(builder.greaterThanOrEqualTo(root.get("timeCreated"),timeCreatedFrom),
-              builder.lessThanOrEqualTo(root.get("timeCreated"),timeCreatedTo));
+          return builder.and(builder.greaterThanOrEqualTo(root.get("timeCreated").as(String.class),
+                          timeCreatedFrom + " 00:00:00"),
+              builder.lessThanOrEqualTo(root.get("timeCreated").as(String.class),
+                      timeCreatedTo + " 00:00:00"));
         };
       }
       else {
         contactSpecification = contactSpecification.and((root,query,builder) -> {
-          return builder.and(builder.greaterThanOrEqualTo(root.get("timeCreated"),timeCreatedFrom),
-              builder.lessThanOrEqualTo(root.get("timeCreated"),timeCreatedTo));
+          return builder.and(builder.greaterThanOrEqualTo(root.get("timeCreated").as(String.class),
+                          timeCreatedFrom + " 00:00:00"),
+              builder.lessThanOrEqualTo(root.get("timeCreated").as(String.class),
+                      timeCreatedTo + " 00:00:00"));
         });
       }
     }

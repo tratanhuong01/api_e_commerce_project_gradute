@@ -27,7 +27,7 @@ public class UserController {
   public List<UserFull> getAllUsersLimit(String userType, String sex, Integer verifyPhone, Integer ageFrom,
                                     Integer ageTo, Integer status, Integer verifyEmail,String ageSorter,
                                     String timeRegisterSorter,String keyword,Integer offset, Integer limit,
-                                    Integer isRegister) {
+                                    Integer isRegister,String timeCreatedFrom,String timeCreatedTo) {
     UserCriteria userCriteria = UserCriteria.builder().
         userType(userType).
         sex(sex).
@@ -42,6 +42,8 @@ public class UserController {
         isRegister(isRegister).
         offset(offset).
         limit(limit).
+        timeCreatedFrom(timeCreatedFrom).
+        timeCreatedTo(timeCreatedTo).
         build();
     return userService.filterUserLimit(userCriteria);
   }
@@ -49,7 +51,8 @@ public class UserController {
   @GetMapping("userFiltersAll")
   public Integer getAllUsersAll(String userType, String sex, Integer verifyPhone, Integer ageFrom,
                                     Integer ageTo, Integer status, Integer verifyEmail,String ageSorter,
-                                    String timeRegisterSorter,String keyword,Integer isRegister) {
+                                    String timeRegisterSorter,String keyword,Integer isRegister,
+                                String timeCreatedFrom,String timeCreatedTo) {
     UserCriteria userCriteria = UserCriteria.builder().
         userType(userType).
         sex(sex).
@@ -62,6 +65,8 @@ public class UserController {
         timeRegisterSorter(timeRegisterSorter).
         keyword(keyword).
         isRegister(isRegister).
+        timeCreatedTo(timeCreatedTo).
+        timeCreatedFrom(timeCreatedFrom).
         build();
     return userService.filterUserAll(userCriteria);
   }

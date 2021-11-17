@@ -63,7 +63,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/getSlidesActive","/getBannerIndexShow","/configWebsites/**","/categoryNews","/imageOthers",
             "/imageOthers/**","/users","/users/**","/getProductByCategoryAll","/getProductByCategoryAll/**",
             "/getProductByCategoryLimit","/getProductByCategoryLimit/**","/productsFilterAll","/bills/**",
-            "/sendMailOrders").permitAll()
+            "/sendMailOrders","/getProductByLineProductFirst").permitAll()
 
 
         .anyRequest().authenticated()

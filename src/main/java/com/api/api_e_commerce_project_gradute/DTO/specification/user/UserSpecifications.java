@@ -3,10 +3,18 @@ package com.api.api_e_commerce_project_gradute.DTO.specification.user;
 import com.api.api_e_commerce_project_gradute.user.User;
 import org.springframework.data.jpa.domain.Specification;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Subquery;
+import java.sql.Time;
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.Locale;
 
 public final class UserSpecifications {
 
@@ -14,7 +22,10 @@ public final class UserSpecifications {
 
   public static Specification<User> createUserSpecification(UserCriteria userCriteria) {
     userSpecification = null;
-    typeUser(userCriteria.getUserType());
+    if (userCriteria.getUserType().equals("CUSTOMER"))
+      typeUserCustomer(userCriteria.getUserType());
+    else
+      typeUserLeader();
     sexFilter(userCriteria.getSex());
     status(userCriteria.getStatus());
     age(userCriteria.getAgeFrom(), userCriteria.getAgeTo());
@@ -52,7 +63,7 @@ public final class UserSpecifications {
     return userSpecification;
   }
 
-  public static Specification<User> typeUser(String typeUser) {
+  public static Specification<User> typeUserCustomer(String typeUser) {
     if (typeUser != null)
       if (userSpecification == null)
         userSpecification = (root,query,builder) -> {
@@ -62,6 +73,20 @@ public final class UserSpecifications {
         userSpecification = userSpecification.and((root,query,builder) -> {
           return builder.equal(root.join("userRole").get("id"), typeUser);
         });
+    return userSpecification;
+  }
+
+  public static Specification<User> typeUserLeader() {
+    if (userSpecification == null)
+      userSpecification = (root,query,builder) -> {
+        return builder.and(builder.notEqual(root.join("userRole").get("id"),"CUSTOMER"),
+                builder.notEqual(root.join("userRole").get("id"),"LEADER"));
+      };
+    else
+      userSpecification = userSpecification.and((root,query,builder) -> {
+        return builder.and(builder.notEqual(root.join("userRole").get("id"),"CUSTOMER"),
+                builder.notEqual(root.join("userRole").get("id"),"LEADER"));
+      });
     return userSpecification;
   }
 
@@ -211,16 +236,20 @@ public final class UserSpecifications {
     if (timeCreatedFrom != null & timeCreatedTo != null) {
       if (userSpecification == null) {
         userSpecification = (root,query,builder) -> {
-          return builder.and(builder.greaterThanOrEqualTo(root.get("timeCreated"),timeCreatedFrom),
-              builder.lessThanOrEqualTo(root.get("timeCreated"),timeCreatedTo));
-        };
-      }
-      else {
-        userSpecification = userSpecification.and((root,query,builder) -> {
-          return builder.and(builder.greaterThanOrEqualTo(root.get("timeCreated"),timeCreatedFrom),
-              builder.lessThanOrEqualTo(root.get("timeCreated"),timeCreatedTo));
-        });
-      }
+          return builder.and(builder.greaterThanOrEqualTo(root.get("timeCreated").as(String.class),
+                          timeCreatedFrom + " 00:00:00"),
+                  builder.lessThanOrEqualTo(root.get("timeCreated").as(String.class),
+                          timeCreatedTo + " 00:00:00"));
+          };
+        }
+        else {
+          userSpecification = userSpecification.and((root,query,builder) -> {
+            return builder.and(builder.greaterThanOrEqualTo(root.get("timeCreated").as(String.class),
+                            timeCreatedFrom + " 00:00:00"),
+                    builder.lessThanOrEqualTo(root.get("timeCreated").as(String.class),
+                            timeCreatedTo + " 00:00:00"));
+          });
+        }
     }
     return userSpecification;
   }

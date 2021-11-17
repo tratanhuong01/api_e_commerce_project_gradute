@@ -20,7 +20,8 @@ public class BillController {
 
   @GetMapping("billFiltersAll")
   public Integer getBillFiltersAll(Integer status,String timeCompletedSorter,String timeCreatedSorter,
-                                   String moneyOrderSorter,String feeDeliverySorter,String keyword) {
+                                   String moneyOrderSorter,String feeDeliverySorter,String keyword,
+                                   String timeCreatedFrom,String timeCreatedTo) {
     BillCriteria billCriteria = BillCriteria.builder()
         .status(status)
         .timeCompletedSorter(timeCompletedSorter)
@@ -28,6 +29,8 @@ public class BillController {
         .moneyOrderSorter(moneyOrderSorter)
         .feeDeliverySorter(feeDeliverySorter)
         .keyword(keyword)
+        .timeCreatedFrom(timeCreatedFrom)
+        .timeCreatedTo(timeCreatedTo)
         .build();
     return billService.getBillFiltersAll(billCriteria);
   }
@@ -35,7 +38,7 @@ public class BillController {
   @GetMapping("billFilters")
   public List<Bill> getBillFiltersLimit(Integer status, String timeCompletedSorter, String timeCreatedSorter,
                                         String moneyOrderSorter, String feeDeliverySorter,Integer offset,
-                                        Integer limit,String keyword) {
+                                        Integer limit,String keyword,String timeCreatedFrom,String timeCreatedTo) {
     BillCriteria billCriteria = BillCriteria.builder()
         .status(status)
         .timeCompletedSorter(timeCompletedSorter)
@@ -45,6 +48,8 @@ public class BillController {
         .offset(offset)
         .limit(limit)
         .keyword(keyword)
+        .timeCreatedFrom(timeCreatedFrom)
+        .timeCreatedTo(timeCreatedTo)
         .build();
     return billService.getBillFiltersLimit(billCriteria);
   }

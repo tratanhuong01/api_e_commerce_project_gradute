@@ -91,14 +91,18 @@ public final class BillSpecifications {
     if (timeCreatedFrom != null & timeCreatedTo != null) {
       if (billSpecification == null) {
         billSpecification = (root,query,builder) -> {
-          return builder.and(builder.greaterThanOrEqualTo(root.get("timeCreated"),timeCreatedFrom),
-              builder.lessThanOrEqualTo(root.get("timeCreated"),timeCreatedTo));
+          return builder.and(builder.greaterThanOrEqualTo(root.get("timeCreated").as(String.class),
+                          timeCreatedFrom + " 00:00:00"),
+              builder.lessThanOrEqualTo(root.get("timeCreated").as(String.class),
+                      timeCreatedTo + " 00:00:00"));
         };
       }
       else {
         billSpecification = billSpecification.and((root,query,builder) -> {
-          return builder.and(builder.greaterThanOrEqualTo(root.get("timeCreated"),timeCreatedFrom),
-              builder.lessThanOrEqualTo(root.get("timeCreated"),timeCreatedTo));
+          return builder.and(builder.greaterThanOrEqualTo(root.get("timeCreated").as(String.class),
+                          timeCreatedFrom + " 00:00:00"),
+              builder.lessThanOrEqualTo(root.get("timeCreated").as(String.class),
+                      timeCreatedTo + " 00:00:00"));
         });
       }
     }

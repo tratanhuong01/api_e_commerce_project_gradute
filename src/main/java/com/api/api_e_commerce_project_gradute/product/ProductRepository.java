@@ -96,6 +96,10 @@ public interface ProductRepository extends JpaRepository<Product,String> , JpaSp
   @Query(value = COLUMN_SELECT + JOIN_TABLE + " WHERE p.id = ?1 ",nativeQuery = true)
   ProductMain getProductByIdProduct(String id);
 
+  //get first product by id line product
+  @Query(value = COLUMN_SELECT + JOIN_TABLE + " WHERE lp.id = ?1 ",nativeQuery = true)
+  List<ProductMain> getProductByIdProductFirst(String id);
+
   // get distinct id line product all
   @Query(value = "SELECT DISTINCT id_line_product FROM product ",nativeQuery = true)
   List<String> getDistinctIdLineProduct();

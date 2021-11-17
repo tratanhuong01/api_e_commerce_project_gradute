@@ -24,12 +24,14 @@ public class ProductController {
   public Integer filterProductAll(String group,Long color,Long ram,Long rom,String brand,Integer priceFrom,
                                   Integer priceTo,Integer typeProduct, String category,Integer status,
                                   String priceOutputSorter,String priceInputSorter,String productSoldSorter,
-                                  String saleSorter,String keyword) {
+                                  String saleSorter,String keyword,String timeCreatedFrom,String timeCreatedTo) {
     ProductAdminCriteria productAdminCriteria = ProductAdminCriteria.builder()
         .group(group)
         .category(category)
         .color(color)
         .brand(brand)
+        .timeCreatedFrom(timeCreatedFrom)
+        .timeCreatedTo(timeCreatedTo)
         .ram(ram)
         .rom(rom)
         .priceFrom(priceFrom)
@@ -49,11 +51,14 @@ public class ProductController {
   public List<ProductFull> filterProductLimit(String group,Long color,Long ram,Long rom,String brand,Integer priceFrom,
                                               Integer priceTo,Integer typeProduct, String category,Integer status,
                                               String priceOutputSorter,String priceInputSorter,String productSoldSorter,
-                                              String saleSorter,Integer offset,Integer limit,String keyword) {
+                                              String saleSorter,Integer offset,Integer limit,String keyword,
+                                              String timeCreatedFrom,String timeCreatedTo) {
     ProductAdminCriteria productAdminCriteria = ProductAdminCriteria.builder()
         .category(category)
         .group(group)
         .color(color)
+        .timeCreatedFrom(timeCreatedFrom)
+        .timeCreatedTo(timeCreatedTo)
         .brand(brand)
         .ram(ram)
         .rom(rom)

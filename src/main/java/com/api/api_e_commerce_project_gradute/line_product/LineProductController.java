@@ -1,9 +1,15 @@
 package com.api.api_e_commerce_project_gradute.line_product;
 
+import com.api.api_e_commerce_project_gradute.DTO.product.ProductFull;
+import com.api.api_e_commerce_project_gradute.DTO.product.ProductMain;
 import com.api.api_e_commerce_project_gradute.DTO.specification.line_product.LineProductCriteria;
+import com.api.api_e_commerce_project_gradute.product.Product;
+import com.api.api_e_commerce_project_gradute.product.ProductRepository;
+import com.api.api_e_commerce_project_gradute.product.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,25 +20,36 @@ public class LineProductController {
   @Autowired
   LineProductService lineProductService;
 
+  @Autowired
+  ProductRepository productRepository;
+
+  @Autowired
+  ProductService productService;
+
   // admin
 
   @GetMapping("lineProductFiltersAll")
-  public List<LineProduct> filtersLineProductAll(String brand,String group,String keyword) {
+  public List<LineProduct> filtersLineProductAll(String brand,String group,String keyword,
+                                                 String timeCreatedFrom,String timeCreatedTo) {
     LineProductCriteria lineProductCriteria = LineProductCriteria.builder()
         .brand(brand)
         .group(group)
         .keyword(keyword)
+        .timeCreatedFrom(timeCreatedFrom)
+        .timeCreatedTo(timeCreatedTo)
         .build();
     return lineProductService.filterLineProductsAll(lineProductCriteria);
   }
 
   @GetMapping("lineProductFilters")
   public List<LineProduct> filtersLineProductLimit(String brand,String group,String keyword,Integer offset,
-                                                   Integer limit) {
+                                                   Integer limit,String timeCreatedFrom,String timeCreatedTo) {
     LineProductCriteria lineProductCriteria = LineProductCriteria.builder()
         .brand(brand)
         .group(group)
         .keyword(keyword)
+        .timeCreatedFrom(timeCreatedFrom)
+        .timeCreatedTo(timeCreatedTo)
         .offset(offset)
         .limit(limit)
         .build();
@@ -90,6 +107,19 @@ public class LineProductController {
   @PutMapping("lineProducts")
   public LineProduct updateLineProduct(@RequestBody LineProduct lineProduct) {
     return lineProductService.updateLineProduct(lineProduct);
+  }
+
+  @GetMapping("getProductByLineProductFirst")
+  public ProductFull getProductByLineProductFirst(@RequestParam String idLineProduct) {
+    ProductFull productFull = null;
+    List<ProductMain> productMain = productRepository.getProductByIdProductFirst(idLineProduct);
+    if (productMain.size() == 0) {
+    }
+    else {
+      productFull = productService.getProductBySlug(productMain.get(0).getIdProduct(),
+              -1);
+    }
+    return productFull;
   }
 
 }

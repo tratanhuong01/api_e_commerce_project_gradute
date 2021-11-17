@@ -12,6 +12,7 @@ import com.api.api_e_commerce_project_gradute.user.User;
 import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
+import java.sql.Timestamp;
 
 @StaticMetamodel(Product.class)
 public class Product_ {
@@ -28,5 +29,7 @@ public class Product_ {
   public static volatile SingularAttribute<Memory, Integer> isShow;
   public static volatile SingularAttribute<Memory, String> slug;
   public static volatile SingularAttribute<Memory, String> describeProduct;
+  public static volatile SingularAttribute<Product, Timestamp> timeCreated;
+
 
 }

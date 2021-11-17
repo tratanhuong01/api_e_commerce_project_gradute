@@ -15,7 +15,8 @@ public class DiscountCodeController {
 
   @GetMapping("discountCodeFiltersAll")
   public Integer getDiscountCodeFiltersAll( Integer typeDiscountCode,String keyword, String expired, String newBestSorter,
-                                            String percentSorter, String maxSorter, String minSorter) {
+                                            String percentSorter, String maxSorter, String minSorter,
+                                            String timeCreatedFrom,String timeCreatedTo) {
     DiscountCodeCriteria discountCodeCriteria = DiscountCodeCriteria.builder()
         .typeDiscountCode(typeDiscountCode)
         .keyword(keyword)
@@ -24,6 +25,8 @@ public class DiscountCodeController {
         .percentSorter(percentSorter)
         .maxSorter(maxSorter)
         .minSorter(minSorter)
+        .timeCreatedFrom(timeCreatedFrom)
+        .timeCreatedTo(timeCreatedTo)
         .build();
     return discountCodeService.filterDiscountCodeAll(discountCodeCriteria);
   }
@@ -31,7 +34,7 @@ public class DiscountCodeController {
   @GetMapping("discountCodeFilters")
   public List<DiscountCode> getDiscountCodeFiltersLimit( Integer typeDiscountCode,String keyword, String expired, String newBestSorter,
                                             String percentSorter, String maxSorter, String minSorter, Integer offset,
-                                            Integer limit) {
+                                            Integer limit,String timeCreatedFrom ,String timeCreatedTo) {
     DiscountCodeCriteria discountCodeCriteria = DiscountCodeCriteria.builder()
         .typeDiscountCode(typeDiscountCode)
         .keyword(keyword)
@@ -41,6 +44,8 @@ public class DiscountCodeController {
         .maxSorter(maxSorter)
         .minSorter(minSorter)
         .offset(offset)
+        .timeCreatedFrom(timeCreatedFrom)
+        .timeCreatedTo(timeCreatedTo)
         .limit(limit)
         .build();
     return discountCodeService.filterDiscountCodeLimit(discountCodeCriteria);

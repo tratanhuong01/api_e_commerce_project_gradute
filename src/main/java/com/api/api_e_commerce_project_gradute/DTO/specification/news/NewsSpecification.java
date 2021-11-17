@@ -96,14 +96,18 @@ public final class NewsSpecification {
     if (timeCreatedFrom != null & timeCreatedTo != null) {
       if (newsSpecification == null) {
         newsSpecification = (root,query,builder) -> {
-          return builder.and(builder.greaterThanOrEqualTo(root.get("timeCreated"),timeCreatedFrom),
-              builder.lessThanOrEqualTo(root.get("timeCreated"),timeCreatedTo));
+          return builder.and(builder.greaterThanOrEqualTo(root.get("timeCreated").as(String.class),
+                          timeCreatedFrom + " 00:00:00"),
+              builder.lessThanOrEqualTo(root.get("timeCreated").as(String.class),
+                      timeCreatedTo + " 00:00:00"));
         };
       }
       else {
         newsSpecification = newsSpecification.and((root,query,builder) -> {
-          return builder.and(builder.greaterThanOrEqualTo(root.get("timeCreated"),timeCreatedFrom),
-              builder.lessThanOrEqualTo(root.get("timeCreated"),timeCreatedTo));
+          return builder.and(builder.greaterThanOrEqualTo(root.get("timeCreated").as(String.class),
+                          timeCreatedFrom + " 00:00:00"),
+              builder.lessThanOrEqualTo(root.get("timeCreated").as(String.class),
+                      timeCreatedTo + " 00:00:00"));
         });
       }
     }

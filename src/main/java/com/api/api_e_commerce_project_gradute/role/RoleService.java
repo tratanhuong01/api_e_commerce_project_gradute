@@ -27,4 +27,8 @@ public class RoleService {
     roleRepository.delete(role);
   }
 
+  public List<Role> getRoleMain() {
+    return roleRepository.getRoleMain();
+  }
+
 }
