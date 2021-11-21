@@ -237,6 +237,7 @@ public class UserService {
       userFull.setAmountProduct(userRepository.countProductBuyByUser(user.getId()));
       userFull.setAmountOrder(userRepository.countBillByUser(user.getId()));
       userFull.setIsRegister(user.getIsRegister());
+      userFull.setUserRole(user.getUserRole());
       userFullList.add(userFull);
     }
     return userFullList;

@@ -7,11 +7,13 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Nullable;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Set;
 
@@ -164,5 +166,9 @@ public interface ProductRepository extends JpaRepository<Product,String> , JpaSp
       "WHERE product.id_line_product = :idLineProduct AND color.id IN (:idColor) ",nativeQuery = true)
   List<Product> getFirstProductByIdLineProductColor(@Param("idLineProduct") String idLineProduct, @Param("idColor") Set<Long> idColor);
 
+  @Modifying
+  @Transactional
+  @Query(value = "DELETE FROM product WHERE id = ? ",nativeQuery = true)
+  Integer deleteProductMain(String id);
 
 }

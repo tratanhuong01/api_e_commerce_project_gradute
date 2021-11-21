@@ -31,5 +31,6 @@ public class ProductAdminCriteria {
   private String keyword;
   private String timeCreatedFrom;
   private String timeCreatedTo;
+  private String timeCreatedSorter;
 
 }

@@ -3,6 +3,9 @@ package com.api.api_e_commerce_project_gradute.DTO.specification.line_product;
 import com.api.api_e_commerce_project_gradute.line_product.LineProduct;
 import org.springframework.data.jpa.domain.Specification;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public final class LineProductSpecification {
 
   static Specification<LineProduct> lineProductSpecification = null;
@@ -59,17 +62,17 @@ public final class LineProductSpecification {
       if (lineProductSpecification == null) {
         lineProductSpecification = (root,query,builder) -> {
           return builder.and(builder.greaterThanOrEqualTo(root.get("timeCreated").as(String.class),
-                          timeCreatedFrom + " 00:00:00"),
+                          timeCreatedFrom + " " + DateTimeFormatter.ofPattern("HH:mm:ss").format(LocalDateTime.now())),
               builder.lessThanOrEqualTo(root.get("timeCreated").as(String.class),
-                      timeCreatedTo + " 00:00:00"));
+                      timeCreatedTo + " " + DateTimeFormatter.ofPattern("HH:mm:ss").format(LocalDateTime.now())));
         };
       }
       else {
         lineProductSpecification = lineProductSpecification.and((root,query,builder) -> {
           return builder.and(builder.greaterThanOrEqualTo(root.get("timeCreated").as(String.class),
-                          timeCreatedFrom + " 00:00:00"),
+                          timeCreatedFrom + " " + DateTimeFormatter.ofPattern("HH:mm:ss").format(LocalDateTime.now())),
               builder.lessThanOrEqualTo(root.get("timeCreated").as(String.class),
-                      timeCreatedTo + " 00:00:00"));
+                      timeCreatedTo + " " + DateTimeFormatter.ofPattern("HH:mm:ss").format(LocalDateTime.now())));
         });
       }
     }

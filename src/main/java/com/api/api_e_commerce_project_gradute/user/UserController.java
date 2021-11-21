@@ -27,7 +27,7 @@ public class UserController {
   public List<UserFull> getAllUsersLimit(String userType, String sex, Integer verifyPhone, Integer ageFrom,
                                     Integer ageTo, Integer status, Integer verifyEmail,String ageSorter,
                                     String timeRegisterSorter,String keyword,Integer offset, Integer limit,
-                                    Integer isRegister,String timeCreatedFrom,String timeCreatedTo) {
+                                    Integer isRegister,String timeCreatedFrom,String timeCreatedTo,String typeRegister) {
     UserCriteria userCriteria = UserCriteria.builder().
         userType(userType).
         sex(sex).
@@ -44,15 +44,16 @@ public class UserController {
         limit(limit).
         timeCreatedFrom(timeCreatedFrom).
         timeCreatedTo(timeCreatedTo).
+        typeRegister(typeRegister).
         build();
     return userService.filterUserLimit(userCriteria);
   }
 
   @GetMapping("userFiltersAll")
   public Integer getAllUsersAll(String userType, String sex, Integer verifyPhone, Integer ageFrom,
-                                    Integer ageTo, Integer status, Integer verifyEmail,String ageSorter,
-                                    String timeRegisterSorter,String keyword,Integer isRegister,
-                                String timeCreatedFrom,String timeCreatedTo) {
+                                Integer ageTo, Integer status, Integer verifyEmail,String ageSorter,
+                                String timeRegisterSorter,String keyword,Integer isRegister,
+                                String timeCreatedFrom,String timeCreatedTo,String typeRegister) {
     UserCriteria userCriteria = UserCriteria.builder().
         userType(userType).
         sex(sex).
@@ -67,6 +68,7 @@ public class UserController {
         isRegister(isRegister).
         timeCreatedTo(timeCreatedTo).
         timeCreatedFrom(timeCreatedFrom).
+        typeRegister(typeRegister).
         build();
     return userService.filterUserAll(userCriteria);
   }

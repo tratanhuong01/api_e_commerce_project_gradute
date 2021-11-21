@@ -24,7 +24,8 @@ public class ProductController {
   public Integer filterProductAll(String group,Long color,Long ram,Long rom,String brand,Integer priceFrom,
                                   Integer priceTo,Integer typeProduct, String category,Integer status,
                                   String priceOutputSorter,String priceInputSorter,String productSoldSorter,
-                                  String saleSorter,String keyword,String timeCreatedFrom,String timeCreatedTo) {
+                                  String saleSorter,String keyword,String timeCreatedFrom,String timeCreatedTo,
+                                  String timeCreatedSorter) {
     ProductAdminCriteria productAdminCriteria = ProductAdminCriteria.builder()
         .group(group)
         .category(category)
@@ -43,6 +44,7 @@ public class ProductController {
         .priceInputSorter(priceInputSorter)
         .status(status)
         .keyword(keyword)
+        .timeCreatedSorter(timeCreatedSorter)
         .build();
     return productService.filterProductAdminAll(productAdminCriteria);
   }
@@ -52,7 +54,7 @@ public class ProductController {
                                               Integer priceTo,Integer typeProduct, String category,Integer status,
                                               String priceOutputSorter,String priceInputSorter,String productSoldSorter,
                                               String saleSorter,Integer offset,Integer limit,String keyword,
-                                              String timeCreatedFrom,String timeCreatedTo) {
+                                              String timeCreatedFrom,String timeCreatedTo,String timeCreatedSorter) {
     ProductAdminCriteria productAdminCriteria = ProductAdminCriteria.builder()
         .category(category)
         .group(group)
@@ -73,6 +75,7 @@ public class ProductController {
         .offset(offset)
         .limit(limit)
         .keyword(keyword)
+        .timeCreatedSorter(timeCreatedSorter)
         .build();
     return productService.filterProductAdminLimit(productAdminCriteria);
   }
@@ -180,7 +183,7 @@ public class ProductController {
 
   @PutMapping("products")
   public Product updateProduct(@RequestBody Product product) {
-    return productService.addProduct(product);
+    return productService.updateProduct(product);
   }
 
   @GetMapping("getIdBestNew")
@@ -260,6 +263,10 @@ public class ProductController {
   @GetMapping("products/combine/")
   public CombineProductInfoProduct getCombineProductInfoProduct(String idProduct) {
     return productService.getCombineProductInfoProduct(idProduct);
+  }
+  @DeleteMapping("deleteProductMain")
+  public void deleteProductMain(@RequestParam String id) {
+    productService.deleteProductMain(id);
   }
 
 }

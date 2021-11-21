@@ -35,7 +35,8 @@ public interface UserRepository extends JpaRepository<User,String> {
   @Query(value = "SELECT * FROM user WHERE ( email = ?1 or phone = ?1 ) AND password = ?2 AND is_register = 1 ",nativeQuery = true)
   User checkLogin(String emailOrPhone,String password);
 
-  @Query(value = "SELECT * FROM user WHERE ( email = ?1 or phone = ?1 ) AND password = ?2 AND type != 0 AND is_register = 1 ",nativeQuery = true)
+  @Query(value = "SELECT * FROM user WHERE ( email = ?1 or phone = ?1 ) AND password = ?2 AND type != 0 AND " +
+          "is_register = 1 AND status = 0 ",nativeQuery = true)
   User adminCheckLogin(String emailOrPhone,String password);
 
   @Transactional

@@ -5,6 +5,8 @@ import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Subquery;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public final class NewsSpecification {
 
@@ -97,17 +99,17 @@ public final class NewsSpecification {
       if (newsSpecification == null) {
         newsSpecification = (root,query,builder) -> {
           return builder.and(builder.greaterThanOrEqualTo(root.get("timeCreated").as(String.class),
-                          timeCreatedFrom + " 00:00:00"),
+                          timeCreatedFrom + " " + DateTimeFormatter.ofPattern("HH:mm:ss").format(LocalDateTime.now())),
               builder.lessThanOrEqualTo(root.get("timeCreated").as(String.class),
-                      timeCreatedTo + " 00:00:00"));
+                      timeCreatedTo + " " + DateTimeFormatter.ofPattern("HH:mm:ss").format(LocalDateTime.now())));
         };
       }
       else {
         newsSpecification = newsSpecification.and((root,query,builder) -> {
           return builder.and(builder.greaterThanOrEqualTo(root.get("timeCreated").as(String.class),
-                          timeCreatedFrom + " 00:00:00"),
+                          timeCreatedFrom + " " + DateTimeFormatter.ofPattern("HH:mm:ss").format(LocalDateTime.now())),
               builder.lessThanOrEqualTo(root.get("timeCreated").as(String.class),
-                      timeCreatedTo + " 00:00:00"));
+                      timeCreatedTo + " " + DateTimeFormatter.ofPattern("HH:mm:ss").format(LocalDateTime.now())));
         });
       }
     }

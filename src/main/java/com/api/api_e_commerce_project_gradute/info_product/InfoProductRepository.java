@@ -33,4 +33,9 @@ public interface InfoProductRepository extends JpaRepository<InfoProduct,Long> {
   @Query(value = "SELECT * FROM info_product WHERE id_product = ?1 ",nativeQuery = true)
   InfoProduct getInfoProductByIdProduct(String idProduct);
 
+  @Transactional
+  @Modifying
+  @Query(value = "DELETE FROM info_product WHERE id_product = ? ",nativeQuery = true)
+  Integer deleteInfoProduct(String id);
+
 }

@@ -6,6 +6,8 @@ import com.api.api_e_commerce_project_gradute.product.Product_;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public final class ProductAdminSpecification {
 
@@ -29,7 +31,29 @@ public final class ProductAdminSpecification {
     color(productAdminCriteria.getColor());
     brand(productAdminCriteria.getBrand());
     timeCreated(productAdminCriteria.getTimeCreatedFrom(),productAdminCriteria.getTimeCreatedTo());
-    sorter(productAdminCriteria.getProductSoldSorter(),"timeCreated");
+    timeCreatedSorter(productAdminCriteria.getTimeCreatedSorter());
+    return productSpecification;
+  }
+
+  public static Specification<Product> timeCreatedSorter(String timeCreatedSorter) {
+    if (timeCreatedSorter != null) {
+      if (productSpecification == null)
+        productSpecification = (root,query,builder) -> {
+          if (timeCreatedSorter.equals("ASC"))
+            query.orderBy(builder.asc(root.get("timeCreated")));
+          else
+            query.orderBy(builder.desc(root.get("timeCreated")));
+          return root.get("id").isNotNull();
+        };
+      else
+        productSpecification = productSpecification.and((root,query,builder) -> {
+          if (timeCreatedSorter.equals("ASC"))
+            query.orderBy(builder.asc(root.get("timeCreated")));
+          else
+            query.orderBy(builder.desc(root.get("timeCreated")));
+          return root.get("id").isNotNull();
+        });
+    }
     return productSpecification;
   }
 
@@ -230,17 +254,17 @@ public final class ProductAdminSpecification {
       if (productSpecification == null) {
         productSpecification = (root,query,builder) -> {
           return builder.and(builder.greaterThanOrEqualTo(root.get("timeCreated").as(String.class),
-                          timeCreatedFrom + " 00:00:00"),
+                          timeCreatedFrom + " " + DateTimeFormatter.ofPattern("HH:mm:ss").format(LocalDateTime.now())),
               builder.lessThanOrEqualTo(root.get("timeCreated").as(String.class),
-                      timeCreatedTo + " 00:00:00"));
+                      timeCreatedTo + " " + DateTimeFormatter.ofPattern("HH:mm:ss").format(LocalDateTime.now())));
         };
       }
       else {
         productSpecification = productSpecification.and((root,query,builder) -> {
           return builder.and(builder.greaterThanOrEqualTo(root.get("timeCreated").as(String.class),
-                          timeCreatedFrom + " 00:00:00"),
+                          timeCreatedFrom + " " + DateTimeFormatter.ofPattern("HH:mm:ss").format(LocalDateTime.now())),
               builder.lessThanOrEqualTo(root.get("timeCreated").as(String.class),
-                      timeCreatedTo + " 00:00:00"));
+                      timeCreatedTo + " " + DateTimeFormatter.ofPattern("HH:mm:ss").format(LocalDateTime.now())));
         });
       }
     }

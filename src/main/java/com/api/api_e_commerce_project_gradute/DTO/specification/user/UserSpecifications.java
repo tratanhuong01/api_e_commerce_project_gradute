@@ -13,6 +13,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Locale;
 
@@ -34,6 +35,7 @@ public final class UserSpecifications {
     search(userCriteria.getKeyword());
     isRegister(userCriteria.getIsRegister());
     timeCreated(userCriteria.getTimeCreatedFrom(),userCriteria.getTimeCreatedTo());
+    typeRegister(userCriteria.getTypeRegister());
     return userSpecification;
   }
 
@@ -237,19 +239,51 @@ public final class UserSpecifications {
       if (userSpecification == null) {
         userSpecification = (root,query,builder) -> {
           return builder.and(builder.greaterThanOrEqualTo(root.get("timeCreated").as(String.class),
-                          timeCreatedFrom + " 00:00:00"),
+                          timeCreatedFrom + " " + DateTimeFormatter.ofPattern("HH:mm:ss").format(LocalDateTime.now())),
                   builder.lessThanOrEqualTo(root.get("timeCreated").as(String.class),
-                          timeCreatedTo + " 00:00:00"));
+                          timeCreatedTo + " " + DateTimeFormatter.ofPattern("HH:mm:ss").format(LocalDateTime.now())));
           };
         }
         else {
           userSpecification = userSpecification.and((root,query,builder) -> {
             return builder.and(builder.greaterThanOrEqualTo(root.get("timeCreated").as(String.class),
-                            timeCreatedFrom + " 00:00:00"),
+                            timeCreatedFrom + " " + DateTimeFormatter.ofPattern("HH:mm:ss").format(LocalDateTime.now())),
                     builder.lessThanOrEqualTo(root.get("timeCreated").as(String.class),
-                            timeCreatedTo + " 00:00:00"));
+                            timeCreatedTo + " " + DateTimeFormatter.ofPattern("HH:mm:ss").format(LocalDateTime.now())));
           });
         }
+    }
+    return userSpecification;
+  }
+
+  public static Specification<User> typeRegister(String typeRegister) {
+    if (typeRegister != null) {
+      Specification<User> specification = null;
+      switch (typeRegister) {
+        case "Normal" :
+          specification = (root,query,builder) -> {
+              return builder.and(root.get("googleId").isNull(),root.get("facebookId").isNull());
+          };
+          break;
+        case "Google" :
+          specification = (root,query,builder) -> {
+            return builder.and(root.get("googleId").isNotNull(),root.get("facebookId").isNull());
+          };
+          break;
+        case "Facebook" :
+          specification = (root,query,builder) -> {
+            return builder.and(root.get("googleId").isNull(),root.get("facebookId").isNotNull());
+          };
+          break;
+        default:
+          break;
+      }
+      if (specification != null) {
+        if (userSpecification == null)
+          userSpecification = specification;
+        else
+          userSpecification = userSpecification.and(specification);
+      }
     }
     return userSpecification;
   }

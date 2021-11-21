@@ -32,10 +32,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.sql.Timestamp;
+import java.util.*;
 
 @Service
 
@@ -64,8 +62,6 @@ public class ProductService{
   @Autowired
   LineProductRepository lineProductRepository;
   @Autowired
-  FunctionProductRepository functionProductRepository;
-  @Autowired
   InfoProductRepository infoProductRepository;
 
   public Product getProductByIdMain(String id) {
@@ -89,9 +85,12 @@ public class ProductService{
   }
 
   public Product addProduct(Product product) {
+    product.setTimeCreated(new Timestamp(new Date().getTime()));
     return productRepository.save(product);
   }
-
+  public Product updateProduct(Product product) {
+    return productRepository.save(product);
+  }
   public Product getIdBestNew() {
     return productRepository.getIdBestNew();
   }
@@ -462,6 +461,11 @@ public class ProductService{
     combineProductInfoProduct.setProduct(productRepository.getProductById(idProduct));
     combineProductInfoProduct.setInfoProduct(infoProductRepository.getInfoProductByIdProduct(idProduct));
     return combineProductInfoProduct;
+  }
+
+  public void deleteProductMain(String id) {
+    infoProductRepository.deleteInfoProduct(id);
+    productRepository.deleteProductMain(id);
   }
 
 }

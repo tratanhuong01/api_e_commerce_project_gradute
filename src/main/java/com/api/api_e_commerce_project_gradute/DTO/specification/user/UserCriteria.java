@@ -24,5 +24,6 @@ public class UserCriteria {
   private Integer isRegister;
   private String timeCreatedFrom;
   private String timeCreatedTo;
+  private String typeRegister;
 
 }
