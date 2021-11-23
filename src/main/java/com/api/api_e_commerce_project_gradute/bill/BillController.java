@@ -103,8 +103,10 @@ public class BillController {
   }
 
   @GetMapping("getDashboardHeader")
-  public DashboardHeader getDashboardHeader() {
-    return billService.getDashboardHeader();
+  public DashboardHeader getDashboardHeader(@RequestParam(required = false) String dateFrom,
+                                            @RequestParam(required = false) String dateTo,
+                                            @RequestParam(required = false) Integer day) {
+    return billService.getDashboardHeader(dateFrom,dateTo,day);
   }
 
   @GetMapping("getBillSixMonthCurrent")

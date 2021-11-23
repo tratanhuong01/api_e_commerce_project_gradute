@@ -1,6 +1,5 @@
 package com.api.api_e_commerce_project_gradute.bill;
 
-import com.api.api_e_commerce_project_gradute.DTO.bill.BillFull;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -16,6 +15,15 @@ import java.util.List;
 
 @Repository
 public interface BillRepository extends JpaRepository<Bill,String> {
+
+  public static String QUERY_GET_BILL= "SELECT COUNT(*) FROM bill";
+  public static String QUERY_GET_PRODUCT_SELL = "SELECT SUM(bill_detail.amount) FROM bill INNER JOIN bill_detail ON bill.id = \n" +
+          "bill_detail.id_bill WHERE ( bill.status != -1 OR bill.status != -2 OR bill.status != 4 ) ";
+  public static String QUERY_GET_TOTAL_MONEY = "SELECT SUM(bill.total) FROM bill WHERE (bill.status != -1 OR " +
+          "bill.status != -2 OR bill.status != 4 ) ";
+  public static String QUERY_GET_TOTAL_PROFIT = "SELECT SUM(info_product.price_input*bill_detail.amount) FROM bill INNER JOIN bill_detail ON bill.id = " +
+          "bill_detail.id_bill INNER JOIN product ON product.id = bill_detail.id_product INNER JOIN info_product ON product.id = " +
+          "info_product.id_product WHERE ( bill.status != -1 OR bill.status != -2 OR bill.status != 4 ) ";
 
   //admin
 
@@ -34,24 +42,6 @@ public interface BillRepository extends JpaRepository<Bill,String> {
 
   @Query(value = "SELECT * FROM bill ORDER BY time_created DESC  LIMIT ?1 , ?2 ",nativeQuery = true)
   List<Bill> getBillAllLimit(int offset,int limit);
-
-  @Query(value = "SELECT COUNT(*) FROM bill WHERE bill.time_created >=  CONCAT(DATE(NOW()),' 00:00:00' )",nativeQuery = true)
-  Integer getBillToday();
-
-  @Query(value = "SELECT SUM(bill_detail.amount) FROM bill INNER JOIN bill_detail ON bill.id = \n" +
-      "bill_detail.id_bill WHERE bill.time_created >= CONCAT(DATE(NOW()),' 00:00:00' ) AND (" +
-      " bill.status != -1 OR bill.status != -2 OR bill.status != 4 ) ",nativeQuery = true)
-  Integer getProductSellToday();
-
-  @Query(value = "SELECT SUM(bill.total) FROM bill WHERE bill.time_created >= CONCAT(DATE(NOW()),' 00:00:00' ) " +
-      "AND (bill.status != -1 OR bill.status != -2 OR bill.status != 4 ) ",nativeQuery = true)
-  Integer getTotalMoneyBillToday();
-
-  @Query(value = "SELECT SUM(info_product.price_input*bill_detail.amount) FROM bill INNER JOIN bill_detail ON bill.id = " +
-      "bill_detail.id_bill INNER JOIN product ON product.id = bill_detail.id_product INNER JOIN info_product ON product.id = " +
-      "info_product.id_product WHERE bill.time_created >= CONCAT(DATE(NOW()),' 00:00:00' ) AND " +
-      " ( bill.status != -1 OR bill.status != -2 OR bill.status != 4 ) ",nativeQuery = true)
-  Integer getSumDetailBillTotalProfitToday();
 
   //user
 
@@ -108,5 +98,93 @@ public interface BillRepository extends JpaRepository<Bill,String> {
       " AND time_created <= CONCAT(YEAR(CURRENT_DATE()),'-',MONTH(CURRENT_DATE()),'-','01',' ','00:00:00')" +
       " AND (bill.status != -1 OR bill.status != -2 OR bill.status != 4 ) ",nativeQuery = true)
   Integer getProductSixMonthCurrent(Integer value);
+
+
+  // dashboard query by today,yesterday,seven day,this month,previous month
+
+  //today
+  @Query(value = QUERY_GET_PRODUCT_SELL + " AND bill.time_created >= CONCAT(DATE(NOW()),' 00:00:00' ) ",nativeQuery = true)
+  Integer getProductSellToday();
+  @Query(value = QUERY_GET_TOTAL_MONEY + " AND bill.time_created >= CONCAT(DATE(NOW()),' 00:00:00' ) ",nativeQuery = true)
+  Integer getTotalMoneyBillToday();
+  @Query(value = QUERY_GET_TOTAL_PROFIT + " AND bill.time_created >= CONCAT(DATE(NOW()),' 00:00:00' ) ",nativeQuery = true)
+  Integer getSumDetailBillTotalProfitToday();
+  @Query(value = QUERY_GET_BILL + " WHERE bill.time_created >=  CONCAT(DATE(NOW()),' 00:00:00' )",nativeQuery = true)
+  Integer getBillToday();
+  //today
+
+  //Yesterday
+  @Query(value = QUERY_GET_PRODUCT_SELL + " AND bill.time_created <= CONCAT(DATE(NOW()),' 00:00:00') AND bill.time_created " +
+          " >= SUBDATE(CURRENT_DATE, 1) ",nativeQuery = true)
+  Integer getProductSellYesterday();
+  @Query(value = QUERY_GET_TOTAL_MONEY + " AND bill.time_created <= CONCAT(DATE(NOW()),' 00:00:00') AND bill.time_created " +
+          " >= SUBDATE(CURRENT_DATE, 1) ",nativeQuery = true)
+  Integer getTotalMoneyBillYesterday();
+  @Query(value = QUERY_GET_TOTAL_PROFIT + " AND bill.time_created <= CONCAT(DATE(NOW()),' 00:00:00') AND bill.time_created " +
+          " >= SUBDATE(CURRENT_DATE, 1) ",nativeQuery = true)
+  Integer getSumDetailBillTotalProfitYesterday();
+  @Query(value = QUERY_GET_BILL + " WHERE bill.time_created <= CONCAT(DATE(NOW()),' 00:00:00') AND bill.time_created " +
+          " >= SUBDATE(CURRENT_DATE, 1) ",nativeQuery = true)
+  Integer getBillYesterday();
+  //Yesterday
+  //Seven Day
+  @Query(value = QUERY_GET_PRODUCT_SELL + " AND bill.time_created <= CONCAT(DATE(NOW()),' 00:00:00') AND bill.time_created " +
+          " >= SUBDATE(CURRENT_DATE, 7) ",nativeQuery = true)
+  Integer getProductSellSevenDay();
+  @Query(value = QUERY_GET_TOTAL_MONEY + " AND bill.time_created <= CONCAT(DATE(NOW()),' 00:00:00') AND bill.time_created " +
+          " >= SUBDATE(CURRENT_DATE, 7) ",nativeQuery = true)
+  Integer getTotalMoneyBillSevenDay();
+  @Query(value = QUERY_GET_TOTAL_PROFIT + " AND bill.time_created <= CONCAT(DATE(NOW()),' 00:00:00') AND bill.time_created " +
+          " >= SUBDATE(CURRENT_DATE, 7) ",nativeQuery = true)
+  Integer getSumDetailBillTotalProfitSevenDay();
+  @Query(value = QUERY_GET_BILL + " WHERE bill.time_created <= CONCAT(DATE(NOW()),' 00:00:00') AND bill.time_created " +
+          " >= SUBDATE(CURRENT_DATE, 7) ",nativeQuery = true)
+  Integer getBillSevenDay();
+  //Seven Day
+
+  //Month current
+  @Query(value = QUERY_GET_PRODUCT_SELL + " AND bill.time_created <= CONCAT(DATE(NOW()),CONCAT(' ',TIME(NOW()))) " +
+          "AND bill.time_created  >= CAST(DATE_FORMAT(NOW() ,'%Y-%m-01') as DATE) ",nativeQuery = true)
+  Integer getProductSellMonthCurrent();
+  @Query(value = QUERY_GET_TOTAL_MONEY + " AND bill.time_created <= CONCAT(DATE(NOW()),CONCAT(' ',TIME(NOW()))) " +
+          "AND bill.time_created  >= CAST(DATE_FORMAT(NOW() ,'%Y-%m-01') as DATE) ",nativeQuery = true)
+  Integer getTotalMoneyBillMonthCurrent();
+  @Query(value = QUERY_GET_TOTAL_PROFIT + " AND bill.time_created <= CONCAT(DATE(NOW()),CONCAT(' ',TIME(NOW()))) " +
+          "AND bill.time_created  >= CAST(DATE_FORMAT(NOW() ,'%Y-%m-01') as DATE) ",nativeQuery = true)
+  Integer getSumDetailBillTotalProfitMonthCurrent();
+  @Query(value = QUERY_GET_BILL + " WHERE bill.time_created <= CONCAT(DATE(NOW()),CONCAT(' ',TIME(NOW()))) " +
+          "AND bill.time_created  >= CAST(DATE_FORMAT(NOW() ,'%Y-%m-01') as DATE) ",nativeQuery = true)
+  Integer getBillMonthCurrents();
+  //Month current
+
+  //Month previous
+  @Query(value = QUERY_GET_PRODUCT_SELL + " AND bill.time_created <= CAST(DATE_FORMAT(NOW() ,'%Y-%m-01') as DATE) " +
+          "AND bill.time_created  >= last_day(CURRENT_DATE - interval 2 month) + interval 1 day ",nativeQuery = true)
+  Integer getProductSellMonthPrevious();
+  @Query(value = QUERY_GET_TOTAL_MONEY + " AND bill.time_created <= CAST(DATE_FORMAT(NOW() ,'%Y-%m-01') as DATE) " +
+          "AND bill.time_created  >= last_day(CURRENT_DATE - interval 2 month) + interval 1 day ",nativeQuery = true)
+  Integer getTotalMoneyBillMonthPrevious();
+  @Query(value = QUERY_GET_TOTAL_PROFIT + " AND bill.time_created <= CAST(DATE_FORMAT(NOW() ,'%Y-%m-01') as DATE) " +
+          "AND bill.time_created  >= last_day(CURRENT_DATE - interval 2 month) + interval 1 day ",nativeQuery = true)
+  Integer getSumDetailBillTotalProfitMonthPrevious();
+  @Query(value = QUERY_GET_BILL + " WHERE bill.time_created <= CAST(DATE_FORMAT(NOW() ,'%Y-%m-01') as DATE) " +
+          "AND bill.time_created  >= last_day(CURRENT_DATE - interval 2 month) + interval 1 day ",nativeQuery = true)
+  Integer getBillMonthPrevious();
+  //Month previous
+
+  //From to
+  @Query(value = QUERY_GET_PRODUCT_SELL + " AND bill.time_created <= CONCAT(?,CONCAT(' ',TIME(NOW()))) " +
+          "AND bill.time_created  >= ? ",nativeQuery = true)
+  Integer getProductSellFromTo(String dateTo,String dateFrom);
+  @Query(value = QUERY_GET_TOTAL_MONEY + " AND bill.time_created <= CONCAT(?,CONCAT(' ',TIME(NOW()))) " +
+          "AND bill.time_created  >= ? ",nativeQuery = true)
+  Integer getTotalMoneyBillFromTo(String dateTo,String dateFrom);
+  @Query(value = QUERY_GET_TOTAL_PROFIT + " AND bill.time_created <= CONCAT(?,CONCAT(' ',TIME(NOW()))) " +
+          "AND bill.time_created  >= ? ",nativeQuery = true)
+  Integer getSumDetailBillTotalProfitFromTo(String dateTo,String dateFrom);
+  @Query(value = QUERY_GET_BILL + " WHERE bill.time_created <= CONCAT(?,CONCAT(' ',TIME(NOW()))) " +
+          "AND bill.time_created  >= ? ",nativeQuery = true)
+  Integer getBillMonthFromTo(String dateTo,String dateFrom);
+  //From to
 
 }

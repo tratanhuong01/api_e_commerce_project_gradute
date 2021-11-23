@@ -1,6 +1,7 @@
 package com.api.api_e_commerce_project_gradute.discount_code;
 
 import com.api.api_e_commerce_project_gradute.DTO.specification.discount_code.DiscountCodeCriteria;
+import com.api.api_e_commerce_project_gradute.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -85,6 +86,11 @@ public class DiscountCodeController {
   @DeleteMapping("discountCodes")
   public void deleteDiscountCode(@RequestBody DiscountCode discountCode) {
     discountCodeService.deleteDiscountCode(discountCode);
+  }
+
+  @GetMapping("checkAllVoucherValid")
+  public List<User> checkAllVoucherValid(@RequestParam Integer amount) {
+    return discountCodeService.checkAllVoucherValid(amount);
   }
 
 }

@@ -28,5 +28,5 @@ public interface DiscountCodeRepository extends JpaRepository<DiscountCode,Long>
   @Query(value = "SELECT dc.* FROM discount_code dc LEFT JOIN discount_code_user dcu " +
       "ON dc.id = dcu.id_discount_code WHERE dc.code = ?1 and NOW() <= dc.time_expired ",nativeQuery = true)
   DiscountCode checkDiscountCodeStillExpired(String code);
-
+  
 }

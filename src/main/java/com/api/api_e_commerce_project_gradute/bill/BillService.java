@@ -169,12 +169,10 @@ public class BillService {
   public List<BillFull> searchBill(String keyword,String idUser,int offset, int limit,int type) {
     List<BillFull> billFullList = new ArrayList<>();
     List<Bill> billList = new ArrayList<>();
-
     if (type == -2)
       billList = billRepository.searchBill(keyword, idUser);
     else
       billList = billRepository.searchBillLimit(keyword,idUser,offset,limit);
-
     for (Bill bill: billList) {
       BillFull billFull = new BillFull();
       billFull.setBill(bill);
@@ -187,17 +185,73 @@ public class BillService {
     return billFullList;
   }
 
-  public DashboardHeader getDashboardHeader() {
-    Integer totalProfit = billRepository.getSumDetailBillTotalProfitToday();
-    Integer totalMoney = billRepository.getTotalMoneyBillToday();
-    totalProfit =  (totalMoney == null ? 0 : totalMoney) - (totalProfit == null ? 0 : totalProfit);
-
+  public DashboardHeader getDashboardHeader(String dateFrom,String dateTo,Integer day) {
+    Integer totalProfitMain = 0;
+    Integer totalMoney = 0;
     DashboardHeader dashboardHeader = new DashboardHeader();
-    dashboardHeader.setTotalBill(billRepository.getBillToday() == null ? 0 : billRepository.getBillToday());
+    Integer billNumber = 0;
+    Integer userSum = 0;
+    Integer totalRevenue = 0;
+    Integer sell = 0;
+    System.out.println("Day " + day);
+    if (day != null) {
+      switch (day) {
+        case 0 :
+          totalProfitMain = billRepository.getSumDetailBillTotalProfitToday();
+          totalMoney = billRepository.getTotalMoneyBillToday();
+          billNumber = billRepository.getBillToday();
+          userSum = userRepository.getUserRegisterToDay();
+          totalRevenue = billRepository.getTotalMoneyBillToday();
+          sell = billRepository.getProductSellToday();
+          break;
+        case 1 :
+          totalProfitMain = billRepository.getSumDetailBillTotalProfitYesterday();
+          totalMoney = billRepository.getTotalMoneyBillYesterday();
+          billNumber = billRepository.getBillYesterday();
+          userSum = userRepository.getUserRegisterYesterday();
+          totalRevenue = billRepository.getTotalMoneyBillYesterday();
+          sell = billRepository.getProductSellYesterday();
+          break;
+        case 7 :
+          totalProfitMain = billRepository.getSumDetailBillTotalProfitSevenDay();
+          totalMoney = billRepository.getTotalMoneyBillSevenDay();
+          billNumber = billRepository.getBillSevenDay();
+          userSum = userRepository.getUserRegisterSeven();
+          totalRevenue = billRepository.getTotalMoneyBillSevenDay();
+          sell = billRepository.getProductSellSevenDay();
+          break;
+        case 30 :
+          totalProfitMain = billRepository.getSumDetailBillTotalProfitMonthCurrent();
+          totalMoney = billRepository.getTotalMoneyBillMonthCurrent();
+          billNumber = billRepository.getBillMonthCurrents();
+          userSum = userRepository.getUserRegisterMonthCurrent();
+          totalRevenue = billRepository.getTotalMoneyBillMonthCurrent();
+          sell = billRepository.getProductSellMonthCurrent();
+          break;
+        case 60 :
+          totalProfitMain = billRepository.getSumDetailBillTotalProfitMonthPrevious();
+          totalMoney = billRepository.getTotalMoneyBillMonthPrevious();
+          billNumber = billRepository.getBillMonthPrevious();
+          userSum = userRepository.getUserRegisterMonthPrevious();
+          totalRevenue = billRepository.getTotalMoneyBillMonthPrevious();
+          sell = billRepository.getProductSellMonthPrevious();
+          break;
+      }
+    }
+    else {
+      totalProfitMain = billRepository.getSumDetailBillTotalProfitFromTo(dateTo,dateFrom);
+      totalMoney = billRepository.getTotalMoneyBillFromTo(dateTo,dateFrom);
+      billNumber = billRepository.getBillMonthFromTo(dateTo,dateFrom);
+      userSum = userRepository.getUserRegisterFromTo(dateTo,dateFrom);
+      totalRevenue = billRepository.getTotalMoneyBillFromTo(dateTo,dateFrom);
+      sell = billRepository.getProductSellFromTo(dateTo,dateFrom);
+    }
+    Integer totalProfit =  (totalMoney == null ? 0 : totalMoney) - (totalProfitMain == null ? 0 : totalProfitMain);
+    dashboardHeader.setTotalBill(billNumber == null ? 0 : billNumber);
     dashboardHeader.setTotalProfit(totalProfit);
-    dashboardHeader.setTotalRegister(userRepository.getUserRegisterToDay());
-    dashboardHeader.setTotalRevenue(billRepository.getTotalMoneyBillToday() == null ? 0 : billRepository.getTotalMoneyBillToday());
-    dashboardHeader.setTotalSold(billRepository.getProductSellToday() == null ? 0 : billRepository.getProductSellToday());
+    dashboardHeader.setTotalRevenue(totalRevenue == null ? 0 : totalRevenue);
+    dashboardHeader.setTotalRegister(userSum == null ? 0 : userSum);
+    dashboardHeader.setTotalSold(sell == null ? 0 : sell);
     return dashboardHeader;
   }
 

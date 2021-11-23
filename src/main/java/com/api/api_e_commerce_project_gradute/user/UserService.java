@@ -242,7 +242,6 @@ public class UserService {
     }
     return userFullList;
   }
-
   //
 
   public int updateStatusUser(Integer status,String id) {

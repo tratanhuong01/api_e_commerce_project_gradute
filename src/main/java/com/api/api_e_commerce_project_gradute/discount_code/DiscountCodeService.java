@@ -3,6 +3,8 @@ package com.api.api_e_commerce_project_gradute.discount_code;
 import com.api.api_e_commerce_project_gradute.DTO.specification.discount_code.DiscountCodeCriteria;
 import com.api.api_e_commerce_project_gradute.DTO.specification.discount_code.DiscountCodeSpecification;
 import com.api.api_e_commerce_project_gradute.discount_code_user.DiscountCodeUser;
+import com.api.api_e_commerce_project_gradute.user.User;
+import com.api.api_e_commerce_project_gradute.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -20,6 +23,9 @@ public class DiscountCodeService {
 
   @Autowired
   DiscountCodeRepository discountCodeRepository;
+
+  @Autowired
+  UserRepository userRepository;
 
   public List<DiscountCode> getDiscountCodes() {
     return discountCodeRepository.findAll();
@@ -64,6 +70,19 @@ public class DiscountCodeService {
     Pageable pageable = PageRequest.of(discountCodeCriteria.getOffset(),discountCodeCriteria.getLimit());
     Page<DiscountCode> discountCodePage = discountCodeRepository.findAll(discountCodeSpecification,pageable);
     return discountCodePage.getContent();
+  }
+
+  public List<User> checkAllVoucherValid(Integer amount) {
+    Integer length = userRepository.getCustomerRegister();
+    List<User> userList = null;
+    if (amount <= length) {
+      List<UserVoucher> userVoucherList = userRepository.getUserBuyMost(amount);
+      userList = new ArrayList<>();
+      for (UserVoucher userVoucher : userVoucherList) {
+        userList.add(userRepository.getUserByIdUser(userVoucher.getIdUser()));
+      }
+    }
+    return userList;
   }
 
 }

@@ -1,5 +1,6 @@
 package com.api.api_e_commerce_project_gradute.user;
 
+import com.api.api_e_commerce_project_gradute.discount_code.UserVoucher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -15,6 +16,8 @@ import java.util.List;
 
 @Repository
 public interface UserRepository extends JpaRepository<User,String> {
+
+  public static String QUERY_GET_USER_REGISTER = "SELECT COUNT(*) FROM user WHERE is_register = 1 AND id_role = 'CUSTOMER' ";
 
   Page<User> findAll(@Nullable Specification<User> userSpecification, Pageable pageable);
 
@@ -65,10 +68,6 @@ public interface UserRepository extends JpaRepository<User,String> {
   @Query(value = "SELECT * FROM user WHERE id_role = ?1 AND is_register = 1 ORDER BY time_created DESC LIMIT ?2 , ?3 ",nativeQuery = true)
   List<User> getUserByTypeLimit(String idRole,int offset,int limit);
 
-  @Query(value = "SELECT COUNT(*) FROM user WHERE user.time_created > CONCAT(DATE(NOW()),' 00:00:00' ) " +
-      "AND is_register = 1 AND id_role = 'CUSTOMER' ",nativeQuery = true)
-  Integer getUserRegisterToDay();
-
   @Query(value = "SELECT COUNT(*) FROM user INNER JOIN bill ON bill.id_user = user.id WHERE bill.id_user = ?1 ",nativeQuery = true)
   Integer countBillByUser(String idUser);
 
@@ -83,8 +82,16 @@ public interface UserRepository extends JpaRepository<User,String> {
   @Query(value = "UPDATE user SET status = ?1 WHERE id = ?2 ",nativeQuery = true)
   int updateStatusUser(Integer status,String id);
 
+  @Query(value = "SELECT COUNT(*) FROM user WHERE is_register = 1 AND id_role = 'CUSTOMER' AND status = 0 ",nativeQuery = true)
+  Integer getCustomerRegister();
+
   @Query(value = "SELECT * FROM user WHERE id_role = ?1 ",nativeQuery = true)
   List<User> getUserByIdRole(String role);
+
+  @Query(value = "SELECT user.id as idUser , SUM(bill_detail.amount) as sumItem FROM user LEFT JOIN bill ON bill.id_user = user.id LEFT JOIN bill_detail " +
+          " ON bill_detail.id_bill = bill.id WHERE user.status = 0 AND user.id_role = 'CUSTOMER' AND is_register = 1 " +
+          " GROUP BY user.id ORDER BY sumItem DESC LIMIT 0 , ? " ,nativeQuery = true)
+  List<UserVoucher> getUserBuyMost(Integer limit);
 
   @Query(value = "SELECT * FROM user WHERE id_role = 'CUSTOMER' AND (email = :emailOrPhone OR " +
       "phone = :emailOrPhone) LIMIT 0,1 ",nativeQuery = true)
@@ -105,5 +112,39 @@ public interface UserRepository extends JpaRepository<User,String> {
   @Transactional
   @Query(value = "UPDATE user SET email = ?1 WHERE id = ?2 ",nativeQuery = true)
   int updateEmail(String email,String idUser);
+
+  // filter dashboard
+  //Today
+  @Query(value = QUERY_GET_USER_REGISTER + " AND user.time_created > CONCAT(DATE(NOW()),' 00:00:00' ) ",nativeQuery = true)
+  Integer getUserRegisterToDay();
+  //Today
+  //Yesterday
+  @Query(value = QUERY_GET_USER_REGISTER + " AND user.time_created <= CONCAT(DATE(NOW()),' 00:00:00') AND user.time_created " +
+          " >= SUBDATE(CURRENT_DATE, 1) ",nativeQuery = true)
+  Integer getUserRegisterYesterday();
+  //Yesterday
+  //Seven Day
+  @Query(value = QUERY_GET_USER_REGISTER + " AND user.time_created <= CONCAT(DATE(NOW()),' 00:00:00') AND user.time_created " +
+          " >= SUBDATE(CURRENT_DATE, 7) ",nativeQuery = true)
+  Integer getUserRegisterSeven();
+  //Seven day
+
+  //Month current
+  @Query(value = QUERY_GET_USER_REGISTER + " AND user.time_created <= CONCAT(DATE(NOW()),CONCAT(' ',TIME(NOW()))) " +
+          "AND user.time_created  >= CAST(DATE_FORMAT(NOW() ,'%Y-%m-01') as DATE) ",nativeQuery = true)
+  Integer getUserRegisterMonthCurrent();
+  //Month current
+
+  //Month previous
+  @Query(value = QUERY_GET_USER_REGISTER + " AND user.time_created <= CAST(DATE_FORMAT(NOW() ,'%Y-%m-01') as DATE) " +
+          "AND user.time_created  >= last_day(CURRENT_DATE - interval 2 month) + interval 1 day ",nativeQuery = true)
+  Integer getUserRegisterMonthPrevious();
+  //Month previous
+
+  //From to
+  @Query(value = QUERY_GET_USER_REGISTER + " AND user.time_created <= CONCAT(?,CONCAT(' ',TIME(NOW()))) " +
+          "AND user.time_created  >= ? ",nativeQuery = true)
+  Integer getUserRegisterFromTo(String dateTo,String dateFrom);
+  //From to
 
 }
