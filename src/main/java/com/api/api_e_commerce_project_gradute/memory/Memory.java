@@ -18,9 +18,6 @@ public class Memory implements Serializable {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @OneToMany(mappedBy = "memoryProduct")
-  private Set<Product> memoryProduct = new HashSet<>();
-
   @Column
   private String nameMemory;
 
@@ -61,4 +58,7 @@ public class Memory implements Serializable {
   public void setType(int type) {
     this.type = type;
   }
+
+
+
 }

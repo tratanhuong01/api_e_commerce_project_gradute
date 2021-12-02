@@ -35,4 +35,8 @@ public class PopupAdsService {
     popupAdsRepository.delete(popupAds);
   }
 
+  public PopupAds getPopupAdsNew() {
+    return popupAdsRepository.getPopupAdsNew();
+  }
+
 }

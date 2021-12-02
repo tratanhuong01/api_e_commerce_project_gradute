@@ -58,4 +58,9 @@ public class ContactController {
     contactService.deleteContact(contact);
   }
 
+  @GetMapping("contacts")
+  public List<Contact> getContactLimit(@RequestParam Integer offset,@RequestParam Integer limit) {
+    return contactService.getContactLimit(offset,limit);
+  }
+
 }

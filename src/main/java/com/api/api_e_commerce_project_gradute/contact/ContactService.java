@@ -43,4 +43,8 @@ public class ContactService {
     contactRepository.delete(contact);
   }
 
+  public List<Contact> getContactLimit(Integer offset,Integer limit) {
+    return contactRepository.getContactLimit(offset,limit);
+  }
+
 }

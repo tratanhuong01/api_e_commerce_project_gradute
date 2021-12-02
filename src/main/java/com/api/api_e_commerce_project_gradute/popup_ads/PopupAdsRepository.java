@@ -12,4 +12,6 @@ public interface PopupAdsRepository extends JpaRepository<PopupAds,Long> {
   @Query(value = "SELECT * FROM popup_ads ORDER BY time_created DESC LIMIT ?1 , ?2",nativeQuery = true)
   List<PopupAds> getPopupAdsLimit(int offset,int limit);
 
+  @Query(value = "SELECT * FROM popup_ads WHERE is_show = 0 ORDER BY time_created DESC LIMIT 0 , 1 ",nativeQuery = true)
+  PopupAds getPopupAdsNew();
 }

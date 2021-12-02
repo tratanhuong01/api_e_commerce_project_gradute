@@ -187,4 +187,14 @@ public interface BillRepository extends JpaRepository<Bill,String> {
   Integer getBillMonthFromTo(String dateTo,String dateFrom);
   //From to
 
+  @Transactional
+  @Modifying
+  @Query(value = "UPDATE bill SET time_approval = NOW() WHERE id = ? ",nativeQuery = true)
+  int updateBillTimeApproval(Long idBill);
+
+  @Modifying
+  @Transactional
+  @Query(value = "UPDATE bill SET time_completed = NOW() WHERE id = ? ",nativeQuery = true)
+  int updateBillTimeCompleted(Long idBill);
+
 }

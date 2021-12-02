@@ -43,6 +43,9 @@ public class PopupAdsController {
     popupAdsService.deletePopupAds(popupAds);
   }
 
-
+  @GetMapping("getPopupAdsNew")
+  public PopupAds getPopupAdsNew() {
+    return popupAdsService.getPopupAdsNew();
+  }
 
 }

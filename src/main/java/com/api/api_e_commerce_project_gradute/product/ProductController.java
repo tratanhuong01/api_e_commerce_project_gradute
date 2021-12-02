@@ -1,11 +1,9 @@
 package com.api.api_e_commerce_project_gradute.product;
 
 import com.api.api_e_commerce_project_gradute.DTO.CategoryByGroupProduct;
-import com.api.api_e_commerce_project_gradute.DTO.product.CombineProductInfoProduct;
-import com.api.api_e_commerce_project_gradute.DTO.product.ProductCriteria;
-import com.api.api_e_commerce_project_gradute.DTO.product.ProductFull;
-import com.api.api_e_commerce_project_gradute.DTO.product.ProductIndex;
+import com.api.api_e_commerce_project_gradute.DTO.product.*;
 import com.api.api_e_commerce_project_gradute.DTO.specification.product.ProductAdminCriteria;
+import com.api.api_e_commerce_project_gradute.news.News;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -211,6 +209,28 @@ public class ProductController {
                                                   @RequestParam(required = false) Integer limit) {
     return productService.getProductByCategory(category);
   }
+
+  @GetMapping("getProductByCategoryIndex")
+  public List<ProductByCategory> getProductByCategoryIndex() {
+    return productService.getProductByCategory();
+  }
+  @GetMapping("getCategoryByGroupProduct")
+  public List<CategoryByGroupProduct> getCategoryByGroupProduct() {
+    return productService.getCategoryByGroupProduct();
+  }
+  @GetMapping("getProductSaleToday")
+  public List<ProductFull> getProductSaleToday() {
+    return productService.getProductSaleToday();
+  }
+  @GetMapping("getProductTopSell")
+  public ProductFull getProductTopSell() {
+    return productService.getProductTopSell();
+  }
+  @GetMapping("getNewsIndex")
+  public List<News> getNewsIndex() {
+    return productService.getNewsIndex();
+  }
+
 
   @GetMapping("getProductIndex")
   public ProductIndex getProductIndex() {

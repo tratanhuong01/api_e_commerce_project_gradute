@@ -21,6 +21,7 @@ import com.api.api_e_commerce_project_gradute.line_product.LineProduct;
 import com.api.api_e_commerce_project_gradute.line_product.LineProductRepository;
 import com.api.api_e_commerce_project_gradute.memory.Memory;
 import com.api.api_e_commerce_project_gradute.memory.MemoryRepository;
+import com.api.api_e_commerce_project_gradute.news.News;
 import com.api.api_e_commerce_project_gradute.news.NewsRepository;
 import com.api.api_e_commerce_project_gradute.ram.RamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -135,9 +136,58 @@ public class ProductService{
     return productFullList;
   }
 
+  public List<CategoryByGroupProduct> getCategoryByGroupProduct() {
+    List<CategoryProduct> categoryProductList = categoryProductRepository.findAll();
+    List<CategoryByGroupProduct> categoryByGroupProductList = new ArrayList<>();
+    for (CategoryProduct categoryProduct: categoryProductList) {
+      CategoryByGroupProduct categoryByGroupProduct = new CategoryByGroupProduct();
+      categoryByGroupProduct.setCategoryProduct(categoryProduct);
+      categoryByGroupProduct.setGroupProductList(groupProductRepository.getGroupProductByIdCategoryProduct(
+              categoryProduct.getId()));
+      categoryByGroupProductList.add(categoryByGroupProduct);
+    }
+    return categoryByGroupProductList;
+  }
+  public List<ProductByCategory> getProductByCategory() {
+    List<ProductByCategory> productByCategoryList = new ArrayList<>();
+    List<CategoryProduct> categoryProductList = categoryProductRepository.findAll();
+
+    for (CategoryProduct categoryProduct: categoryProductList) {
+      ProductByCategory productByCategory = new ProductByCategory();
+      productByCategory.setIdCategoryProduct(categoryProduct.getId());
+      productByCategory.setNameCategoryProduct(categoryProduct.getNameCategoryProduct());
+      productByCategory.setSlugCategoryProduct(categoryProduct.getSlugCategoryProduct());
+      List<String> stringList = productRepository.getDistinctIdLineProductByIdCategoryLimit(
+              categoryProduct.getId(),0,12);
+      List<ProductFull> productFullList = new ArrayList<>();
+      for (String string: stringList) {
+        List<ProductMain> productMainList = productRepository.getProductByIdLineProduct(string);
+        List<Color> colorList = checkListColor(productMainList);
+        List<Image> imageList = checkListImage(productMainList);
+        List<Memory> memoryList = checkListMemory(productMainList);
+        productFullList.add(returnProductFull(productMainList.get(0),colorList,memoryList,imageList,productMainList));
+      }
+      productByCategory.setListProductCategory(productFullList);
+      productByCategoryList.add(productByCategory);
+    }
+
+    return productByCategoryList;
+  }
+  public List<News> getNewsIndex() {
+    return newsRepository.getBestNewsIndex();
+  }
+  public ProductFull getProductTopSell() {
+    return getProductBySlug(productRepository.getProductTopSell().getIdProduct(),-1);
+  }
+  public List<ProductFull> getProductSaleToday() {
+    List<ProductFull> listProductSaleToday = new ArrayList<>();
+    for (Product product: productRepository.getProductSaleToday())
+      listProductSaleToday.add(getProductBySlug(product.getId(),-1));
+    return listProductSaleToday;
+  }
+
   public ProductIndex getProductIndex() {
     ProductIndex productIndex = new ProductIndex();
-    productIndex.setListProductSaleToday(new ArrayList<>());
 
     List<ProductByCategory> productByCategoryList = new ArrayList<>();
     List<CategoryProduct> categoryProductList = categoryProductRepository.findAll();
