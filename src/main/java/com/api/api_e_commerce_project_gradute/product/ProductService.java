@@ -293,7 +293,7 @@ public class ProductService{
   }
 
   public List<Image> getImageByIdLineProduct(String idLineProduct) {
-    return imageRepository.getImageByIdLineProduct(idLineProduct);
+    return imageRepository.getImageLineProduct(idLineProduct);
   }
 
   public List<Memory> getMemoryByIdLineProduct(String idLineProduct) {

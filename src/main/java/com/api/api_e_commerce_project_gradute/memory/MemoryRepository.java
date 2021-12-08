@@ -26,7 +26,7 @@ public interface MemoryRepository extends JpaRepository<Memory,String> {
   List<Memory> searchMemoryAll(@Param("keyword") String keyword);
 
   @Query(value = "SELECT * FROM memory WHERE memory.id IN (SELECT product.id_memory FROM product " +
-          "LEFT JOIN memory ON product.id_memory = memory.id WHERE id_line_product = ? " +
+          "LEFT JOIN memory ON product.id_memory = memory.id WHERE product.id_line_product = ?1 " +
           "GROUP BY product.id_memory) ",nativeQuery = true)
   List<Memory> getMemoryByIdLineProduct(String idLineProduct);
 }

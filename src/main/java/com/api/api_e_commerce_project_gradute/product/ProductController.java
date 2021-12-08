@@ -164,7 +164,7 @@ public class ProductController {
   }
 
   @GetMapping("getImageByIdLineProduct")
-  public List<Image> getImageByIdLineProduct(@RequestParam String idLineProduct) {
+  public List<Image> getImageByIdLIneProduct(@RequestParam String idLineProduct) {
     return productService.getImageByIdLineProduct(idLineProduct);
   }
 

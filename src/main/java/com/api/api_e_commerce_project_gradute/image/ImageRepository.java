@@ -18,4 +18,9 @@ public interface ImageRepository extends JpaRepository<Image,Long> {
   @Query(value = "SELECT image.* FROM image WHERE id_line_product = ?1 AND id_color = ?2 ",nativeQuery = true)
   Image getImageByIdLineProductAndColor(String idLineProduct,Long idColor);
 
+  @Query(value = "SELECT * FROM image WHERE image.id IN (SELECT product.id_image FROM product " +
+          "INNER JOIN image ON product.id_image = image.id WHERE product.id_line_product = ?1 " +
+          "GROUP BY product.id_image) ",nativeQuery = true)
+  List<Image> getImageLineProduct(String idLineProduct);
+
 }
