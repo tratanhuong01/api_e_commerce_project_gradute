@@ -2,9 +2,11 @@ package com.api.api_e_commerce_project_gradute.cart;
 
 import com.api.api_e_commerce_project_gradute.DTO.cart.CartFull;
 import com.api.api_e_commerce_project_gradute.DTO.cart.CartMain;
-import com.api.api_e_commerce_project_gradute.color.ColorRepository;
-import com.api.api_e_commerce_project_gradute.image.ImageRepository;
-import com.api.api_e_commerce_project_gradute.memory.MemoryRepository;
+import com.api.api_e_commerce_project_gradute.color.Color;
+import com.api.api_e_commerce_project_gradute.image.Image;
+import com.api.api_e_commerce_project_gradute.memory.Memory;
+import com.api.api_e_commerce_project_gradute.product.Product;
+import com.api.api_e_commerce_project_gradute.product.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,13 +23,7 @@ public class CartService {
   CartRepository cartRepository;
 
   @Autowired
-  ColorRepository colorRepository;
-
-  @Autowired
-  ImageRepository imageRepository;
-
-  @Autowired
-  MemoryRepository memoryRepository;
+  ProductRepository productRepository;
 
   public List<Cart> getAllCarts() {
     return cartRepository.findAll();
@@ -47,10 +43,13 @@ public class CartService {
     List<CartFull> cartFullList = new ArrayList<>();
     List<CartMain> cartMainList = cartRepository.getAllCartByIdUser(idUser);
     for (CartMain cartMain: cartMainList) {
+      Product product = productRepository.getProductById(cartMain.getIdProduct());
+      Color color = product.getImageProduct().getColorProduct();
+      Image image = product.getImageProduct();
+      Memory memory = product.getMemoryProduct();
       CartFull cartFull = new CartFull(cartMain.getIdCart(),cartMain.getIdProduct(),cartMain.getIdUser(),cartMain.getFirstName(),
       cartMain.getLastName(),cartMain.getIdLineProduct(),cartMain.getNameLineProduct(),cartMain.getPriceInput(),cartMain.getPriceOutput(),
-      cartMain.getSale(),colorRepository.getColorByIdColor(cartMain.getColor()), memoryRepository.getMemoryByIdMemory(cartMain.getMemory()),
-      imageRepository.getImageByIdImage(cartMain.getImage()),cartMain.getSlug(),cartMain.getBrand(),cartMain.getAmount());
+      cartMain.getSale(),color, memory,image,cartMain.getSlug(),cartMain.getBrand(),cartMain.getAmount());
       cartFullList.add(cartFull);
     }
     return cartFullList;

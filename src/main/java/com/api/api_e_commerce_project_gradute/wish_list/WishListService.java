@@ -2,12 +2,13 @@ package com.api.api_e_commerce_project_gradute.wish_list;
 
 import com.api.api_e_commerce_project_gradute.DTO.cart.CartFull;
 import com.api.api_e_commerce_project_gradute.DTO.cart.CartMain;
-import com.api.api_e_commerce_project_gradute.color.ColorRepository;
-import com.api.api_e_commerce_project_gradute.image.ImageRepository;
-import com.api.api_e_commerce_project_gradute.memory.MemoryRepository;
+import com.api.api_e_commerce_project_gradute.color.Color;
+import com.api.api_e_commerce_project_gradute.image.Image;
+import com.api.api_e_commerce_project_gradute.memory.Memory;
+import com.api.api_e_commerce_project_gradute.product.Product;
+import com.api.api_e_commerce_project_gradute.product.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -21,13 +22,7 @@ public class WishListService {
   WishListRepository wishListRepository;
 
   @Autowired
-  ColorRepository colorRepository;
-
-  @Autowired
-  MemoryRepository memoryRepository;
-
-  @Autowired
-  ImageRepository imageRepository;
+  ProductRepository productRepository;
 
   public List<WishList> getWistListByIdUser(String idUser) {
     return wishListRepository.getWishListByIdUser(idUser);
@@ -36,10 +31,13 @@ public class WishListService {
     List<CartFull> cartFullList = new ArrayList<>();
     List<CartMain> cartMainList = wishListRepository.getAllWishListByIdUser(idUser);
     for (CartMain cartMain: cartMainList) {
+      Product product = productRepository.getProductById(cartMain.getIdProduct());
+      Color color = product.getImageProduct().getColorProduct();
+      Image image = product.getImageProduct();
+      Memory memory = product.getMemoryProduct();
       CartFull cartFull = new CartFull(cartMain.getIdCart(),cartMain.getIdProduct(),cartMain.getIdUser(),cartMain.getFirstName(),
-          cartMain.getLastName(),cartMain.getIdLineProduct(),cartMain.getNameLineProduct(),cartMain.getPriceInput(),cartMain.getPriceOutput(),
-          cartMain.getSale(),colorRepository.getColorByIdColor(cartMain.getColor()), memoryRepository.getMemoryByIdMemory(cartMain.getMemory()),
-          imageRepository.getImageByIdImage(cartMain.getImage()),cartMain.getSlug(),cartMain.getBrand(),cartMain.getAmount());
+              cartMain.getLastName(),cartMain.getIdLineProduct(),cartMain.getNameLineProduct(),cartMain.getPriceInput(),cartMain.getPriceOutput(),
+              cartMain.getSale(),color, memory,image,cartMain.getSlug(),cartMain.getBrand(),cartMain.getAmount());
       cartFullList.add(cartFull);
     }
     return cartFullList;

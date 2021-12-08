@@ -74,8 +74,11 @@ public interface ProductRepository extends JpaRepository<Product,String> , JpaSp
   String getSlugByNotColorAndMemory(String idMemory,String idLineProduct);
 
   //get product by id line product
-  @Query(value = COLUMN_SELECT + JOIN_TABLE + " WHERE p.id_line_product = ?1 ",nativeQuery = true)
+  @Query(value = COLUMN_SELECT + JOIN_TABLE + " WHERE p.id_line_product = ?1  ",nativeQuery = true)
   List<ProductMain> getProductByIdLineProduct(String idLineProduct);
+
+  @Query(value = COLUMN_SELECT + JOIN_TABLE + " WHERE p.id_line_product = ?1 LIMIT 0,1  ",nativeQuery = true)
+  ProductMain getProductByIdLineProductOnce(String idLineProduct);
 
   //
   @Query(value = COLUMN_SELECT + JOIN_TABLE + " WHERE lp.name_line_product LIKE %:keyword% AND cp.slug_category_product " +
