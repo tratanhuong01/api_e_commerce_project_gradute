@@ -4,25 +4,22 @@ import com.api.api_e_commerce_project_gradute.DTO.CategoryByGroupProduct;
 import com.api.api_e_commerce_project_gradute.DTO.product.*;
 import com.api.api_e_commerce_project_gradute.DTO.specification.product.ProductAdminCriteria;
 import com.api.api_e_commerce_project_gradute.DTO.specification.product.ProductAdminSpecification;
+import com.api.api_e_commerce_project_gradute.brand.Brand;
 import com.api.api_e_commerce_project_gradute.brand.BrandRepository;
 import com.api.api_e_commerce_project_gradute.category_product.CategoryProduct;
 import com.api.api_e_commerce_project_gradute.category_product.CategoryProductRepository;
 import com.api.api_e_commerce_project_gradute.color.Color;
 import com.api.api_e_commerce_project_gradute.color.ColorRepository;
-import com.api.api_e_commerce_project_gradute.detail_function_product.DetailFunctionProduct;
-import com.api.api_e_commerce_project_gradute.detail_function_product.DetailFunctionProductRepository;
-import com.api.api_e_commerce_project_gradute.function_product.FunctionProduct;
-import com.api.api_e_commerce_project_gradute.function_product.FunctionProductRepository;
 import com.api.api_e_commerce_project_gradute.group_product.GroupProductRepository;
 import com.api.api_e_commerce_project_gradute.image.Image;
 import com.api.api_e_commerce_project_gradute.image.ImageRepository;
 import com.api.api_e_commerce_project_gradute.info_product.InfoProductRepository;
-import com.api.api_e_commerce_project_gradute.line_product.LineProduct;
 import com.api.api_e_commerce_project_gradute.line_product.LineProductRepository;
 import com.api.api_e_commerce_project_gradute.memory.Memory;
 import com.api.api_e_commerce_project_gradute.memory.MemoryRepository;
 import com.api.api_e_commerce_project_gradute.news.News;
 import com.api.api_e_commerce_project_gradute.news.NewsRepository;
+import com.api.api_e_commerce_project_gradute.ram.Ram;
 import com.api.api_e_commerce_project_gradute.ram.RamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -30,8 +27,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 
 import java.sql.Timestamp;
 import java.util.*;
@@ -58,8 +53,6 @@ public class ProductService{
   NewsRepository newsRepository;
   @Autowired
   RamRepository ramRepository;
-  @Autowired
-  DetailFunctionProductRepository detailFunctionProductRepository;
   @Autowired
   LineProductRepository lineProductRepository;
   @Autowired
@@ -89,9 +82,11 @@ public class ProductService{
     product.setTimeCreated(new Timestamp(new Date().getTime()));
     return productRepository.save(product);
   }
+
   public Product updateProduct(Product product) {
     return productRepository.save(product);
   }
+
   public Product getIdBestNew() {
     return productRepository.getIdBestNew();
   }
@@ -106,19 +101,11 @@ public class ProductService{
     return returnListProductFull(stringList);
   }
 
-  public List<ProductFull> getProductByCategoryLimit(String idCategory,Integer offset,Integer limit) {
-    List<String> stringList = productRepository.getDistinctIdLineProductByIdCategory(idCategory);
-    return returnListProductFull(stringList);
-  }
-
   public List<ProductFull> returnListProductFull(List<String> stringList) {
     List<ProductFull> productFullList = new ArrayList<>();
     for (String string: stringList) {
-      List<ProductMain> productMainList = productRepository.getProductByIdLineProduct(string);
-      List<Color> colorList = checkListColor(productMainList);
-      List<Image> imageList = checkListImage(productMainList);
-      List<Memory> memoryList = checkListMemory(productMainList);
-      productFullList.add(returnProductFull(productMainList.get(0),colorList,memoryList,imageList,productMainList));
+      ProductMain productMain = productRepository.getProductByIdLineProductOnce(string);
+      productFullList.add(returnProductFull(productMain));
     }
     return productFullList;
   }
@@ -148,6 +135,7 @@ public class ProductService{
     }
     return categoryByGroupProductList;
   }
+
   public List<ProductByCategory> getProductByCategory() {
     List<ProductByCategory> productByCategoryList = new ArrayList<>();
     List<CategoryProduct> categoryProductList = categoryProductRepository.findAll();
@@ -161,11 +149,8 @@ public class ProductService{
               categoryProduct.getId(),0,12);
       List<ProductFull> productFullList = new ArrayList<>();
       for (String string: stringList) {
-        List<ProductMain> productMainList = productRepository.getProductByIdLineProduct(string);
-        List<Color> colorList = checkListColor(productMainList);
-        List<Image> imageList = checkListImage(productMainList);
-        List<Memory> memoryList = checkListMemory(productMainList);
-        productFullList.add(returnProductFull(productMainList.get(0),colorList,memoryList,imageList,productMainList));
+        ProductMain productMain = productRepository.getProductByIdLineProductOnce(string);
+        productFullList.add(returnProductFull(productMain));
       }
       productByCategory.setListProductCategory(productFullList);
       productByCategoryList.add(productByCategory);
@@ -173,12 +158,15 @@ public class ProductService{
 
     return productByCategoryList;
   }
+
   public List<News> getNewsIndex() {
     return newsRepository.getBestNewsIndex();
   }
+
   public ProductFull getProductTopSell() {
     return getProductBySlug(productRepository.getProductTopSell().getIdProduct(),-1);
   }
+
   public List<ProductFull> getProductSaleToday() {
     List<ProductFull> listProductSaleToday = new ArrayList<>();
     for (Product product: productRepository.getProductSaleToday())
@@ -186,106 +174,34 @@ public class ProductService{
     return listProductSaleToday;
   }
 
-  public ProductIndex getProductIndex() {
-    ProductIndex productIndex = new ProductIndex();
-
-    List<ProductByCategory> productByCategoryList = new ArrayList<>();
-    List<CategoryProduct> categoryProductList = categoryProductRepository.findAll();
-    List<CategoryByGroupProduct> categoryByGroupProductList = new ArrayList<>();
-
-    for (CategoryProduct categoryProduct: categoryProductList) {
-      CategoryByGroupProduct categoryByGroupProduct = new CategoryByGroupProduct();
-      categoryByGroupProduct.setCategoryProduct(categoryProduct);
-      categoryByGroupProduct.setGroupProductList(groupProductRepository.getGroupProductByIdCategoryProduct(
-          categoryProduct.getId()));
-      categoryByGroupProductList.add(categoryByGroupProduct);
-      ProductByCategory productByCategory = new ProductByCategory();
-      productByCategory.setIdCategoryProduct(categoryProduct.getId());
-      productByCategory.setNameCategoryProduct(categoryProduct.getNameCategoryProduct());
-      productByCategory.setSlugCategoryProduct(categoryProduct.getSlugCategoryProduct());
-      List<String> stringList = productRepository.getDistinctIdLineProductByIdCategoryLimit(
-          categoryProduct.getId(),0,12);
-      List<ProductFull> productFullList = new ArrayList<>();
-      for (String string: stringList) {
-        List<ProductMain> productMainList = productRepository.getProductByIdLineProduct(string);
-        List<Color> colorList = checkListColor(productMainList);
-        List<Image> imageList = checkListImage(productMainList);
-        List<Memory> memoryList = checkListMemory(productMainList);
-        productFullList.add(returnProductFull(productMainList.get(0),colorList,memoryList,imageList,productMainList));
-      }
-      productByCategory.setListProductCategory(productFullList);
-      productByCategoryList.add(productByCategory);
+  public ProductFull returnProductFull(ProductMain productMains) {
+    if (productMains != null) {
+      Product product = productRepository.getProductById(productMains.getIdProduct());
+      Image image = product.getImageProduct();
+      Color color = product.getImageProduct().getColorProduct();
+      Memory memory = product.getMemoryProduct();
+      Ram ram = product.getRamProduct();
+      Brand brand = product.getLineProduct().getBrandProduct();
+      return new ProductFull(productMains.getIdProduct(),productMains.getIdProduct(),productMains.getIdCategoryProduct(),
+              productMains.getNameCategoryProduct(),productMains.getIdGroupProduct(),productMains.getNameGroupProduct(),
+              productMains.getIdLineProduct(),productMains.getNameLineProduct(),new ArrayList<>(),new ArrayList<>(),new ArrayList<>(),
+              productMains.getSlug(),productMains.getPriceInput(),productMains.getPriceOutput(),productMains.getSale(),image,
+              color,memory,ram,brand,productMains.getDescribeProduct(),productMains.getTypeProduct(),productMains.getReview(),
+              productMains.getItemCurrent(),productMains.getItemSold());
     }
-
-    productIndex.setNewsList(newsRepository.getBestNewsIndex());
-    productIndex.setListCategoryByGroupProduct(categoryByGroupProductList);
-    productIndex.setListProductByCategory(productByCategoryList);
-
-    List<ProductFull> listProductSaleToday = new ArrayList<>();
-    for (Product product: productRepository.getProductSaleToday())
-      listProductSaleToday.add(getProductBySlug(product.getId(),-1));
-    productIndex.setListProductSaleToday(listProductSaleToday);
-
-    productIndex.setProductTopSell(getProductBySlug(productRepository.getProductTopSell().getIdProduct(),-1));
-    return productIndex;
+    return null;
   }
 
-  public List<Color> checkListColor(List<ProductMain> productMainList) {
-    List<Color> colorList = new ArrayList<>();
-    for (ProductMain productMain: productMainList)
-      if (productMain.getIdColor() != null) {
-        int count = 0;
-        for (Color color : colorList)
-          if (color.getId().equals(productMain.getIdColor()))
-            count++;
-        if (count == 0)
-          colorList.add(colorRepository.getColorByIdColor(productMain.getIdColor()));
-      }
-    return colorList;
-  }
-
-  public List<Image> checkListImage(List<ProductMain> productMainList) {
-    List<Image> imageList = new ArrayList<>();
-    for (ProductMain productMain: productMainList)
-      if (productMain.getIdImage() != null) {
-        int count = 0;
-        for (Image image : imageList)
-          if (image.getId().equals(productMain.getIdImage()))
-            count++;
-        if (count == 0)
-          imageList.add(imageRepository.getImageByIdImage(productMain.getIdImage()));
-      }
-    return imageList;
-  }
-
-  public List<Memory> checkListMemory(List<ProductMain> productMainList) {
-    List<Memory> memoryList = new ArrayList<>();
-    for (ProductMain productMain: productMainList) {
-      if (productMain.getIdMemory() != null) {
-        int count = 0;
-        for (Memory memory : memoryList)
-          if (memory.getId().equals(productMain.getIdMemory()))
-            count++;
-        if (count == 0)
-          memoryList.add(memoryRepository.getMemoryByIdMemory(productMain.getIdMemory()));
-      }
-    }
-    return memoryList;
-  }
-
-  public ProductFull returnProductFull(ProductMain productMains,List<Color> colorList,List<Memory> memoryList,
-                                       List<Image> imageList,List<ProductMain> productMainList) {
-    return new ProductFull(productMains.getIdProduct(),productMains.getIdProduct(),productMains.getIdCategoryProduct(),
-        productMains.getNameCategoryProduct(),productMains.getIdGroupProduct(),productMains.getNameGroupProduct(),
-        productMains.getIdLineProduct(),productMains.getNameLineProduct(),colorList,memoryList,imageList,
-        productMains.getSlug(),productMains.getPriceInput(),productMains.getPriceOutput(),
-        productMains.getSale(),imageRepository.getImageByIdImage(productMains.getIdImage()),
-        colorRepository.getColorByIdColor(productMains.getIdColor()),
-        memoryRepository.getMemoryByIdMemory(productMains.getIdMemory()),
-        ramRepository.getRamByIdRam(productMainList.get(0).getIdRam()),
-        brandRepository.getBrandByIdBrand(productMains.getIdBrand()),
-        productMains.getDescribeProduct(),productMains.getTypeProduct(),productMains.getReview(),
-        productMains.getItemCurrent(),productMains.getItemSold());
+  public ProductFull returnProductFullByProductMaster(Product product) {
+    ProductMain productMain = productRepository.getProductByIdProduct(product.getId());
+    return new ProductFull(product.getId(),product.getId(),
+            productMain.getIdCategoryProduct(),productMain.getNameCategoryProduct(), productMain.getIdGroupProduct(),
+            productMain.getNameGroupProduct(), productMain.getIdLineProduct(),productMain.getNameLineProduct(),
+            new ArrayList<>(),new ArrayList<>(),new ArrayList<>(),
+            product.getSlug(),productMain.getPriceInput(),productMain.getPriceOutput(),productMain.getSale(),product.getImageProduct(),
+            product.getImageProduct().getColorProduct(), product.getMemoryProduct(),product.getRamProduct(),product.getLineProduct().getBrandProduct(),
+            productMain.getDescribeProduct(),productMain.getTypeProduct(),productMain.getReview(),
+            productMain.getItemCurrent(),productMain.getItemSold());
   }
 
   public ProductFull getProductBySlug(String slug, int type) {
@@ -294,13 +210,8 @@ public class ProductService{
       productMains = productRepository.getProductBySlug(slug);
     else
       productMains = productRepository.getProductByIdProduct(slug);
-    if (productMains != null) {
-      List<ProductMain> productMainList = productRepository.getProductByIdLineProduct(productMains.getIdLineProduct());
-      List<Color> colorList = checkListColor(productMainList);
-      List<Image> imageList = checkListImage(productMainList);
-      List<Memory> memoryList = checkListMemory(productMainList);
-      return returnProductFull(productMains,colorList,memoryList,imageList,productMainList);
-    }
+    if (productMains != null)
+      return returnProductFull(productMains);
     return null;
   }
 
@@ -329,110 +240,6 @@ public class ProductService{
     return categoryByGroupProductList;
   }
 
-  public boolean checkFeatureHaveUnique(Set<Long> featureClient, List<DetailFunctionProduct> detailFunctionProductList) {
-    for (Long longData: featureClient) {
-      for (DetailFunctionProduct detailFunctionProduct: detailFunctionProductList) {
-        if (detailFunctionProduct.getFunctionProductDetail().getId().equals(longData))
-          if (detailFunctionProduct.getFunctionProductDetail().getTypeFunctionProduct() == 1)
-            return true;
-      }
-    }
-    return false;
-  }
-
-  public boolean checkFeatureHaveNotFunc(Set<Long> featureClient, List<DetailFunctionProduct> detailFunctionProductList) {
-    int count = 0;
-    for (Long longData: featureClient) {
-//      FunctionProduct functionProduct = functionProductRepository.getFunctionProductByIdFunctionProduct(longData);
-      for (DetailFunctionProduct detailFunctionProduct: detailFunctionProductList)
-        if (detailFunctionProduct.getFunctionProductDetail().getId().equals(longData))
-          count++;
-    }
-    return count == featureClient.size() ? true : false;
-  }
-
-  public boolean checkFeatureLineProduct(Set<Long> featureClient, List<DetailFunctionProduct> detailFunctionProductList) {
-    List<DetailFunctionProduct> detailFunctionProducts = new ArrayList<>();
-    for (Long longData : featureClient)
-      for (DetailFunctionProduct detailFunctionProduct : detailFunctionProductList)
-        if (detailFunctionProduct.getFunctionProductDetail().getId().equals(longData))
-          detailFunctionProducts.add(detailFunctionProduct);
-    if(checkFeatureHaveNotFunc(featureClient,detailFunctionProducts))
-     return true;
-    return false;
-  }
-
-  public List<ProductFull> filterProduct(ProductCriteria productCriteria) {
-    Specification<Product> productSpecification = ProductSpecifications.createProductSpecifications(productCriteria);
-    List<Product> productList = productRepository.findAll(productSpecification);
-    List<ProductFull> productFullList = new ArrayList<>();
-    List<String> lineProductId = new ArrayList<>();
-    for (Product product: productList){
-      int count = 0;
-      for (String string :lineProductId)
-        if (string.equals(product.getLineProduct().getId())) count++;
-      if (count == 0) lineProductId.add(product.getLineProduct().getId());
-    }
-    for (String string:lineProductId) {
-      if (productCriteria.getFeature() != null) {
-        if (checkFeatureLineProduct(productCriteria.getFeature(), detailFunctionProductRepository.
-            getDetailFunctionProductByLineProduct(string))) {
-          List<Product> list = new ArrayList<>();
-          if (productCriteria.getSorter() != null) {
-            if (productCriteria.getSorter().equals("5"))
-              if (productCriteria.getColor() != null)
-                list = (productRepository.getFirstProductByIdLineProductReviewAndColor(string,productCriteria.getColor()));
-              else
-                list = (productRepository.getFirstProductByIdLineProductReview(string));
-            else
-                list = (productRepository.getFirstProductByIdLineProductReview(string));
-          }
-          else {
-            if (productCriteria.getColor() != null)
-              list = (productRepository.getFirstProductByIdLineProductColor(string,productCriteria.getColor()));
-            else
-              list = (productRepository.getFirstProductByIdLineProduct(string));
-          }
-//          if (countTypeProduct > 0)
-            if (list.size() > 0)
-              productFullList.add(getProductBySlug(list.get(0).getId(),-1));
-        }
-      }
-      else {
-        List<Product> list = new ArrayList<>();
-        if (productCriteria.getSorter() != null) {
-          if (productCriteria.getSorter().equals("5"))
-            if (productCriteria.getColor() != null)
-              list = (productRepository.getFirstProductByIdLineProductReviewAndColor(string,productCriteria.getColor()));
-            else
-              list = (productRepository.getFirstProductByIdLineProductReview(string));
-          else
-            if (productCriteria.getColor() != null)
-              list = (productRepository.getFirstProductByIdLineProductColor(string,productCriteria.getColor()));
-            else
-              list = (productRepository.getFirstProductByIdLineProduct(string));
-        }
-        else {
-          if (productCriteria.getColor() != null)
-            list = (productRepository.getFirstProductByIdLineProductColor(string,productCriteria.getColor()));
-          else
-            list = (productRepository.getFirstProductByIdLineProduct(string));
-        }
-        if (list.size() > 0)
-          productFullList.add(getProductBySlug(list.get(0).getId(),-1));
-      }
-    }
-    return productFullList;
-  }
-
-  public boolean checkProductIsAdd(ProductCriteria productCriteria,String string) {
-    if (productCriteria.getFeature() != null)
-      if (checkFeatureLineProduct(productCriteria.getFeature(), detailFunctionProductRepository.
-          getDetailFunctionProductByLineProduct(string)))
-        return true;
-    return false;
-  }
-
   public Integer filterProductMainCustomerAll(ProductCriteria productCriteria) {
     Specification<Product> productSpecification = ProductSpecifications.createProductSpecifications(productCriteria);
     return productRepository.findAll(productSpecification).size();
@@ -444,12 +251,12 @@ public class ProductService{
     List<ProductFull> productFullList = new ArrayList<>();
     Page<Product> productPage = productRepository.findAll(productSpecification,pageable);
     for (Product product:productPage.getContent())
-      productFullList.add(getProductBySlug(product.getId(),-1));
+      productFullList.add(returnProductFullByProductMaster(product));
     return productFullList;
   }
 
   public List<ProductFull> searchProduct(String keyword,String slug,Integer offset,Integer limit,Integer type) {
-    List<String> stringList = new ArrayList<>();
+    List<String> stringList =  null;
     if (type == 0)
       stringList = lineProductRepository.searchProduct(keyword,slug);
     else

@@ -234,7 +234,7 @@ public class ProductController {
 
   @GetMapping("getProductIndex")
   public ProductIndex getProductIndex() {
-    return productService.getProductIndex();
+    return new ProductIndex();
   }
 
   @PostMapping("getProductBySlug")
