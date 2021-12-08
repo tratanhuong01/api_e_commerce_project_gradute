@@ -292,6 +292,15 @@ public class ProductService{
     return productList.size();
   }
 
+  public List<Image> getImageByIdLineProduct(String idLineProduct) {
+    return imageRepository.getImageByIdLineProduct(idLineProduct);
+  }
+
+  public List<Memory> getMemoryByIdLineProduct(String idLineProduct) {
+    return memoryRepository.getMemoryByIdLineProduct(idLineProduct);
+  }
+
+
   //admin
 
   public Integer filterProductAdminAll(ProductAdminCriteria productAdminCriteria) {

@@ -3,6 +3,8 @@ package com.api.api_e_commerce_project_gradute.product;
 import com.api.api_e_commerce_project_gradute.DTO.CategoryByGroupProduct;
 import com.api.api_e_commerce_project_gradute.DTO.product.*;
 import com.api.api_e_commerce_project_gradute.DTO.specification.product.ProductAdminCriteria;
+import com.api.api_e_commerce_project_gradute.image.Image;
+import com.api.api_e_commerce_project_gradute.memory.Memory;
 import com.api.api_e_commerce_project_gradute.news.News;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -159,6 +161,16 @@ public class ProductController {
   public Integer searchProductPageAll(@RequestParam(required = false) String keyword,
                                       @RequestParam(required = false) String slug) {
     return productService.searchProductPageAll(keyword,slug);
+  }
+
+  @GetMapping("getImageByIdLineProduct")
+  public List<Image> getImageByIdLineProduct(@RequestParam String idLineProduct) {
+    return productService.getImageByIdLineProduct(idLineProduct);
+  }
+
+  @GetMapping("getMemoryByIdLineProduct")
+  public List<Memory> getMemoryByIdLineProduct(@RequestParam String idLineProduct) {
+    return productService.getMemoryByIdLineProduct(idLineProduct);
   }
 
   @GetMapping("products/search/page/limit/")
