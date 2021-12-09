@@ -13,6 +13,7 @@ import com.api.api_e_commerce_project_gradute.color.ColorRepository;
 import com.api.api_e_commerce_project_gradute.group_product.GroupProductRepository;
 import com.api.api_e_commerce_project_gradute.image.Image;
 import com.api.api_e_commerce_project_gradute.image.ImageRepository;
+import com.api.api_e_commerce_project_gradute.info_product.InfoProduct;
 import com.api.api_e_commerce_project_gradute.info_product.InfoProductRepository;
 import com.api.api_e_commerce_project_gradute.line_product.LineProductRepository;
 import com.api.api_e_commerce_project_gradute.memory.Memory;
@@ -38,21 +39,15 @@ public class ProductService{
   @Autowired
   ProductRepository productRepository;
   @Autowired
-  ColorRepository colorRepository;
-  @Autowired
   MemoryRepository memoryRepository;
   @Autowired
   ImageRepository imageRepository;
-  @Autowired
-  BrandRepository brandRepository;
   @Autowired
   CategoryProductRepository categoryProductRepository;
   @Autowired
   GroupProductRepository groupProductRepository;
   @Autowired
   NewsRepository newsRepository;
-  @Autowired
-  RamRepository ramRepository;
   @Autowired
   LineProductRepository lineProductRepository;
   @Autowired
@@ -193,15 +188,16 @@ public class ProductService{
   }
 
   public ProductFull returnProductFullByProductMaster(Product product) {
-    ProductMain productMain = productRepository.getProductByIdProduct(product.getId());
+    InfoProduct infoProduct = infoProductRepository.getInfoProductByIdProduct(product.getId());
     return new ProductFull(product.getId(),product.getId(),
-            productMain.getIdCategoryProduct(),productMain.getNameCategoryProduct(), productMain.getIdGroupProduct(),
-            productMain.getNameGroupProduct(), productMain.getIdLineProduct(),productMain.getNameLineProduct(),
-            new ArrayList<>(),new ArrayList<>(),new ArrayList<>(),
-            product.getSlug(),productMain.getPriceInput(),productMain.getPriceOutput(),productMain.getSale(),product.getImageProduct(),
+            product.getLineProduct().getGroupProduct().getCategoryGroupProduct().getId(),
+            product.getLineProduct().getGroupProduct().getCategoryGroupProduct().getNameCategoryProduct(),
+            product.getLineProduct().getGroupProduct().getId(),product.getLineProduct().getGroupProduct().getNameGroupProduct(),
+            product.getLineProduct().getId(),product.getLineProduct().getNameLineProduct(), new ArrayList<>(),new ArrayList<>(),
+            new ArrayList<>(),product.getSlug(),infoProduct.getPriceInput(),infoProduct.getPriceOutput(),infoProduct.getSale(),product.getImageProduct(),
             product.getImageProduct().getColorProduct(), product.getMemoryProduct(),product.getRamProduct(),product.getLineProduct().getBrandProduct(),
-            productMain.getDescribeProduct(),productMain.getTypeProduct(),productMain.getReview(),
-            productMain.getItemCurrent(),productMain.getItemSold());
+            product.getLineProduct().getDescribeProduct(),infoProduct.getTypeInfoProduct(),infoProduct.getReview(),
+            infoProduct.getItemCurrent(),infoProduct.getItemSold());
   }
 
   public ProductFull getProductBySlug(String slug, int type) {
@@ -318,7 +314,7 @@ public class ProductService{
     Page<Product> productPage = productRepository.findAll(productSpecification,pageable);
     List<ProductFull> productFullList = new ArrayList<>();
     for (Product product:productPage)
-      productFullList.add(getProductBySlug(product.getId(),-1));
+      productFullList.add(returnProductFullByProductMaster(product));
     return productFullList;
   }
 
