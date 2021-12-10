@@ -189,8 +189,8 @@ public class UserService {
   public String updateCodePhone(User user) {
     Random rnd = new Random();
     int number = rnd.nextInt(9999999);
-    new SendPhone().sendCodePhone(user.getPhone());
-    userRepository.updatePhone(String.valueOf(number),user.getId());
+    new SendPhone().sendCodePhone(user.getPhone(),String.valueOf(number));
+    userRepository.updateCodePhone(String.valueOf(number),user.getId());
     return String.valueOf(number);
   }
 
