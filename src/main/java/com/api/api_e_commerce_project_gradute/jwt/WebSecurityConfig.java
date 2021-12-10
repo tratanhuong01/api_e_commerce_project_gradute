@@ -23,14 +23,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .authorizeRequests()
         .antMatchers(HttpMethod.GET, "/", "/*.html", "/favicon.ico", "/**/*.html", "/**/*.css", "/**/*.js").permitAll()
 
-
         .antMatchers(HttpMethod.POST, "/checkLoginJWT","/getProductBySlug","/getSlug",
             "/reviewProducts/**","/reviewProductsAll","/reviewProductsAll/**","/reviewProducts",
             "/messages","/messages/**","/groupChats/**","/groupChats","/groupChatsAll/**","/groupChatsAll",
             "/comments","/comments/**","/commentsAll/**","/commentsAll","/getNewsBySlug","/getUserFromJWT",
             "/adminCheckLoginJWT","/users/email","/users/phone","/users","/sendCodeEmail","/bills","/billDetails",
-            "/billDetails/**","/searchUserByEmailOrPhone","/getListPasswordReset","/passwordResets",
-            "/verifyAccountJWT", "/checkEmailHave","/getNewsByIdCategory","/contacts","/updateImageSingle").permitAll()
+            "/billDetails/**","/searchUserByEmailOrPhone","/getListPasswordReset","/passwordResets","/payments/vnPay",
+            "/verifyAccountJWT", "/checkEmailHave","/getNewsByIdCategory","/contacts","/updateImageSingle",
+            "/sendCodePhone").permitAll()
 
 
         .antMatchers(HttpMethod.DELETE,"/addresses").permitAll()
@@ -66,8 +66,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/sendMailOrders","/getProductByLineProductFirst","/getProductByCategoryIndex",
             "/getNewsIndex","/getProductTopSell","/getCategoryByGroupProduct","/getProductSaleToday",
             "/getPopupAdsNew","/getImageByIdLineProduct","/getMemoryByIdLineProduct").permitAll()
-
-
         .anyRequest().authenticated()
         .and()
         .addFilterBefore(new JWTFilter(), UsernamePasswordAuthenticationFilter.class)

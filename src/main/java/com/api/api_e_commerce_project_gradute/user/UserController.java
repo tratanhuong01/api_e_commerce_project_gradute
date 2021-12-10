@@ -1,10 +1,6 @@
 package com.api.api_e_commerce_project_gradute.user;
 
-import com.api.api_e_commerce_project_gradute.DTO.AccountLogin;
-import com.api.api_e_commerce_project_gradute.DTO.DataSendMail;
-import com.api.api_e_commerce_project_gradute.DTO.UpdateStatus;
-import com.api.api_e_commerce_project_gradute.DTO.UserDetail;
-import com.api.api_e_commerce_project_gradute.DTO.product.ProductCriteria;
+import com.api.api_e_commerce_project_gradute.DTO.*;
 import com.api.api_e_commerce_project_gradute.DTO.specification.user.UserCriteria;
 import com.api.api_e_commerce_project_gradute.DTO.specification.user.UserFull;
 import com.api.api_e_commerce_project_gradute.mail.MailService;
@@ -200,6 +196,11 @@ public class UserController {
   @PostMapping("searchUserByEmailOrPhone")
   public User searchUserByEmailOrPhone(@RequestBody String emailOrPhone) {
     return userService.searchUserByEmailOrPhone(emailOrPhone);
+  }
+
+  @PostMapping("sendCodePhone")
+  public String sendCodePhone(@RequestBody User user) {
+    return userService.updateCodePhone(user);
   }
 
 }

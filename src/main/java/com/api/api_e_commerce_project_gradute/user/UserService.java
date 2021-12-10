@@ -2,6 +2,7 @@ package com.api.api_e_commerce_project_gradute.user;
 
 import com.api.api_e_commerce_project_gradute.DTO.AccountLogin;
 import com.api.api_e_commerce_project_gradute.DTO.DataSendMail;
+import com.api.api_e_commerce_project_gradute.DTO.SendPhone;
 import com.api.api_e_commerce_project_gradute.DTO.UserDetail;
 import com.api.api_e_commerce_project_gradute.DTO.specification.user.UserCriteria;
 import com.api.api_e_commerce_project_gradute.DTO.specification.user.UserFull;
@@ -67,7 +68,7 @@ public class UserService {
 
   public User checkLogin(AccountLogin accountLogin) {
     return userRepository.checkLogin(accountLogin.getEmailOrPhone(),
-        DigestUtils.md5Hex(accountLogin.getPassword()).toUpperCase());
+            DigestUtils.md5Hex(accountLogin.getPassword()).toUpperCase());
   }
 
   public void deleteUser(User user) {
@@ -76,13 +77,13 @@ public class UserService {
 
   public UserDetail checkLoginJWT(AccountLogin accountLogin) {
     User user = userRepository.checkLogin(accountLogin.getEmailOrPhone(),
-          DigestUtils.md5Hex(accountLogin.getPassword()).toUpperCase());
+            DigestUtils.md5Hex(accountLogin.getPassword()).toUpperCase());
     return returnUserDetailByUser(user);
   }
 
   public UserDetail verifyAccountJWT(AccountLogin accountLogin) {
     User user = userRepository.checkLogin(accountLogin.getEmailOrPhone(),
-        accountLogin.getPassword());
+            accountLogin.getPassword());
     UserDetail userDetail = new UserDetail();
     if (user != null) {
       userDetail.setUser(user);
@@ -144,7 +145,7 @@ public class UserService {
 
   public UserDetail adminCheckLoginJWT(AccountLogin accountLogin) {
     User user = userRepository.adminCheckLogin(accountLogin.getEmailOrPhone(),
-        DigestUtils.md5Hex(accountLogin.getPassword()).toUpperCase());
+            DigestUtils.md5Hex(accountLogin.getPassword()).toUpperCase());
     if (user != null) {
       UserDetail userDetail = new UserDetail();
       userDetail.setUser(user);
@@ -182,6 +183,14 @@ public class UserService {
     dataSendMail.setUser(user);
     mailService.sendMail(dataSendMail);
     userRepository.updateCodeEmail(String.valueOf(number),user.getId());
+    return String.valueOf(number);
+  }
+
+  public String updateCodePhone(User user) {
+    Random rnd = new Random();
+    int number = rnd.nextInt(9999999);
+    new SendPhone().sendCodePhone(user.getPhone());
+    userRepository.updatePhone(String.valueOf(number),user.getId());
     return String.valueOf(number);
   }
 
