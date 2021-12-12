@@ -301,4 +301,9 @@ public class ProductController {
     productService.deleteProductMain(id);
   }
 
+  @GetMapping("getProductSame")
+  public List<ProductFull> getProductSame(@RequestParam String idProduct,@RequestParam String idGroupProduct) {
+    return productService.getProductSame(idProduct, idGroupProduct);
+  }
+
 }

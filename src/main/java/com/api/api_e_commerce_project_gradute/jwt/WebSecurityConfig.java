@@ -69,7 +69,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/getProductByCategoryLimit","/getProductByCategoryLimit/**","/productsFilterAll","/bills/**",
             "/sendMailOrders","/getProductByLineProductFirst","/getProductByCategoryIndex",
             "/getNewsIndex","/getProductTopSell","/getCategoryByGroupProduct","/getProductSaleToday",
-            "/getPopupAdsNew","/getImageByIdLineProduct","/getMemoryByIdLineProduct").permitAll()
+            "/getPopupAdsNew","/getImageByIdLineProduct","/getMemoryByIdLineProduct","/getProductSame").permitAll()
         .anyRequest().authenticated()
         .and()
         .addFilterBefore(new JWTFilter(), UsernamePasswordAuthenticationFilter.class)

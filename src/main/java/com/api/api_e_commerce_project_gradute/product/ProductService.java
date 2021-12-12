@@ -330,4 +330,13 @@ public class ProductService{
     productRepository.deleteProductMain(id);
   }
 
+  public List<ProductFull> getProductSame(String idProduct,String idGroupProduct) {
+    List<ProductMain> productMainList = productRepository.getProductSame(idProduct,idGroupProduct);
+    List<ProductFull> productFullList = new ArrayList<>();
+    for (ProductMain productMain: productMainList) {
+      productFullList.add(returnProductFull(productMain));
+    }
+    return productFullList;
+  }
+
 }

@@ -116,9 +116,11 @@ public class BillService {
     bill.setTimeCreated((new Timestamp(new Date().getTime())));
     return billRepository.save(bill);
   }
+
   public Bill updateBill(Bill bill) {
     return billRepository.save(bill);
   }
+
   public List<BillFull> getBillByUser(String idUser,int type,int offset, int limit) {
     List<BillFull> billFullList = new ArrayList<>();
     List<Bill> billList = new ArrayList<>();

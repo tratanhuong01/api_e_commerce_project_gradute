@@ -174,4 +174,8 @@ public interface ProductRepository extends JpaRepository<Product,String> , JpaSp
   @Query(value = "DELETE FROM product WHERE id = ? ",nativeQuery = true)
   Integer deleteProductMain(String id);
 
+  //get product by id product
+  @Query(value = COLUMN_SELECT + JOIN_TABLE + " WHERE p.id != ?1 and gp.id = ?2 ORDER BY ip.item_sold " +
+          "DESC LIMIT 0,12 ",nativeQuery = true)
+  List<ProductMain> getProductSame(String idProduct,String idGroupProduct);
 }

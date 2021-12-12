@@ -18,12 +18,12 @@ public interface BillRepository extends JpaRepository<Bill,String> {
 
   public static String QUERY_GET_BILL= "SELECT COUNT(*) FROM bill";
   public static String QUERY_GET_PRODUCT_SELL = "SELECT SUM(bill_detail.amount) FROM bill INNER JOIN bill_detail ON bill.id = \n" +
-          "bill_detail.id_bill WHERE ( bill.status != -1 OR bill.status != -2 OR bill.status != 4 ) ";
+          "bill_detail.id_bill WHERE ( bill.status != -1 OR bill.status != -2 OR bill.status != 4 OR bill.status != -3 ) ";
   public static String QUERY_GET_TOTAL_MONEY = "SELECT SUM(bill.total) FROM bill WHERE (bill.status != -1 OR " +
-          "bill.status != -2 OR bill.status != 4 ) ";
+          "bill.status != -2 OR bill.status != 4 OR bill.status != -3 ) ";
   public static String QUERY_GET_TOTAL_PROFIT = "SELECT SUM(info_product.price_input*bill_detail.amount) FROM bill INNER JOIN bill_detail ON bill.id = " +
           "bill_detail.id_bill INNER JOIN product ON product.id = bill_detail.id_product INNER JOIN info_product ON product.id = " +
-          "info_product.id_product WHERE ( bill.status != -1 OR bill.status != -2 OR bill.status != 4 ) ";
+          "info_product.id_product WHERE ( bill.status != -1 OR bill.status != -2 OR bill.status != 4 OR bill.status != -3 ) ";
 
   //admin
 
