@@ -69,6 +69,17 @@ public class Bill {
   @Column
   private String email;
 
+  @Column
+  private Timestamp timeCancel;
+
+  public Timestamp getTimeCancel() {
+    return timeCancel;
+  }
+
+  public void setTimeCancel(Timestamp timeCancel) {
+    this.timeCancel = timeCancel;
+  }
+
   public String getEmail() {
     return email;
   }

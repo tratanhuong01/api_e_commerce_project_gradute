@@ -156,12 +156,15 @@ public class BillService {
 
   public int updateStatusBill(Long idBill,int status) {
     switch (status) {
+      case -1 :
+         billRepository.updateBillTimeCancel(idBill);
+         break;
       case 1 :
-        billRepository.updateBillTimeApproval(idBill);
-        break;
+         billRepository.updateBillTimeApproval(idBill);
+         break;
       case 3 :
-        billRepository.updateBillTimeCompleted(idBill);
-        break;
+         billRepository.updateBillTimeCompleted(idBill);
+         break;
     }
     return billRepository.updateStatusBill(status,idBill);
   }

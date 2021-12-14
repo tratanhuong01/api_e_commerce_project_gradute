@@ -197,4 +197,9 @@ public interface BillRepository extends JpaRepository<Bill,String> {
   @Query(value = "UPDATE bill SET time_completed = NOW() WHERE id = ? ",nativeQuery = true)
   int updateBillTimeCompleted(Long idBill);
 
+  @Modifying
+  @Transactional
+  @Query(value = "UPDATE bill SET time_cancel = NOW() WHERE id = ? ",nativeQuery = true)
+  int updateBillTimeCancel(Long idBill);
+
 }

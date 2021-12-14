@@ -120,8 +120,8 @@ public class UserService {
         case 2 :
           userDetail.setUser(null);
           userDetail.setToken(null);
-          userDetail.setMessage("Tài khoản của bạn đã bị  khóa vĩnh viễn .. ");
-          userDetail.setStatus(201);
+          userDetail.setMessage("Tài khoản của bạn đã bị khóa vĩnh viễn .. ");
+          userDetail.setStatus(203);
           break;
         default:
           userDetail.setUser(null);
